@@ -590,7 +590,7 @@ export const RideHome = ({ navigation }) => {
                                 paddingHorizontal: myWidth(4.5),
                                 flexDirection: 'row', alignItems: 'center',
                             }}
-                            onPress={() => null}
+                            onPress={() => navigation.navigate('AddCard')}
                         >
                             <Image source={require('../../../assets/home_main/plus.png')}
                                 style={{

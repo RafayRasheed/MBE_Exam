@@ -9,6 +9,8 @@ import { Platform, StatusBar } from "react-native";
 import { myColors } from "../../../../ultils/myColors";
 import { ios } from "../../../common";
 import { RideHome } from "./ride_home_screen";
+import { AddCard } from "./add_card_screen";
+import { CardDone } from "./card_done";
 
 const statusColorP = ['DestinationScreen', 'SaveLocation', 'LocationFromMap']
 const RideTAB = createNativeStackNavigator();
@@ -30,13 +32,15 @@ export const RideNavigator = ({ route }) => {
                 animation: 'fade',
                 headerShown: false
             }}
-            initialRouteName="RideHome"
+            initialRouteName="AddCard"
         >
             <RideTAB.Screen component={RideScreen} name="RideScreen" />
             <RideTAB.Screen component={DestinationScreen} name="DestinationScreen" />
             <RideTAB.Screen component={SaveLocation} name="SaveLocation" />
             <RideTAB.Screen component={LocationFromMap} name="LocationFromMap" />
             <RideTAB.Screen component={RideHome} name="RideHome" />
+            <RideTAB.Screen component={AddCard} name="AddCard" />
+            <RideTAB.Screen component={CardDone} name="CardDone" />
 
 
         </RideTAB.Navigator>
