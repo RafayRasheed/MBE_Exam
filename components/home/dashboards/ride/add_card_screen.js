@@ -1,23 +1,82 @@
 import { Image, LayoutAnimation, SafeAreaView, ScrollView, SliderBase, StyleSheet, Text, TextInput, TouchableHighlight, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { myColors } from '../../../../ultils/myColors'
-import { Spacer, ios, myHeight, myWidth } from '../../../common'
+import { MyError, Spacer, ios, myHeight, myWidth } from '../../../common'
 import { myFontSize, myFonts, myLetSpacing } from '../../../../ultils/myFonts'
 import Animated, { SlideInDown, SlideInLeft, SlideInUp, SlideOutDown, SlideOutLeft } from 'react-native-reanimated'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Calender, CalenderDate } from './ride_component/calender'
+import { Loader } from '../../../common'
 
 export const AddCard = ({ navigation }) => {
     const [card, setCard] = useState(null);
     const [expiry, setExpiry] = useState(null);
     const [ccv, setCcv] = useState(null);
     const [name, setName] = useState(null);
-    const [showCalender, setShowCalender] = useState(true)
+    const [showCalender, setShowCalender] = useState(false)
+    const [errorMessage, setErrorMessage] = useState(null)
+    const [loading, setLoading] = useState(null)
 
+
+    useEffect(() => {
+        console.log(errorMessage)
+        if (errorMessage) {
+            setTimeout(() => {
+                setErrorMessage(null)
+            }, 2000)
+        }
+    }, [errorMessage])
+
+    function onAddCard() {
+        setLoading(true)
+        if (verifyCard() && verifyExpiry() && verifyCVV() && verifyName()) {
+            setTimeout(() => {
+                setLoading(false)
+                navigation.navigate('CardDone')
+            }, 1000)
+        } else {
+            setLoading(false)
+        }
+    }
+    function verifyCard() {
+        if (card) {
+            return true
+        }
+        setErrorMessage('Please Enter a Card Number')
+        return false
+    }
+    function verifyExpiry() {
+        if (expiry) {
+            return true
+        }
+        setErrorMessage('Please Enter a Expiry Date')
+        return false
+    }
+    function verifyCVV() {
+        if (ccv) {
+            return true
+        }
+        setErrorMessage('Please Enter a CVV Number')
+        return false
+    }
+    function verifyName() {
+        if (name) {
+            return true
+        }
+        setErrorMessage('Please Enter a Full Name')
+        return false
+    }
+
+    function getDate(date) {
+        const d = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
+        setExpiry(d)
+    }
     return (
         <>
             <SafeAreaView style={{ backgroundColor: myColors.primaryT }}></SafeAreaView>
             <SafeAreaView style={styles.container}>
+                {errorMessage && <MyError message={errorMessage} />}
+                {loading && <Loader />}
                 <KeyboardAwareScrollView style={{ paddingHorizontal: myWidth(4.5) }}>
                     {/* Top */}
                     <Spacer paddingT={myHeight(1.7)} />
@@ -199,7 +258,7 @@ export const AddCard = ({ navigation }) => {
                 {/* Bottom */}
                 <View style={{ paddingHorizontal: myWidth(4.5) }}>
                     {/* Add Card Button */}
-                    <TouchableOpacity activeOpacity={0.8} onPress={() => null}
+                    <TouchableOpacity activeOpacity={0.8} onPress={onAddCard}
                         onLongPress={() => navigation.navigate('CardDone')}
                         style={{
                             backgroundColor: myColors.primaryT,
@@ -250,7 +309,7 @@ export const AddCard = ({ navigation }) => {
 
             {
                 showCalender &&
-                <CalenderDate show={setShowCalender} value={setExpiry} />
+                <CalenderDate show={setShowCalender} value={getDate} />
             }
         </>
     )

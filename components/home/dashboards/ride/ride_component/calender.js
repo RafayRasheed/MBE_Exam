@@ -3,58 +3,39 @@ import React, { useState } from 'react'
 import { myColors } from '../../../../../ultils/myColors'
 import { myWidth, myHeight, Spacer } from '../../../../common'
 import { myFontSize, myFonts, myLetSpacing } from '../../../../../ultils/myFonts'
-import { Calendar } from 'react-native-calendars'
+import { Calendar, NewCalendarList } from 'react-native-calendars'
 // import { Calendar, LocaleConfig } from 'react-native-calendars';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-export const CalenderDate = ({ show, value }) => {
-    const [selected, setSelected] = useState('');
-    // var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    // function getDay(dateString) {
-    //     return days[new Date(dateString).getDay()]
-    // }
-    // const getCurrentDate = () => {
+export const CalenderDate = ({ show, value, time = null }) => {
 
-    //     var day = new Date().getDate();
-    //     var dayName = new Date('2023-02-03').getDay();
-    //     var month = new Date().getMonth() + 1;
-    //     var year = new Date().getFullYear();
-    //     //Alert.alert(date + '-' + month + '-' + year);
-    //     // You can turn it in to your desired format
-    //     return [year, month, day];//format: d-m-y;
-    // }
-    // console.log(getCurrentDate())
-
-    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-
-    const showDatePicker = () => {
-        setDatePickerVisibility(true);
-    };
 
     const hideDatePicker = () => {
         show(false);
     };
 
     const handleConfirm = (date) => {
-        value(date.toString())
+        value(date)
         hideDatePicker();
     };
 
+
+
     return (
         <TouchableOpacity onPress={() => show(false)} style={styles.container}>
-            <TouchableOpacity onPress={() => setSelected('2021-01')}>
-                <Text>2021</Text>
-            </TouchableOpacity>
-            <Button title="Show Date Picker" onPress={showDatePicker} />
+
             <DateTimePickerModal
+                minimumDate={time ? null : new Date()}
                 accentColor={myColors.primaryT}
                 buttonTextColorIOS={myColors.primaryT}
                 isVisible={true}
                 modalStyleIOS={{ backgroundColor: '#00000030', margin: 0, }}
-                mode='time'
+                mode={time ? 'time' : 'date'}
                 onConfirm={handleConfirm}
                 onCancel={hideDatePicker}
             />
+
+
             {/* <Calendar
 
                 style={{

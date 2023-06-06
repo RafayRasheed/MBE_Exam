@@ -59,9 +59,9 @@ export const CardDone = ({ navigation }) => {
 
                 {/* Bottom */}
                 <View style={{ paddingHorizontal: myWidth(4.5) }}>
-                    {/* Add Card Button */}
+                    {/* Back to Home Button */}
                     <TouchableOpacity activeOpacity={0.8}
-                        onPress={() => navigation.replace('RideHome')}
+                        onPress={() => navigation.pop(2)}
                         style={{
                             backgroundColor: myColors.primaryT,
                             borderRadius: myHeight(1),

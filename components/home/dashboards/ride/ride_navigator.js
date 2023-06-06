@@ -2,7 +2,6 @@ import { createNativeStackNavigator, } from "@react-navigation/native-stack";
 import { DestinationScreen } from "./destination_screen";
 import { RideScreen } from "./ride_screen_dashboard";
 import { SaveLocation } from "./save_location_screen";
-import { LocationFromMap } from "./location_from_map";
 import React, { useEffect } from "react";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { Platform, StatusBar } from "react-native";
@@ -30,17 +29,19 @@ export const RideNavigator = ({ route }) => {
         <RideTAB.Navigator
             screenOptions={{
                 animation: 'fade',
-                headerShown: false
+                headerShown: false,
             }}
-            initialRouteName="AddCard"
+
+            initialRouteName="DestinationScreen"
         >
             <RideTAB.Screen component={RideScreen} name="RideScreen" />
             <RideTAB.Screen component={DestinationScreen} name="DestinationScreen" />
             <RideTAB.Screen component={SaveLocation} name="SaveLocation" />
-            <RideTAB.Screen component={LocationFromMap} name="LocationFromMap" />
             <RideTAB.Screen component={RideHome} name="RideHome" />
             <RideTAB.Screen component={AddCard} name="AddCard" />
             <RideTAB.Screen component={CardDone} name="CardDone" />
+
+
 
 
         </RideTAB.Navigator>

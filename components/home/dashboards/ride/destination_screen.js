@@ -116,7 +116,8 @@ export const DestinationScreen = ({ navigation }) => {
                                 <Animated.View entering={FadeInUp.delay(0 + (150 * i))} key={i} style={{}}>
                                     <Spacer paddingT={myHeight(2)} />
 
-                                    <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('RideHome')} style={{ flexDirection: 'row' }}>
+                                    <TouchableOpacity activeOpacity={0.8}
+                                        onPress={() => navigation.navigate('RideHome', { currentLoc, pickLocation: { some: 'ok' } })} style={{ flexDirection: 'row' }}>
                                         <View style={{
                                             marginTop: myHeight(0.5),
                                             width: myHeight(3.2), height: myHeight(3.2),
@@ -127,11 +128,13 @@ export const DestinationScreen = ({ navigation }) => {
                                                 source={require('../../../assets/home_main/dashboards/location.png')} />
                                         </View>
                                         <Spacer paddingEnd={myWidth(3)} />
+
                                         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
                                             <View style={{ flex: 1 }}>
                                                 <Text numberOfLines={1} style={styles.textRecentLocName}>{item.name}</Text>
                                                 <Text numberOfLines={1} style={styles.textRecentLoc}>{item.address}</Text>
                                             </View>
+
                                             <TouchableOpacity activeOpacity={0.7}
                                                 onPress={() => {
                                                     if (isInSave) {
@@ -146,6 +149,7 @@ export const DestinationScreen = ({ navigation }) => {
                                                         : require('../../../assets/home_main/dashboards/heart_o.png')} />
                                             </TouchableOpacity>
                                         </View>
+
                                     </TouchableOpacity>
                                     <Spacer paddingT={myHeight(2)} />
 
@@ -162,7 +166,7 @@ export const DestinationScreen = ({ navigation }) => {
                     {/* Set Location On map */}
                     {showRecentList &&
                         <Animated.View entering={FadeInUp.delay(150 * recentLocations.length)} style={{ flexDirection: 'row' }}>
-                            <TouchableOpacity onPress={() => navigation.navigate('LocationFromMap')}
+                            <TouchableOpacity onPress={() => navigation.navigate('RideHome', { currentLoc, pickLocation: null })}
                                 style={{ alignItems: 'center', flexDirection: 'row' }}
                                 activeOpacity={0.7}>
                                 <View style={{

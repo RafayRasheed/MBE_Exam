@@ -55,7 +55,7 @@ export const MyError = ({ message = '' }) => {
                     style={{
                         paddingVertical: myHeight(0.4), paddingHorizontal: myWidth(3),
                         width: myWidth(90), backgroundColor: myColors.red,
-                        alignItems: 'center', alignSelf: 'center',
+                        alignItems: 'center', alignSelf: 'center', opacity: 1, overflow: 'hidden', zIndex: 10,
                         borderRadius: myWidth(100)
                     }}
                 >

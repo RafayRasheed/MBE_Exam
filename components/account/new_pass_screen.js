@@ -16,7 +16,6 @@ export const NewPassword = ({ navigation }) => {
 
     useEffect(() => {
         if (errorMessage) {
-            console.log(errorMessage.length)
             setTimeout(() => {
                 setErrorMessage(null)
             }, 2000)

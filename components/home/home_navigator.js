@@ -68,10 +68,7 @@ export const HomeNavigator = ({ navigation, route }) => {
             <HomeTAB.Screen component={FoodNavigator} name="FoodNavigator" />
             <HomeTAB.Screen component={FilterScreen} name="FilterScreen" />
             <HomeTAB.Screen component={RestaurantDetail} name="RestaurantDetail" />
-            <HomeTAB.Screen component={RideNavigator} name="RideNavigator"
-
-
-            />
+            <HomeTAB.Screen component={RideNavigator} name="RideNavigator" />
 
 
         </HomeTAB.Navigator>
