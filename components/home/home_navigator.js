@@ -8,30 +8,24 @@ import { RideNavigator } from "./dashboards/ride/ride_navigator";
 import { getFocusedRouteNameFromRoute, useNavigation } from "@react-navigation/native";
 import { myColors } from '../../ultils/myColors';
 import { ios, myHeight, myWidth } from '../common';
+import { Platform, StatusBar } from 'react-native';
 
 
 const HomeTAB = createNativeStackNavigator();
 const tabHiddenRoutes = ["RideNavigator"];
 
 
-function useHideBottomBar() {
-    const navigation = useNavigation();
 
-    useEffect(() => {
-        navigation.getParent()?.setOptions({ tabBarStyle: { display: 'none' }, tabBarVisible: false });
-        return () =>
-            navigation.getParent()?.setOptions({ tabBarStyle: undefined, tabBarVisible: undefined });
-    }, [navigation]);
-}
 
 export const HomeNavigator = ({ navigation, route }) => {
+
     React.useLayoutEffect(() => {
+
         if (tabHiddenRoutes.includes(getFocusedRouteNameFromRoute(route))) {
             navigation.setOptions({ tabBarStyle: { display: 'none' } })
 
-            // navigation.setOptions({ tabBarStyle: { display: 'none' } });
         } else {
-            // navigation.setOptions({ tabBarStyle: { display: 'flex' } })
+
 
             navigation.setOptions({
                 tabBarStyle: {
@@ -45,15 +39,11 @@ export const HomeNavigator = ({ navigation, route }) => {
                     paddingTop: myHeight(2.5),
                 },
             })
+            if (!ios && Platform.Version >= 23) {
 
-            // navigation.setOptions({
-            //     // tabBarStyle: {
-            //     //     // borderTopLeftRadius: responsiveScreenWidth(8),
-            //     //     // borderTopRightRadius: responsiveScreenWidth(8),
-            //     //     // backgroundColor: myColors.background,
-            //     //     // height: responsiveScreenHeight(7.8),
-            //     // }
-            // });
+                StatusBar.setBackgroundColor(myColors.background)
+            }
+
         }
     }, [navigation, route]);
     return (

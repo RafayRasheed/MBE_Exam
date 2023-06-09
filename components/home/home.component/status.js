@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, Image, View, Text, FlatList, Modal, UIManager, LayoutAnimation } from 'react-native'
+import { Animated, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, Image, View, Text, FlatList, Modal, UIManager, LayoutAnimation } from 'react-native'
 import { MyError, Spacer, ios, myHeight, myWidth } from '../../common';
 import { myFontSize, myFonts, myLetSpacing } from '../../../ultils/myFonts';
-import Animated from 'react-native-reanimated';
 import { GestureHandlerRootView, PanGestureHandler } from 'react-native-gesture-handler';
 import { myColors } from '../../../ultils/myColors';
 
-if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
-    UIManager.setLayoutAnimationEnabledExperimental(true)
-}
+UIManager.setLayoutAnimationEnabledExperimental &&
+    UIManager.setLayoutAnimationEnabledExperimental(true);
 
 export const Status = ({ notifications }) => {
     const [notiLen, setNotiLen] = useState(notifications.length.toString())
@@ -89,7 +87,7 @@ export const Status = ({ notifications }) => {
                         }
                     }}
                 >
-                    <View
+                    <Animated.View
                         style={{
                             alignItems: 'center', marginBottom: myHeight(1),
                             width: '100%'
@@ -116,7 +114,7 @@ export const Status = ({ notifications }) => {
                         <View style={[styles.containerNotiCount, { right: -(myWidth(9.5) + (myWidth(1) * notiLen.length)), }]}>
                             <Text style={styles.textNotiCount}>{notifications.length}</Text>
                         </View>
-                    </View>
+                    </Animated.View>
                 </PanGestureHandler>
             }
             <ScrollView bounces={false} contentContainerStyle={{ flexGrow: 1 }}>

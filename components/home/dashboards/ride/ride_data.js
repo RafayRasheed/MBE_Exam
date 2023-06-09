@@ -2,20 +2,19 @@ export const recentLocations = [
     {
         id: 'loc1',
         name: 'Tauheed Commercial',
-        address: 'block#7 C-163 24th Street',
-        save: true,
+        address: '22-28 24th St, Phase V Defence V Defence Housing Authority, Karachi, Karachi City, Sindh 75500, Pakistan',
     },
     {
 
         id: 'loc2',
         name: 'Kings Residency',
-        address: 'block#7 C-163 24th Street',
+        address: '22-28 24th St, Phase V Defence V Defence Housing Authority, Karachi, Karachi City, Sindh 75500, Pakistan',
         save: false,
     },
     {
         id: 'loc3',
         name: 'kings Road',
-        address: 'block#7 C-163 24th Street',
+        address: '22-28 24th St, Phase V Defence V Defence Housing Authority, Karachi, Karachi City, Sindh 75500, Pakistant',
         save: false,
     },
 

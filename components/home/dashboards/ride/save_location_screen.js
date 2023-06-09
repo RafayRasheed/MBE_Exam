@@ -1,9 +1,8 @@
 import { Image, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { myColors } from '../../../../ultils/myColors'
-import { Spacer, ios, myHeight, myWidth } from '../../../common'
+import { Spacer, myHeight, myWidth } from '../../../common'
 import { myFontSize, myFonts, myLetSpacing } from '../../../../ultils/myFonts'
-import { recentLocations } from './ride_data'
 import Animated, { FadeIn, FadeInUp } from 'react-native-reanimated'
 
 export const SaveLocation = ({ route, navigation }) => {

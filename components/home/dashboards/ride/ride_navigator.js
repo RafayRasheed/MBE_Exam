@@ -11,16 +11,16 @@ import { RideHome } from "./ride_home_screen";
 import { AddCard } from "./add_card_screen";
 import { CardDone } from "./card_done";
 
-const statusColorP = ['DestinationScreen', 'SaveLocation', 'LocationFromMap']
+const statusColorW = ['RideScreen']
 const RideTAB = createNativeStackNavigator();
 
 export const RideNavigator = ({ route }) => {
     React.useLayoutEffect(() => {
         if (!ios && Platform.Version >= 23) {
-            if (statusColorP.includes(getFocusedRouteNameFromRoute(route))) {
-                StatusBar.setBackgroundColor(myColors.primaryT)
-            } else {
+            if (statusColorW.includes(getFocusedRouteNameFromRoute(route))) {
                 StatusBar.setBackgroundColor(myColors.background)
+            } else {
+                StatusBar.setBackgroundColor(myColors.primaryT)
             }
         }
     }, [route])

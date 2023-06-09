@@ -14,6 +14,8 @@ export function printWithPlat(print) {
     console.log(`${Platform.OS} => ${print} ${height} ${StatusBar.currentHeight}`)
 }
 export function myHeight(per) {
+    return (per * height) / 100
+
     if (ios) {
 
         return (per * height) / 100

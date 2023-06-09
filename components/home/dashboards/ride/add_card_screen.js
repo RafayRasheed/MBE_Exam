@@ -150,15 +150,14 @@ export const AddCard = ({ navigation }) => {
                             <Spacer paddingT={myHeight(1)} />
 
                             {/* Input expiry date */}
-                            <View activeOpacity={0.8} style={[styles.containerInput,]}>
+                            <TouchableOpacity activeOpacity={0.8} onPress={() => setShowCalender(true)}
+                                style={[styles.containerInput,]}>
 
                                 <TextInput placeholder="MM/YY"
                                     placeholderTextColor={myColors.textL3}
-                                    selectionColor={myColors.primaryT}
-                                    onPressIn={() => setShowCalender(true)}
+                                    pointerEvents="none"
                                     editable={false}
-                                    cursorColor={myColors.primaryT}
-                                    value={expiry} onChangeText={setExpiry}
+                                    value={expiry}
                                     style={[styles.textInput]}
                                 />
                                 <Image source={require('../../../assets/home_main/dashboards/ride/question.png')}
@@ -169,7 +168,7 @@ export const AddCard = ({ navigation }) => {
                                         // tintColor: myColors.primaryT
                                     }}
                                 />
-                            </View>
+                            </TouchableOpacity>
                         </View>
                         <View style={{ width: '43%' }}>
                             {/* text CCV*/}

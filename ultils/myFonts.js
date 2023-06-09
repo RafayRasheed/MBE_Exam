@@ -28,17 +28,17 @@ export const myFontSize = {
     small: RFValue(9), // done 11
     small2: RFValue(9.75), // done 12
     small3: RFValue(9.95), // done 12.5
-    xSmall: RFValue(10.1), //done 13
+    xSmall: RFValue(10.3), //done 13
     xxSmall: RFValue(11.25), //done 14
     body0: RFValue(11.5), //done 14.5
     body: RFValue(12.2), //done 15
     body2: RFValue(13.1), //done 16
-    xBody: RFValue(16), //done 20
+    xBody: RFValue(15.5), //done 20
     xxBody: RFValue(18), //done --
     medium0: RFValue(19),  //done 24
     medium: RFValue(20), //  done 25
     medium2: RFValue(22), //  done --
-    xMedium: RFValue(26), // done 32
+    xMedium: RFValue(25.5), // done 32
     large: RFValue(28), //done 36
 
 

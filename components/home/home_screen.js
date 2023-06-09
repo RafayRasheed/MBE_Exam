@@ -12,6 +12,7 @@ import Animated, { BounceInUp, SlideInRight } from 'react-native-reanimated';
 
 import { GestureHandlerRootView, PanGestureHandler } from 'react-native-gesture-handler';
 import { Status } from './home.component/status';
+import { screensEnabled } from 'react-native-screens';
 
 if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true)
@@ -23,7 +24,7 @@ export const HomeScreen = ({ navigation }) => {
     const [notificationVisible, setNotificationVisible] = useState(notifications.length != 0 ? [notifications[0]] : null)
     const [notificationExpand, setNotificationExpand] = useState(false)
     const [notificationsFocusID, setNotificationsFocusID] = useState(notifications.length != 0 ? notifications[0].orderID : null)
-
+    const [loader, setLoader] = useState(true)
     const [i, setI] = useState(0)
     const lenBook = bookNow.length;
     const width = myWidth(92)
@@ -83,6 +84,27 @@ export const HomeScreen = ({ navigation }) => {
         }
     }, [notifications])
 
+    // React.useLayoutEffect(() => {
+    //     if (loader) {
+    //         navigation.getParent().setOptions({ tabBarStyle: { display: 'none' } })
+
+    //     }
+    //     else {
+    //         navigation.getParent().setOptions({
+    //             tabBarStyle: {
+    //                 display: 'flex',
+    //                 backgroundColor: myColors.background,
+    //                 paddingHorizontal: myWidth(3.5),
+    //                 alignItems: 'center',
+    //                 justifyContent: 'center',
+    //                 height: myHeight(9.5),
+    //                 paddingBottom: ios ? myHeight(2.2) : myHeight(1.5),
+    //                 paddingTop: myHeight(2.5),
+    //             },
+    //         })
+    //     }
+
+    // }, [loader])
     // return (<Test />)
     return (
         <SafeAreaView style={styles.container}>

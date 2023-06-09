@@ -117,7 +117,7 @@ export const DestinationScreen = ({ navigation }) => {
                                     <Spacer paddingT={myHeight(2)} />
 
                                     <TouchableOpacity activeOpacity={0.8}
-                                        onPress={() => navigation.navigate('RideHome', { currentLoc, pickLocation: { some: 'ok' } })} style={{ flexDirection: 'row' }}>
+                                        onPress={() => navigation.navigate('RideHome', { currentLoc, pickLocation: item.address })} style={{ flexDirection: 'row' }}>
                                         <View style={{
                                             marginTop: myHeight(0.5),
                                             width: myHeight(3.2), height: myHeight(3.2),
