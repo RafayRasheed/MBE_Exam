@@ -10,18 +10,15 @@ import { ios } from "../../../common";
 import { RideHome } from "./ride_home_screen";
 import { AddCard } from "./add_card_screen";
 import { CardDone } from "./card_done";
+import { SavePlaces } from "./save_places_screen";
+import { Chat } from "./chat_screen";
 
-const statusColorW = ['RideScreen']
 const RideTAB = createNativeStackNavigator();
 
 export const RideNavigator = ({ route }) => {
     React.useLayoutEffect(() => {
         if (!ios && Platform.Version >= 23) {
-            if (statusColorW.includes(getFocusedRouteNameFromRoute(route))) {
-                StatusBar.setBackgroundColor(myColors.background)
-            } else {
-                StatusBar.setBackgroundColor(myColors.primaryT)
-            }
+            StatusBar.setBackgroundColor(myColors.primaryT)
         }
     }, [route])
 
@@ -32,14 +29,18 @@ export const RideNavigator = ({ route }) => {
                 headerShown: false,
             }}
 
-            initialRouteName="DestinationScreen"
+            initialRouteName="RideHome"
         >
-            <RideTAB.Screen component={RideScreen} name="RideScreen" />
+            {/* <RideTAB.Screen component={RideScreen} name="RideScreen" /> */}
+            <RideTAB.Screen component={RideHome} name="RideHome" />
             <RideTAB.Screen component={DestinationScreen} name="DestinationScreen" />
             <RideTAB.Screen component={SaveLocation} name="SaveLocation" />
-            <RideTAB.Screen component={RideHome} name="RideHome" />
             <RideTAB.Screen component={AddCard} name="AddCard" />
             <RideTAB.Screen component={CardDone} name="CardDone" />
+            <RideTAB.Screen component={SavePlaces} name="SavePlaces" />
+            <RideTAB.Screen component={Chat} name="Chat" />
+
+
 
 
 

@@ -93,7 +93,8 @@ export const DestinationScreen = ({ navigation }) => {
 
                     {/* Save Place */}
                     <View style={{ flexDirection: 'row' }}>
-                        <TouchableOpacity style={{ alignItems: 'center', flexDirection: 'row' }} activeOpacity={0.7}>
+                        <TouchableOpacity style={{ alignItems: 'center', flexDirection: 'row' }} activeOpacity={0.7}
+                            onPress={() => navigation.navigate('SavePlaces')}>
                             <View style={{
                                 borderRadius: myHeight(2), padding: myHeight(0.6), paddingTop: myHeight(0.4),
                                 backgroundColor: myColors.primaryL2
@@ -117,7 +118,7 @@ export const DestinationScreen = ({ navigation }) => {
                                     <Spacer paddingT={myHeight(2)} />
 
                                     <TouchableOpacity activeOpacity={0.8}
-                                        onPress={() => navigation.navigate('RideHome', { currentLoc, pickLocation: item.address })} style={{ flexDirection: 'row' }}>
+                                        onPress={() => navigation.navigate('RideHome', { currentLoc, dropLocation: item.address })} style={{ flexDirection: 'row' }}>
                                         <View style={{
                                             marginTop: myHeight(0.5),
                                             width: myHeight(3.2), height: myHeight(3.2),
@@ -166,7 +167,7 @@ export const DestinationScreen = ({ navigation }) => {
                     {/* Set Location On map */}
                     {showRecentList &&
                         <Animated.View entering={FadeInUp.delay(150 * recentLocations.length)} style={{ flexDirection: 'row' }}>
-                            <TouchableOpacity onPress={() => navigation.navigate('RideHome', { currentLoc, pickLocation: null })}
+                            <TouchableOpacity onPress={() => navigation.navigate('RideHome', { currentLoc, dropLocation: null })}
                                 style={{ alignItems: 'center', flexDirection: 'row' }}
                                 activeOpacity={0.7}>
                                 <View style={{

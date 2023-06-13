@@ -17,16 +17,25 @@ const { UIManager } = NativeModules;
 UIManager.setLayoutAnimationEnabledExperimental &&
     UIManager.setLayoutAnimationEnabledExperimental(true);
 
+if (!ios) {
+    if (UIManager.setLayoutAnimationEnabledExperimental) {
+        UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
+}
+
 
 export const RideHome = ({ route, navigation }) => {
-    const { currentLoc } = route.params
-    const { pickLocation } = route.params
-    const [pickLoc, setPickLoc] = useState(pickLocation)
+    const curLoc = route.params ? route.params.currentLoc : null
+    const dropLocation = route.params ? route.params.dropLocation : null
+
+    const [currentLoc, setCurrentLoc] = useState(null)
+    const [dropLoc, setDropLoc] = useState(null)
     const [typeIndex, setTypeIndex] = useState(0)
 
     const [expandRiderModal, setExpandRiderModal] = useState(false)
-    const [riderTypeModal, setRiderTypeModal] = useState(true)
-    // const [riderTypeModalAnimation, setRiderTypeModalAnimation] = useState(true)
+    const [riderTypeModal, setRiderTypeModal] = useState(false)
+    const [locOnMapModal, setLocOnMapModal] = useState(false)
+    const [dropOfLocModal, setDropOfModal] = useState(false)
     const [scheduleModal, setScheduleModal] = useState(false)
     const [promoModal, setPromoModal] = useState(false)
     const [cashModal, setCashModal] = useState(false)
@@ -38,6 +47,7 @@ export const RideHome = ({ route, navigation }) => {
     const [cancelRideModal, setCancelRideModal] = useState(false)
     const [captainModalExpand, setCaptainModalExpand] = useState(false)
     const [feedbackModal, setFeedbackModal] = useState(false)
+    const [directCallModal, setDirectCallModal] = useState(false)
 
 
 
@@ -48,6 +58,41 @@ export const RideHome = ({ route, navigation }) => {
     const [time, setTime] = useState(null)
     const [calender, setCalender] = useState(false)
     const [feedBInd, setFeedBInd] = useState(null)
+
+    useEffect(() => {
+        if (scheduleModal && !time && !date) {
+            formatTime(new Date())
+            formatDate(new Date())
+        }
+    }, [scheduleModal])
+
+    useEffect(() => {
+        setDropLoc(dropLocation)
+        setCurrentLoc(curLoc)
+    }, [route])
+
+    useEffect(() => {
+        if (dropLoc && currentLoc) {
+            setDropOfModal(false)
+            setLocOnMapModal(false)
+            setRiderTypeModal(true)
+
+        } else if (currentLoc) {
+            setDropOfModal(false)
+            setLocOnMapModal(true)
+        }
+        else {
+            setDropOfModal(true)
+        }
+    }, [dropLoc, currentLoc])
+
+    useEffect(() => {
+        if (connectedToDriverModal) {
+            setTimeout(() => {
+                onDriverConnected()
+            }, 2000)
+        }
+    }, [connectedToDriverModal])
 
 
     const feedbackTexts = [
@@ -60,8 +105,11 @@ export const RideHome = ({ route, navigation }) => {
     ]
 
     // const [isFirst, setIsFirst] = useState(true)
+    function onDirectCall() {
+
+    }
     function onConfirmLocation() {
-        setPickLoc('Defence Housing Authority, Karachi, Karachi City, Sindh 75500, Pakistan')
+        setDropLoc('Defence Housing Authority, Karachi, Karachi City, Sindh 75500, Pakistan')
     }
     function onBookNow() {
         setNoDriverModal(true)
@@ -80,16 +128,15 @@ export const RideHome = ({ route, navigation }) => {
 
     }
     function onCall() {
-
+        setDirectCallModal(true)
     }
     function onChat() {
-
+        navigation.navigate('Chat')
     }
     function onClickNeedHelp() {
 
     }
     function onClickCancelRide() {
-        console.log('aaya')
         setCancelRideModal(true)
     }
     function onCancelRide() {
@@ -126,10 +173,11 @@ export const RideHome = ({ route, navigation }) => {
             // setConnectedToDriverModal(false)
             return
         }
-        if (captainModal) {
-            navigation.navigate('HomeScreen')
-            return
-        }
+
+        // if (captainModal) {
+        //     navigation.navigate('HomeScreen')
+        //     return
+        // }
         navigation.goBack()
     }
 
@@ -167,11 +215,15 @@ export const RideHome = ({ route, navigation }) => {
             setNoDriverModal(false)
             return true
         }
-
-        if (captainModal || feedbackModal) {
-            navigation.navigate('HomeScreen')
+        if (directCallModal) {
+            setDirectCallModal(false)
             return true
         }
+
+        // if (captainModal || feedbackModal) {
+        //     navigation.navigate('HomeScreen')
+        //     return true
+        // }
         return false
     };
 
@@ -189,38 +241,6 @@ export const RideHome = ({ route, navigation }) => {
 
 
 
-    useEffect(() => {
-        if (scheduleModal && !time && !date) {
-            formatTime(new Date())
-            formatDate(new Date())
-        }
-    }, [scheduleModal])
-
-
-
-
-    // useEffect(() => {
-    //     if (riderTypeModal) {
-    //         setRiderTypeModalAnimation(false)
-    //     }
-    // }, [riderTypeModal])
-
-    // useEffect(() => {
-    //     console.log(riderTypeModalAnimation)
-
-    // }, [riderTypeModalAnimation])
-
-    useEffect(() => {
-        setRiderTypeModal(pickLoc)
-    }, [pickLoc])
-
-    useEffect(() => {
-        if (connectedToDriverModal) {
-            setTimeout(() => {
-                onDriverConnected()
-            }, 2000)
-        }
-    }, [connectedToDriverModal])
 
 
     useFocusEffect(
@@ -233,16 +253,13 @@ export const RideHome = ({ route, navigation }) => {
                 BackHandler.removeEventListener(
                     'hardwareBackPress', onBackPress
                 );
-        }, [feedbackModal, cancelRideModal, noDriverModal, connectedToDriverModal, scheduleModal, cashModal, promoModal, scheduleBookingDetailModal, bookingDetailModal])
+        }, [feedbackModal, directCallModal, cancelRideModal, noDriverModal, connectedToDriverModal, scheduleModal, cashModal, promoModal, scheduleBookingDetailModal, bookingDetailModal])
     );
 
 
 
 
-
-
-
-    const w = myWidth(7.8)
+    const w = myWidth(8.2)
     const offset = useSharedValue(0);
     const animatedStyles = useAnimatedStyle(() => {
         return {
@@ -254,7 +271,9 @@ export const RideHome = ({ route, navigation }) => {
             offset.value = withTiming(1, {
                 duration: 200,
             });
-            setUseCredit(true)
+            setTimeout(() =>
+                setUseCredit(true)
+                , 50)
 
         } else {
             offset.value = withTiming(0, {
@@ -271,7 +290,7 @@ export const RideHome = ({ route, navigation }) => {
             <SafeAreaView style={{ backgroundColor: myColors.primaryT }}></SafeAreaView>
             <SafeAreaView style={{ flex: 1, }}>
                 {/* Map */}
-                <TouchableOpacity style={{ flex: 1 }} activeOpacity={1}
+                <View style={{ height: myHeight(100), width: myWidth(100) }} activeOpacity={1}
                     onPress={() => null}>
                     <MapView
                         zoomEnabled
@@ -286,9 +305,9 @@ export const RideHome = ({ route, navigation }) => {
                             longitudeDelta: 0.0421,
                         }}
                     />
-                </TouchableOpacity>
+                </View>
                 {/* Back */}
-                {(!noDriverModal && !connectedToDriverModal && !feedbackModal) &&
+                {(!directCallModal && !noDriverModal && !connectedToDriverModal && !feedbackModal) &&
                     <View style={{ position: 'absolute' }}>
                         <Spacer paddingT={myHeight(0.7)} />
                         <TouchableOpacity style={{
@@ -311,15 +330,17 @@ export const RideHome = ({ route, navigation }) => {
 
 
             {/*Rider Type OR pickup location */}
-            {riderTypeModal ?
+            {riderTypeModal &&
 
                 <Animated.View
-                    entering={SlideInDown.duration(800).delay(1000)}
+                    entering={SlideInDown.duration(800).delay(500)}
                     exiting={SlideOutDown}
                     style={{
                         display: captainModal || scheduleModal || noDriverModal || bookingDetailModal || scheduleBookingDetailModal ? 'none' : 'flex',
                         maxHeight: myHeight(80),
                         paddingHorizontal: myWidth(4.5),
+                        borderTopStartRadius: myWidth(2.5),
+                        borderTopEndRadius: myWidth(2.5),
                         backgroundColor: myColors.background,
                         width: "100%", position: 'absolute', bottom: 0,
 
@@ -637,7 +658,10 @@ export const RideHome = ({ route, navigation }) => {
                     </View>
 
                 </Animated.View>
-                :
+            }
+
+            {/* pickup location */}
+            {locOnMapModal &&
                 <View style={{
                     position: 'absolute', zIndex: 1, bottom: 0, width: '100%',
                     borderTopStartRadius: myWidth(2.5),
@@ -677,7 +701,43 @@ export const RideHome = ({ route, navigation }) => {
                 </View>
             }
 
+            {
+                dropOfLocModal &&
+                <View style={{
+                    position: 'absolute', zIndex: 1, bottom: 0,
+                    width: '100%', borderTopStartRadius: myWidth(2),
+                    borderTopEndRadius: myWidth(2),
+                    backgroundColor: myColors.background,
+                    paddingHorizontal: myWidth(4),
+                }}>
+                    <Spacer paddingT={myHeight(3.2)} />
+                    <Text style={[styles.textCommon, {
+                        fontSize: myFontSize.xBody,
+                        fontFamily: myFonts.bodyBold,
+                    }]}>Hi, MBE</Text>
+                    <Text style={[styles.textCommon, {
+                        fontSize: myFontSize.xxSmall,
+                        fontFamily: myFonts.body,
+                    }]}>Hope you’re having a great day!</Text>
 
+                    <Spacer paddingT={myHeight(2.1)} />
+
+                    <TouchableOpacity style={{
+                        borderWidth: myHeight(0.1),
+                        borderColor: myColors.primaryT,
+                        padding: myHeight(1),
+                    }}
+                        onPress={() => navigation.navigate('DestinationScreen')} activeOpacity={0.7}>
+                        <Text style={[styles.textCommon, {
+                            fontSize: myFontSize.xxSmall,
+                            fontFamily: myFonts.body,
+                        }]}>Enter your Drop off Location</Text>
+                    </TouchableOpacity>
+
+                    <Spacer paddingT={myHeight(4)} />
+
+                </View>
+            }
 
 
 
@@ -1042,7 +1102,7 @@ export const RideHome = ({ route, navigation }) => {
                                         fontFamily: myFonts.body,
                                         color: myColors.textL6
                                     }
-                                ]}>{pickLoc}</Text>
+                                ]}>{dropLoc}</Text>
                             </View>
                             <Spacer paddingT={myHeight(1.2)} />
 
@@ -1447,7 +1507,7 @@ export const RideHome = ({ route, navigation }) => {
                                         fontFamily: myFonts.body,
                                         color: myColors.textL6
                                     }
-                                ]}>{pickLoc}</Text>
+                                ]}>{dropLoc}</Text>
                             </View>
                             <Spacer paddingT={myHeight(1.2)} />
 
@@ -1988,119 +2048,113 @@ export const RideHome = ({ route, navigation }) => {
             {/* Promo Code Modal */}
             {
                 promoModal &&
-                <View style={{
-                    height: myHeight(100), width: myWidth(100),
-                    backgroundColor: '#00000030',
-                    position: 'absolute',
-                    // borderTopStartRadius: myWidth(4),
-                    // borderTopEndRadius: myWidth(4),
-                    backgroundColor: '#00000030',
-                    position: 'absolute',
-                    zIndex: 11,
-                }}>
 
-                    <KeyboardAwareScrollView
-                        bounces={false}
-                        contentContainerStyle={{
-                            flexGrow: 1,
+                <KeyboardAwareScrollView
+                    bounces={false}
+                    extraScrollHeight={100}
+                    extraHeight={100}
+                    contentContainerStyle={{
+                        height: myHeight(100), width: myWidth(100),
+                        backgroundColor: '#00000030',
+                    }}
 
+                >
+
+                    <TouchableOpacity activeOpacity={1}
+                        style={{
+                            flex: 1, paddingHorizontal: myWidth(4.5),
                         }}
+                        onPress={() => setPromoModal(false)}
                     >
-                        <TouchableOpacity activeOpacity={1}
-                            style={{
-                                flex: 1, paddingHorizontal: myWidth(4.5),
-                            }}
-                            onPress={() => setPromoModal(false)}
-                        >
-                        </TouchableOpacity>
-                        <Animated.View
-                            entering={SlideInDown.duration(300)}
-                            style={{
-                                paddingHorizontal: myWidth(4.5),
-                                backgroundColor: myColors.background,
-                                width: "100%", position: 'absolute', bottom: 0,
-                                borderTopStartRadius: myWidth(4),
-                                borderTopEndRadius: myWidth(4),
-                            }}>
-                            <Spacer paddingT={myHeight(0.8)} />
+                    </TouchableOpacity>
+                    <Animated.View
+                        entering={SlideInDown.duration(300)}
+                        style={{
+                            paddingHorizontal: myWidth(4.5),
+                            backgroundColor: myColors.background,
+                            width: "100%", position: 'absolute', bottom: 0,
+                            borderTopStartRadius: myWidth(4),
+                            borderTopEndRadius: myWidth(4),
+                        }}>
+                        <Spacer paddingT={myHeight(0.8)} />
 
-                            {/* Line */}
-                            <View style={{
-                                width: myWidth(30), height: myHeight(0.7),
-                                backgroundColor: myColors.dot, borderRadius: myHeight(2),
-                                alignSelf: 'center',
-                            }} />
-                            <Spacer paddingT={myHeight(1.5)} />
+                        {/* Line */}
+                        <View style={{
+                            width: myWidth(30), height: myHeight(0.7),
+                            backgroundColor: myColors.dot, borderRadius: myHeight(2),
+                            alignSelf: 'center',
+                        }} />
+                        <Spacer paddingT={myHeight(1.5)} />
+
+                        <Text style={[
+                            styles.textCommon,
+                            {
+                                fontSize: myFontSize.xBody,
+                                fontFamily: myFonts.heading,
+                            }
+                        ]}>Add Promo</Text>
+                        <Spacer paddingT={myHeight(1.5)} />
+
+                        {/* Input */}
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            borderRadius: myHeight(0.8),
+                            paddingHorizontal: myWidth(2.5),
+                            borderWidth: myHeight(0.09),
+                            borderColor: myColors.primaryT,
+                            backgroundColor: myColors.background,
+                            elevation: 3,
+                            shadowColor: '#000',
+                            shadowOffset: { width: 0, height: 2 },
+                            shadowOpacity: 0.1,
+                            shadowRadius: 4,
+                        }}>
+
+                            <TextInput placeholder="Enter promo code"
+                                keyboardType={'number-pad'}
+                                placeholderTextColor={myColors.offColor}
+                                selectionColor={myColors.primaryT}
+                                cursorColor={myColors.primaryT}
+                                value={promoCode} onChangeText={setPromoCode}
+                                style={{
+                                    flex: 1,
+                                    textAlignVertical: 'center',
+                                    paddingVertical: ios ? myHeight(1.2) : myHeight(100) > 600 ? myHeight(0.8) : myHeight(0.1),
+                                    fontSize: myFontSize.body,
+                                    color: myColors.text,
+                                    includeFontPadding: false,
+                                    fontFamily: myFonts.heading,
+                                }}
+                            />
+                        </View>
+
+                        <Spacer paddingT={myHeight(8)} />
+                        {/* Activate Code Button */}
+                        <TouchableOpacity activeOpacity={0.8} onPress={onActivateCode}
+                            style={{
+                                backgroundColor: myColors.primaryT,
+                                borderRadius: myHeight(0.5),
+                                paddingVertical: myHeight(1),
+                                alignItems: 'center',
+                                width: '100%', justifyContent: 'center',
+                            }}>
 
                             <Text style={[
                                 styles.textCommon,
                                 {
-                                    fontSize: myFontSize.xBody,
+                                    fontSize: myFontSize.body,
                                     fontFamily: myFonts.heading,
+                                    color: myColors.background,
                                 }
-                            ]}>Add Promo</Text>
-                            <Spacer paddingT={myHeight(1.5)} />
-                            <View style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                borderRadius: myHeight(0.8),
-                                paddingHorizontal: myWidth(2.5),
-                                borderWidth: myHeight(0.09),
-                                borderColor: myColors.primaryT,
-                                backgroundColor: myColors.background,
-                                elevation: 3,
-                                shadowColor: '#000',
-                                shadowOffset: { width: 0, height: 2 },
-                                shadowOpacity: 0.1,
-                                shadowRadius: 4,
-                            }}>
+                            ]}>Activate Code</Text>
 
-                                <TextInput placeholder="Enter promo code"
-                                    keyboardType={'number-pad'}
-                                    placeholderTextColor={myColors.offColor}
-                                    selectionColor={myColors.primaryT}
-                                    cursorColor={myColors.primaryT}
-                                    autoFocus
-                                    value={promoCode} onChangeText={setPromoCode}
-                                    style={{
-                                        flex: 1,
-                                        textAlignVertical: 'center',
-                                        paddingVertical: ios ? myHeight(1.2) : myHeight(100) > 600 ? myHeight(0.8) : myHeight(0.1),
-                                        fontSize: myFontSize.body,
-                                        color: myColors.text,
-                                        includeFontPadding: false,
-                                        fontFamily: myFonts.heading,
-                                    }}
-                                />
-                            </View>
-                            <Spacer paddingT={myHeight(8)} />
+                        </TouchableOpacity>
+                        <Spacer paddingT={myHeight(4)} />
 
-                            {/* Book Now Button */}
-                            <TouchableOpacity activeOpacity={0.8} onPress={onActivateCode}
-                                style={{
-                                    backgroundColor: myColors.primaryT,
-                                    borderRadius: myHeight(0.5),
-                                    paddingVertical: myHeight(1),
-                                    alignItems: 'center',
-                                    width: '100%', justifyContent: 'center',
-                                }}>
+                    </Animated.View>
 
-                                <Text style={[
-                                    styles.textCommon,
-                                    {
-                                        fontSize: myFontSize.body,
-                                        fontFamily: myFonts.heading,
-                                        color: myColors.background,
-                                    }
-                                ]}>Activate Code</Text>
-
-                            </TouchableOpacity>
-                            <Spacer paddingT={myHeight(4)} />
-
-                        </Animated.View>
-
-                    </KeyboardAwareScrollView>
-                </View>
+                </KeyboardAwareScrollView>
 
             }
 
@@ -2325,25 +2379,25 @@ export const RideHome = ({ route, navigation }) => {
                                 const s = event.nativeEvent.translationY
                                 if (s < -25) {
                                     if (!captainModalExpand) {
-                                        setCaptainModalExpand(true)
                                         LayoutAnimation.configureNext({
                                             "create": { "property": "opacity", "type": "linear" },
                                             "delete": { "property": "opacity", "type": "linear" },
                                             "duration": 300,
                                             "update": { "type": "linear" }
                                         })
+                                        setCaptainModalExpand(true)
 
                                     }
                                 }
                                 else if (s > 25) {
                                     if (captainModalExpand) {
-                                        setCaptainModalExpand(false)
                                         LayoutAnimation.configureNext({
                                             "create": { "property": "opacity", "type": "linear" },
                                             "delete": { "property": "opacity", "type": "linear" },
                                             "duration": 300,
                                             "update": { "type": "linear" }
                                         })
+                                        setCaptainModalExpand(false)
 
                                     }
                                 }
@@ -2721,6 +2775,9 @@ export const RideHome = ({ route, navigation }) => {
                     </GestureHandlerRootView>
                 </Animated.View>
             }
+
+
+
             {/* Cancel a Ride*/}
             {
                 cancelRideModal &&
@@ -2916,6 +2973,66 @@ export const RideHome = ({ route, navigation }) => {
                         </TouchableOpacity>
                     </Animated.View>
                     <Spacer paddingT={myHeight(5)} />
+                </View>
+            }
+
+            {/* Direct Call Modal  */}
+
+            {
+                directCallModal &&
+                <View
+                    style={{
+
+                        backgroundColor: '#00000030',
+                        height: myHeight(100), width: myWidth(100),
+                        borderTopStartRadius: myWidth(4),
+                        borderTopEndRadius: myWidth(4),
+                        position: 'absolute',
+                    }}
+
+                >
+                    <TouchableOpacity activeOpacity={1}
+                        style={{
+                            flex: 1, paddingHorizontal: myWidth(4.5),
+                        }}
+                        onPress={() => setDirectCallModal(false)}
+                    >
+                    </TouchableOpacity>
+                    <Animated.View
+                        entering={SlideInDown.duration(300)}
+                        style={{
+                            backgroundColor: myColors.background,
+                            width: "100%", position: 'absolute', bottom: 0,
+                            borderTopStartRadius: myWidth(4),
+                            borderTopEndRadius: myWidth(4),
+                        }}>
+
+                        <Spacer paddingT={myHeight(2.5)} />
+                        <TouchableOpacity activeOpacity={0.8} style={{ paddingHorizontal: myWidth(4), flexDirection: 'row', alignItems: 'center' }}
+                            onPress={onDirectCall}>
+
+                            <Image source={require('../../../assets/home_main/dashboards/ride/callO.png')}
+                                style={{
+                                    width: myHeight(4.7),
+                                    height: myHeight(4.7),
+                                    resizeMode: 'contain',
+                                }}
+                            />
+                            <Text style={[
+                                styles.textCommon,
+                                {
+                                    fontSize: myFontSize.xBody,
+                                    fontFamily: myFonts.bodyBold,
+                                    alignSelf: 'center',
+                                    paddingStart: myWidth(2)
+                                }
+                            ]}>Call Captain Directly</Text>
+                        </TouchableOpacity>
+
+                        <Spacer paddingT={myHeight(2.5)} />
+
+                    </Animated.View>
+
                 </View>
             }
         </>

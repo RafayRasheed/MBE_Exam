@@ -6,13 +6,9 @@ import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import { bookNow, category, dailySpecial, nearDrivers, notifications, rewards } from './home_data';
 import { DailySpecial } from './home.component/daily_special';
 import LinearGradient from 'react-native-linear-gradient';
-import Animated, { BounceInUp, SlideInRight } from 'react-native-reanimated';
-// import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
-// import SwipeUpDown from 'react-native-swipe-up-down';
 
-import { GestureHandlerRootView, PanGestureHandler } from 'react-native-gesture-handler';
+
 import { Status } from './home.component/status';
-import { screensEnabled } from 'react-native-screens';
 
 if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true)
@@ -113,7 +109,6 @@ export const HomeScreen = ({ navigation }) => {
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.container}>
 
                 <Spacer paddingT={myHeight(3.4)} />
-
                 {/* Morning & Loca */}
                 <View style={{ paddingHorizontal: myWidth(6.75) }}>
                     <Text style={styles.textGoodM}>{`Good Morning ${name}!`}</Text>
@@ -130,7 +125,7 @@ export const HomeScreen = ({ navigation }) => {
                 <View style={styles.containerCategory}>
                     {category.map((cat, index) =>
                         <TouchableOpacity key={index} onPress={() => navigation.navigate(cat.navigate)}
-                            style={{ paddingTop: myHeight(1.2), flexBasis: '24%', }} activeOpacity={0.8}>
+                            style={{ paddingTop: myHeight(1.2), flexBasis: '24%', }} activeOpacity={0.9}>
                             <View style={{ flexDirection: 'row' }}>
                                 <View style={{ width: myWidth(23), alignItems: 'center', }}>
                                     <View style={styles.containerEachCate}>

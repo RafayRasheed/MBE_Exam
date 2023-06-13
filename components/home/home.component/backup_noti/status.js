@@ -1,14 +1,12 @@
 // import React, { useEffect, useState } from 'react';
-// import { SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, Image, View, Text, FlatList, Modal, UIManager, LayoutAnimation } from 'react-native'
+// import { Animated, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, Image, View, Text, FlatList, Modal, UIManager, LayoutAnimation } from 'react-native'
 // import { MyError, Spacer, ios, myHeight, myWidth } from '../../common';
 // import { myFontSize, myFonts, myLetSpacing } from '../../../ultils/myFonts';
-// import Animated from 'react-native-reanimated';
 // import { GestureHandlerRootView, PanGestureHandler } from 'react-native-gesture-handler';
 // import { myColors } from '../../../ultils/myColors';
 
-// if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
-//     UIManager.setLayoutAnimationEnabledExperimental(true)
-// }
+// UIManager.setLayoutAnimationEnabledExperimental &&
+//     UIManager.setLayoutAnimationEnabledExperimental(true);
 
 // export const Status = ({ notifications }) => {
 //     const [notiLen, setNotiLen] = useState(notifications.length.toString())
@@ -55,72 +53,75 @@
 //         }
 //     }, [notifications])
 //     return (
-//         <Animated.View style={[styles.containerNotification]}>
+//         <GestureHandlerRootView style={[styles.containerNotification]} >
 //             {notifications.length > 1 &&
-//                 <GestureHandlerRootView onLayout={(event) => console.log('uper', event.nativeEvent.layout.height)}>
-//                     <PanGestureHandler
-
-//                         onGestureEvent={(event) => {
-//                             const s = event.nativeEvent.translationY
-//                             if (s < -25) {
-//                                 if (!notificationExpand) {
-//                                     setNotificationExpand(true)
-//                                     LayoutAnimation.configureNext({
-//                                         "create": { "property": "opacity", "type": "linear" },
-//                                         "delete": { "property": "opacity", "type": "linear" },
-//                                         "duration": 300,
-//                                         "update": { "type": "linear" }
-//                                     });
-//                                 }
+//                 <PanGestureHandler
+//                     onGestureEvent={(event) => {
+//                         const s = event.nativeEvent.translationY
+//                         if (s < -25) {
+//                             if (!notificationExpand) {
+//                                 console.log('ok')
+//                                 // LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
+//                                 LayoutAnimation.configureNext({
+//                                     "create": { "property": "opacity", "type": "linear" },
+//                                     "delete": { "property": "opacity", "type": "linear" },
+//                                     "duration": 300,
+//                                     "update": { "type": "linear" }
+//                                 });
+//                                 setNotificationExpand(true)
 //                             }
-//                             else if (s > 25) {
-//                                 if (notificationExpand) {
-//                                     setNotificationExpand(false)
-//                                     LayoutAnimation.configureNext({
-//                                         "create": { "property": "opacity", "type": "linear" },
-//                                         "delete": { "property": "opacity", "type": "linear" },
-//                                         "duration": 150,
-//                                         "update": { "type": "linear" }
-//                                     });
-//                                 }
-
+//                         }
+//                         else if (s > 25) {
+//                             if (notificationExpand) {
+//                                 LayoutAnimation.configureNext({
+//                                     "create": { "property": "opacity", "type": "linear" },
+//                                     "delete": { "property": "opacity", "type": "linear" },
+//                                     "duration": 300,
+//                                     "update": { "type": "linear" }
+//                                 });
+//                                 setNotificationExpand(false)
 //                             }
-//                         }}
-//                     >
+
+//                         }
+//                     }}
+//                 >
+//                     <Animated.View
+//                         style={{
+//                             alignItems: 'center', marginBottom: myHeight(1),
+//                             width: '100%'
+//                         }}>
 //                         <View
-//                             style={{ alignItems: 'center', marginBottom: myHeight(1) }}>
-//                             <View
-//                             // onPress={() => {
-//                             //     // LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
-//                             //     setNotificationExpand(!notificationExpand)
-//                             //     const duration = notificationExpand ? 150 : 300
-//                             //     LayoutAnimation.configureNext({
-//                             //         "create": { "property": "opacity", "type": "linear" },
-//                             //         "delete": { "property": "opacity", "type": "linear" },
-//                             //         "duration": duration,
-//                             //         "update": { "type": "linear" }
-//                             //     });
-//                             // }}
-//                             >
-//                                 <Spacer paddingT={myHeight(0.5)} />
-//                                 <Image style={[styles.imageUp, notificationExpand && { transform: [{ rotate: '180deg' }] }]}
-//                                     source={require('../../assets/home_main/up.png')} />
-//                                 <Spacer paddingT={myHeight(0.5)} />
-//                             </View>
-//                             <Text style={styles.textNotiSwipe}>{notificationExpand ? 'Swipe down to see less requests' : 'Swipe up to see more requests'}</Text>
-//                             <View style={[styles.containerNotiCount, { right: -(myWidth(9.5) + (myWidth(1) * notiLen.length)), }]}>
-//                                 <Text style={styles.textNotiCount}>{notifications.length}</Text>
-//                             </View>
+//                         // onPress={() => {
+//                         //     // LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
+//                         //     setNotificationExpand(!notificationExpand)
+//                         //     const duration = notificationExpand ? 150 : 300
+//                         //     LayoutAnimation.configureNext({
+//                         //         "create": { "property": "opacity", "type": "linear" },
+//                         //         "delete": { "property": "opacity", "type": "linear" },
+//                         //         "duration": duration,
+//                         //         "update": { "type": "linear" }
+//                         //     });
+//                         // }}
+//                         >
+//                             <Spacer paddingT={myHeight(0.5)} />
+//                             <Image style={[styles.imageUp, notificationExpand && { transform: [{ rotate: '180deg' }] }]}
+//                                 source={require('../../assets/home_main/up.png')} />
+//                             <Spacer paddingT={myHeight(0.5)} />
 //                         </View>
-//                     </PanGestureHandler>
-//                 </GestureHandlerRootView>
+//                         <Text style={styles.textNotiSwipe}>{notificationExpand ? 'Swipe down to see less requests' : 'Swipe up to see more requests'}</Text>
+//                         <View style={[styles.containerNotiCount, { right: -(myWidth(9.5) + (myWidth(1) * notiLen.length)), }]}>
+//                             <Text style={styles.textNotiCount}>{notifications.length}</Text>
+//                         </View>
+//                     </Animated.View>
+//                 </PanGestureHandler>
 //             }
 //             <ScrollView bounces={false} contentContainerStyle={{ flexGrow: 1 }}>
 //                 <View>
 //                     {notificationVisible &&
 //                         notificationVisible.map((item, i) =>
+
 //                             <TouchableOpacity
-//                                 onLayout={(event) => console.log('item', event.nativeEvent.layout.height)}
+//                                 // onLayout={(event) => console.log('item', event.nativeEvent.layout.height)}
 //                                 activeOpacity={notificationExpand ? 0.8 : 1}
 //                                 onPress={() => {
 //                                     if (notificationExpand) {
@@ -128,7 +129,7 @@
 //                                         LayoutAnimation.configureNext({
 //                                             "create": { "property": "opacity", "type": "linear" },
 //                                             "delete": { "property": "opacity", "type": "linear" },
-//                                             "duration": 150,
+//                                             "duration": 300,
 //                                             "update": { "type": "linear" }
 //                                         });
 //                                         onNotificationsFocus(item.orderID)
@@ -161,8 +162,7 @@
 //                     }
 //                 </View>
 //             </ScrollView>
-//             {/* </GestureRecognizer> */}
-//         </Animated.View>
+//         </GestureHandlerRootView>
 //     )
 // }
 

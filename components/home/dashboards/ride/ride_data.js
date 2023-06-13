@@ -9,15 +9,30 @@ export const recentLocations = [
         id: 'loc2',
         name: 'Kings Residency',
         address: '22-28 24th St, Phase V Defence V Defence Housing Authority, Karachi, Karachi City, Sindh 75500, Pakistan',
-        save: false,
     },
     {
         id: 'loc3',
         name: 'kings Road',
         address: '22-28 24th St, Phase V Defence V Defence Housing Authority, Karachi, Karachi City, Sindh 75500, Pakistant',
-        save: false,
     },
 
+]
+
+
+export const saveLocations = [
+    {
+        id: 'loc1',
+        saveName: 'Home',
+        name: 'Tauheed Commercial',
+        address: '22-28 24th St, Phase V Defence V Defence Housing Authority, Karachi, Karachi City, Sindh 75500, Pakistan',
+    },
+    {
+
+        id: 'loc2',
+        saveName: 'Work',
+        name: 'Kings Residency',
+        address: '22-28 24th St, Phase V Defence V Defence Housing Authority, Karachi, Karachi City, Sindh 75500, Pakistan',
+    },
 ]
 export const saveLocIds = ['loc1']
 
