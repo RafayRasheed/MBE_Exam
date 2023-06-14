@@ -11,9 +11,11 @@ const MyMessage = ({ message }) => {
     return (
         <View style={{
             borderRadius: myWidth(2.5), borderBottomRightRadius: 0,
-            paddingHorizontal: myWidth(5), paddingVertical: myHeight(1.2),
+            paddingHorizontal: myWidth(4), paddingVertical: myHeight(1.2),
             backgroundColor: myColors.primary, maxWidth: myWidth(70),
-            alignSelf: 'flex-end', marginVertical: myHeight(0.7)
+            alignSelf: 'flex-end', marginVertical: myHeight(0.7),
+            // borderWidth: myHeight(0.1),
+            // borderColor: myColors.primaryT,
         }}>
             <Text style={[styles.textCommon, {
                 fontSize: myFontSize.body,
@@ -37,14 +39,14 @@ const OtherMessage = ({ message }) => {
             <Spacer paddingEnd={myWidth(2)} />
             <View style={{
                 borderRadius: myWidth(2.5), borderBottomLeftRadius: 0,
-                paddingHorizontal: myWidth(5), paddingVertical: myHeight(1.2),
+                paddingHorizontal: myWidth(4), paddingVertical: myHeight(1.2),
                 borderWidth: myHeight(0.1),
                 borderColor: myColors.textL5,
-                alignSelf: 'flex-start',
+                alignSelf: 'flex-start', backgroundColor: '#f1f1f1'
             }}>
                 <Text style={[styles.textCommon, {
                     fontSize: myFontSize.body,
-                    fontFamily: myFonts.heading,
+                    fontFamily: myFonts.bodyBold,
                 }]}>{message}</Text>
             </View>
         </View>
@@ -52,6 +54,7 @@ const OtherMessage = ({ message }) => {
 }
 export const Chat = ({ navigation }) => {
     const [message, setMessage] = useState(null)
+    const [focus, setFocus] = useState(false)
 
     function onSendMsg() {
     }
@@ -143,8 +146,8 @@ export const Chat = ({ navigation }) => {
                                 flex: 1,
                                 borderRadius: myHeight(10),
                                 paddingHorizontal: myWidth(3.5),
-                                borderWidth: myHeight(0.09),
-                                borderColor: myColors.primaryT,
+                                borderWidth: myHeight(0.1),
+                                borderColor: focus ? myColors.primaryT : myColors.text,
                                 backgroundColor: myColors.background,
 
                             }}>
@@ -154,6 +157,8 @@ export const Chat = ({ navigation }) => {
                                     selectionColor={myColors.primaryT}
                                     cursorColor={myColors.primaryT}
                                     value={message} onChangeText={setMessage}
+                                    onFocus={() => setFocus(true)}
+                                    onEndEditing={() => setFocus(false)}
                                     style={{
                                         flex: 1,
                                         textAlignVertical: 'center',

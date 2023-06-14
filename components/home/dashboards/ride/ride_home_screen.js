@@ -1,4 +1,4 @@
-import { BackHandler, Image, LayoutAnimation, Modal, NativeModules, Pressable, SafeAreaView, ScrollView, SliderBase, StyleSheet, Text, TextInput, TouchableHighlight, TouchableOpacity, View } from 'react-native'
+import { BackHandler, Image, LayoutAnimation, Modal, UIManager, Pressable, SafeAreaView, ScrollView, SliderBase, StyleSheet, Text, TextInput, TouchableHighlight, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { myColors } from '../../../../ultils/myColors'
 import { Spacer, ios, myHeight, myWidth } from '../../../common'
@@ -12,15 +12,10 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { CalenderDate } from './ride_component/calender'
 import { useFocusEffect } from '@react-navigation/native'
 
-const { UIManager } = NativeModules;
+// const { UIManager } = NativeModules;
 
-UIManager.setLayoutAnimationEnabledExperimental &&
-    UIManager.setLayoutAnimationEnabledExperimental(true);
-
-if (!ios) {
-    if (UIManager.setLayoutAnimationEnabledExperimental) {
-        UIManager.setLayoutAnimationEnabledExperimental(true);
-    }
+if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true)
 }
 
 
@@ -48,6 +43,8 @@ export const RideHome = ({ route, navigation }) => {
     const [captainModalExpand, setCaptainModalExpand] = useState(false)
     const [feedbackModal, setFeedbackModal] = useState(false)
     const [directCallModal, setDirectCallModal] = useState(false)
+    const [ratingModal, setRatingModal] = useState(false)
+
 
 
 
@@ -58,6 +55,7 @@ export const RideHome = ({ route, navigation }) => {
     const [time, setTime] = useState(null)
     const [calender, setCalender] = useState(false)
     const [feedBInd, setFeedBInd] = useState(null)
+    const [starI, setStarI] = useState(undefined)
 
     useEffect(() => {
         if (scheduleModal && !time && !date) {
@@ -79,10 +77,14 @@ export const RideHome = ({ route, navigation }) => {
 
         } else if (currentLoc) {
             setDropOfModal(false)
+            setRiderTypeModal(false)
             setLocOnMapModal(true)
         }
         else {
             setDropOfModal(true)
+            setRiderTypeModal(false)
+            setLocOnMapModal(false)
+
         }
     }, [dropLoc, currentLoc])
 
@@ -134,7 +136,7 @@ export const RideHome = ({ route, navigation }) => {
         navigation.navigate('Chat')
     }
     function onClickNeedHelp() {
-
+        setRatingModal(true)
     }
     function onClickCancelRide() {
         setCancelRideModal(true)
@@ -155,12 +157,17 @@ export const RideHome = ({ route, navigation }) => {
     function onSubmitFeedback() {
         navigation.navigate('HomeScreen')
     }
+    function onDoneRating() {
+        navigation.navigate('HomeScreen')
+    }
 
 
 
     //Back Functions
     function onBackScheduleBookingDetails() {
-        setScheduleBookingDetailModal(false)
+        navigation.navigate('HomeScreen')
+
+        // setScheduleBookingDetailModal(false)
         // setScheduleModal(true)
     }
 
@@ -169,13 +176,21 @@ export const RideHome = ({ route, navigation }) => {
             setScheduleModal(false)
             return
         }
-        if (connectedToDriverModal) {
-            // setConnectedToDriverModal(false)
+        if (noDriverModal) {
+            setNoDriverModal(false)
+            return
+        }
+        if (ratingModal) {
             return
         }
 
-        // if (captainModal) {
-        //     navigation.navigate('HomeScreen')
+        if (captainModal) {
+            navigation.navigate('HomeScreen')
+            return
+        }
+
+        // if (riderTypeModal || locOnMapModal) {
+        //     navigation.goBack()
         //     return
         // }
         navigation.goBack()
@@ -196,7 +211,6 @@ export const RideHome = ({ route, navigation }) => {
             return true
         }
         if (connectedToDriverModal) {
-            // setConnectedToDriverModal(false)
             return true
         }
         if (bookingDetailModal) {
@@ -207,10 +221,10 @@ export const RideHome = ({ route, navigation }) => {
             setCancelRideModal(false)
             return true
         }
-        if (scheduleBookingDetailModal) {
-            setScheduleBookingDetailModal(false)
-            return true
-        }
+        // if (scheduleBookingDetailModal) {
+        //     setScheduleBookingDetailModal(false)
+        //     return true
+        // }
         if (noDriverModal) {
             setNoDriverModal(false)
             return true
@@ -219,11 +233,18 @@ export const RideHome = ({ route, navigation }) => {
             setDirectCallModal(false)
             return true
         }
-
-        // if (captainModal || feedbackModal) {
-        //     navigation.navigate('HomeScreen')
+        if (ratingModal) {
+            return true
+        }
+        if (captainModal || scheduleBookingDetailModal) {
+            navigation.navigate('HomeScreen')
+            return true
+        }
+        // if (riderTypeModal || locOnMapModal) {
+        //     navigation.navigate('DestinationScreen')
         //     return true
         // }
+
         return false
     };
 
@@ -241,8 +262,6 @@ export const RideHome = ({ route, navigation }) => {
 
 
 
-
-
     useFocusEffect(
         React.useCallback(() => {
 
@@ -253,7 +272,7 @@ export const RideHome = ({ route, navigation }) => {
                 BackHandler.removeEventListener(
                     'hardwareBackPress', onBackPress
                 );
-        }, [feedbackModal, directCallModal, cancelRideModal, noDriverModal, connectedToDriverModal, scheduleModal, cashModal, promoModal, scheduleBookingDetailModal, bookingDetailModal])
+        }, [riderTypeModal, locOnMapModal, feedbackModal, directCallModal, cancelRideModal, noDriverModal, connectedToDriverModal, scheduleModal, cashModal, promoModal, scheduleBookingDetailModal, bookingDetailModal])
     );
 
 
@@ -285,6 +304,19 @@ export const RideHome = ({ route, navigation }) => {
         }
     };
 
+    const Star = ({ i }) => (
+        <TouchableOpacity activeOpacity={0.9} onPress={() => setStarI(i)}>
+            <Image source={require('../../../assets/home_main/star.png')}
+                style={{
+                    width: myHeight(3.2),
+                    height: myHeight(3.2),
+                    resizeMode: 'contain',
+                    tintColor: starI >= i ? myColors.star : myColors.offColor
+                }}
+            />
+        </TouchableOpacity>
+    )
+
     return (
         <>
             <SafeAreaView style={{ backgroundColor: myColors.primaryT }}></SafeAreaView>
@@ -307,7 +339,7 @@ export const RideHome = ({ route, navigation }) => {
                     />
                 </View>
                 {/* Back */}
-                {(!directCallModal && !noDriverModal && !connectedToDriverModal && !feedbackModal) &&
+                {(!ratingModal && !directCallModal && !connectedToDriverModal && !feedbackModal) &&
                     <View style={{ position: 'absolute' }}>
                         <Spacer paddingT={myHeight(0.7)} />
                         <TouchableOpacity style={{
@@ -329,7 +361,7 @@ export const RideHome = ({ route, navigation }) => {
             </SafeAreaView>
 
 
-            {/*Rider Type OR pickup location */}
+            {/*Rider Type */}
             {riderTypeModal &&
 
                 <Animated.View
@@ -360,26 +392,30 @@ export const RideHome = ({ route, navigation }) => {
                                     const s = event.nativeEvent.translationY
                                     if (s < -25) {
                                         if (!expandRiderModal) {
-                                            setExpandRiderModal(true)
                                             // LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
 
                                             LayoutAnimation.configureNext({
-                                                "create": { "property": "opacity", "type": "linear" },
-                                                "delete": { "property": "opacity", "type": "linear" },
-                                                "duration": 200,
-                                                "update": { "type": "linear" }
+                                                duration: 400,
+                                                create: {
+                                                    type: LayoutAnimation.Types.easeInEaseOut,
+                                                    property: LayoutAnimation.Properties.opacity,
+                                                },
+                                                update: { type: LayoutAnimation.Types.easeInEaseOut },
                                             });
+                                            setExpandRiderModal(true)
                                         }
                                     }
                                     else if (s > 25) {
                                         if (expandRiderModal) {
-                                            setExpandRiderModal(false)
                                             LayoutAnimation.configureNext({
-                                                "create": { "property": "opacity", "type": "linear" },
-                                                "delete": { "property": "opacity", "type": "linear" },
-                                                "duration": 200,
-                                                "update": { "type": "linear" }
+                                                duration: 400,
+                                                create: {
+                                                    type: LayoutAnimation.Types.easeInEaseOut,
+                                                    property: LayoutAnimation.Properties.opacity,
+                                                },
+                                                update: { type: LayoutAnimation.Types.easeInEaseOut },
                                             });
+                                            setExpandRiderModal(false)
                                             if (typeIndex > 2) {
                                                 setTypeIndex(0)
                                             }
@@ -851,120 +887,103 @@ export const RideHome = ({ route, navigation }) => {
             {/* No Driver Modal */}
             {
                 noDriverModal &&
-                <View
-                    style={{
 
-                        backgroundColor: '#00000030',
-                        height: myHeight(100), width: myWidth(100),
+                <Animated.View
+                    entering={SlideInDown.duration(300)}
+                    style={{
+                        alignItems: 'center',
+                        backgroundColor: myColors.background,
+                        width: "100%", position: 'absolute', bottom: 0,
                         borderTopStartRadius: myWidth(4),
                         borderTopEndRadius: myWidth(4),
-                        position: 'absolute',
-                    }}
+                    }}>
 
-                >
-                    <TouchableOpacity activeOpacity={1}
+                    <Spacer paddingT={myHeight(1.5)} />
+
+                    <Text style={[
+                        styles.textCommon,
+                        {
+                            fontSize: myFontSize.body2,
+                            fontFamily: myFonts.heading,
+                            alignSelf: 'center'
+                        }
+                    ]}>Select vehicle type</Text>
+
+                    <Spacer paddingT={myHeight(1.2)} />
+                    {/* DIVIDER */}
+                    <View style={{
+                        borderTopWidth: myHeight(0.08),
+                        borderColor: myColors.text, width: '100%',
+                    }} />
+
+                    <Spacer paddingT={myHeight(0.5)} />
+                    <Text style={[
+                        styles.textCommon,
+                        {
+                            fontSize: myFontSize.xxSmall,
+                            fontFamily: myFonts.body,
+                            alignSelf: 'center'
+                        }
+                    ]}>No Driver Available</Text>
+
+                    <Spacer paddingT={myHeight(1.5)} />
+
+                    {/* Car Image */}
+                    <View style={{
+                        paddingVertical: myHeight(0.7),
+                        borderRadius: myHeight(4),
+                        paddingHorizontal: myHeight(1),
+                        borderWidth: myHeight(0.08),
+                        borderColor: myColors.text2,
+                        backgroundColor: myColors.primaryL4
+                    }}>
+                        <Image source={riderType[typeIndex].image}
+                            style={{
+                                width: myHeight(4.7),
+                                height: myHeight(4.7) * 1.12,
+                                resizeMode: 'contain',
+                            }}
+                        />
+                    </View>
+
+                    <Spacer paddingT={myHeight(1.5)} />
+                    {/* cat name */}
+                    <Text style={[
+                        styles.textCommon,
+                        {
+                            fontSize: myFontSize.body,
+                            fontFamily: myFonts.body,
+                            alignSelf: 'center',
+                            color: myColors.primaryT
+                        }
+                    ]}>{riderType[typeIndex].name}</Text>
+
+                    <Spacer paddingT={myHeight(1.1)} />
+                    {/* Proceed Button */}
+                    <TouchableOpacity activeOpacity={0.8} onPress={onProceed}
                         style={{
-                            flex: 1, paddingHorizontal: myWidth(4.5),
-                        }}
-                        onPress={() => setNoDriverModal(false)}
-                    >
-                    </TouchableOpacity>
-                    <Animated.View
-                        entering={SlideInDown.duration(300)}
-                        style={{
+                            backgroundColor: myColors.primaryT,
+                            borderRadius: myHeight(0.5),
+                            paddingVertical: myHeight(1.2),
+                            width: '91%', justifyContent: 'center',
                             alignItems: 'center',
-                            backgroundColor: myColors.background,
-                            width: "100%", position: 'absolute', bottom: 0,
-                            borderTopStartRadius: myWidth(4),
-                            borderTopEndRadius: myWidth(4),
                         }}>
 
-                        <Spacer paddingT={myHeight(1.5)} />
-
-                        <Text style={[
-                            styles.textCommon,
-                            {
-                                fontSize: myFontSize.body2,
-                                fontFamily: myFonts.heading,
-                                alignSelf: 'center'
-                            }
-                        ]}>Select vehicle type</Text>
-
-                        <Spacer paddingT={myHeight(1.2)} />
-                        {/* DIVIDER */}
-                        <View style={{
-                            borderTopWidth: myHeight(0.08),
-                            borderColor: myColors.text, width: '100%',
-                        }} />
-
-                        <Spacer paddingT={myHeight(0.5)} />
-                        <Text style={[
-                            styles.textCommon,
-                            {
-                                fontSize: myFontSize.xxSmall,
-                                fontFamily: myFonts.body,
-                                alignSelf: 'center'
-                            }
-                        ]}>No Driver Available</Text>
-
-                        <Spacer paddingT={myHeight(1.5)} />
-
-                        {/* Car Image */}
-                        <View style={{
-                            paddingVertical: myHeight(0.7),
-                            borderRadius: myHeight(4),
-                            paddingHorizontal: myHeight(1),
-                            borderWidth: myHeight(0.08),
-                            borderColor: myColors.text2,
-                            backgroundColor: myColors.primaryL4
-                        }}>
-                            <Image source={riderType[typeIndex].image}
-                                style={{
-                                    width: myHeight(4.7),
-                                    height: myHeight(4.7) * 1.12,
-                                    resizeMode: 'contain',
-                                }}
-                            />
-                        </View>
-
-                        <Spacer paddingT={myHeight(1.5)} />
-                        {/* cat name */}
                         <Text style={[
                             styles.textCommon,
                             {
                                 fontSize: myFontSize.body,
-                                fontFamily: myFonts.body,
-                                alignSelf: 'center',
-                                color: myColors.primaryT
+                                fontFamily: myFonts.heading,
+                                color: myColors.background,
                             }
-                        ]}>{riderType[typeIndex].name}</Text>
+                        ]}>Proceed</Text>
 
-                        <Spacer paddingT={myHeight(1.1)} />
-                        {/* Proceed Button */}
-                        <TouchableOpacity activeOpacity={0.8} onPress={onProceed}
-                            style={{
-                                backgroundColor: myColors.primaryT,
-                                borderRadius: myHeight(0.5),
-                                paddingVertical: myHeight(1.2),
-                                width: '91%', justifyContent: 'center',
-                                alignItems: 'center',
-                            }}>
+                    </TouchableOpacity>
+                    <Spacer paddingT={myHeight(4)} />
 
-                            <Text style={[
-                                styles.textCommon,
-                                {
-                                    fontSize: myFontSize.body,
-                                    fontFamily: myFonts.heading,
-                                    color: myColors.background,
-                                }
-                            ]}>Proceed</Text>
+                </Animated.View>
 
-                        </TouchableOpacity>
-                        <Spacer paddingT={myHeight(4)} />
 
-                    </Animated.View>
-
-                </View>
             }
 
 
@@ -1058,7 +1077,7 @@ export const RideHome = ({ route, navigation }) => {
                                     fontSize: myFontSize.body2,
                                     fontFamily: myFonts.heading,
                                 }
-                            ]}>Set your pickup spot</Text>
+                            ]}>Details</Text>
                             {/* Select your */}
                             <Text style={[
                                 styles.textCommon,
@@ -1066,7 +1085,7 @@ export const RideHome = ({ route, navigation }) => {
                                     fontSize: myFontSize.xxSmall,
                                     fontFamily: myFonts.body,
                                 }
-                            ]}>Select your exact pickup point</Text>
+                            ]}>Your Selected Drop-off Location</Text>
 
 
 
@@ -1389,7 +1408,7 @@ export const RideHome = ({ route, navigation }) => {
             {
                 scheduleBookingDetailModal &&
                 <View style={{
-                    display: captainModal || connectedToDriverModal ? 'none' : 'flex',
+                    display: feedbackModal || captainModal || connectedToDriverModal ? 'none' : 'flex',
                     backgroundColor: 'transparent', height: '100%',
                     width: '100%', position: 'absolute', zIndex: 0
                 }}>
@@ -1463,7 +1482,7 @@ export const RideHome = ({ route, navigation }) => {
                                     fontSize: myFontSize.body2,
                                     fontFamily: myFonts.heading,
                                 }
-                            ]}>Set your pickup spot</Text>
+                            ]}>Details</Text>
                             {/* Select your */}
                             <Text style={[
                                 styles.textCommon,
@@ -1471,7 +1490,7 @@ export const RideHome = ({ route, navigation }) => {
                                     fontSize: myFontSize.xxSmall,
                                     fontFamily: myFonts.body,
                                 }
-                            ]}>Select your exact pickup point</Text>
+                            ]}>Your Selected Drop-off Location</Text>
 
 
 
@@ -2051,13 +2070,10 @@ export const RideHome = ({ route, navigation }) => {
 
                 <KeyboardAwareScrollView
                     bounces={false}
-                    extraScrollHeight={100}
-                    extraHeight={100}
                     contentContainerStyle={{
-                        height: myHeight(100), width: myWidth(100),
+                        height: '100%',
                         backgroundColor: '#00000030',
                     }}
-
                 >
 
                     <TouchableOpacity activeOpacity={1}
@@ -2153,7 +2169,6 @@ export const RideHome = ({ route, navigation }) => {
                         <Spacer paddingT={myHeight(4)} />
 
                     </Animated.View>
-
                 </KeyboardAwareScrollView>
 
             }
@@ -2361,7 +2376,7 @@ export const RideHome = ({ route, navigation }) => {
                     entering={SlideInDown.duration(500)}
                     exiting={SlideOutDown}
                     style={{
-                        display: feedbackModal ? 'none' : 'flex',
+                        display: ratingModal || feedbackModal ? 'none' : 'flex',
                         paddingHorizontal: myWidth(4.5),
                         borderTopStartRadius: myWidth(4),
                         borderTopEndRadius: myWidth(4),
@@ -2380,11 +2395,13 @@ export const RideHome = ({ route, navigation }) => {
                                 if (s < -25) {
                                     if (!captainModalExpand) {
                                         LayoutAnimation.configureNext({
-                                            "create": { "property": "opacity", "type": "linear" },
-                                            "delete": { "property": "opacity", "type": "linear" },
-                                            "duration": 300,
-                                            "update": { "type": "linear" }
-                                        })
+                                            duration: 400,
+                                            create: {
+                                                type: LayoutAnimation.Types.linear,
+                                                property: LayoutAnimation.Properties.opacity,
+                                            },
+                                            update: { type: LayoutAnimation.Types.linear },
+                                        });
                                         setCaptainModalExpand(true)
 
                                     }
@@ -2392,11 +2409,13 @@ export const RideHome = ({ route, navigation }) => {
                                 else if (s > 25) {
                                     if (captainModalExpand) {
                                         LayoutAnimation.configureNext({
-                                            "create": { "property": "opacity", "type": "linear" },
-                                            "delete": { "property": "opacity", "type": "linear" },
-                                            "duration": 300,
-                                            "update": { "type": "linear" }
-                                        })
+                                            duration: 400,
+                                            create: {
+                                                type: LayoutAnimation.Types.linear,
+                                                property: LayoutAnimation.Properties.opacity,
+                                            },
+                                            update: { type: LayoutAnimation.Types.linear },
+                                        });
                                         setCaptainModalExpand(false)
 
                                     }
@@ -3033,6 +3052,183 @@ export const RideHome = ({ route, navigation }) => {
 
                     </Animated.View>
 
+                </View>
+            }
+
+            {/* Rating Modal*/}
+            {
+                ratingModal &&
+                <View
+                    style={{
+
+                        backgroundColor: '#00000010',
+                        height: myHeight(100), width: myWidth(100),
+                        position: 'absolute', zIndex: 8,
+                        justifyContent: 'flex-end',
+                    }}
+
+                >
+                    <Animated.View
+                        entering={FadeIn.duration(500)}
+                        style={{
+                            flex: 1, paddingHorizontal: myWidth(4.5),
+                            justifyContent: 'flex-end',
+                        }}
+                        onPress={() => null}
+                    >
+                        {/* Rating Card */}
+                        <View style={{
+                            width: '100%', backgroundColor: myColors.background,
+                            borderRadius: myWidth(3.2),
+
+                        }}>
+                            {/* Image & Name */}
+                            <View style={{ alignItems: 'center', marginTop: -myHeight(6) }}>
+                                <View style={{ padding: myHeight(0.6), borderRadius: myHeight(12), backgroundColor: myColors.background }}>
+
+                                    <Image source={require('../../../assets/home_main/driver.png')}
+                                        style={{
+                                            width: myHeight(12),
+                                            height: myHeight(12),
+                                            resizeMode: 'contain',
+                                            borderRadius: myHeight(12),
+
+                                        }}
+                                    />
+                                </View>
+                                <Spacer paddingT={myHeight(1)} />
+
+                                <Text style={[
+                                    styles.textCommon,
+                                    {
+                                        fontSize: myFontSize.body,
+                                        fontFamily: myFonts.body,
+                                        textAlign: 'center'
+                                    }
+                                ]}>John</Text>
+                            </View>
+
+                            <View style={{ paddingHorizontal: myWidth(14) }}>
+                                <Spacer paddingT={myHeight(2)} />
+
+                                <Text style={[
+                                    styles.textCommon,
+                                    {
+                                        fontSize: myFontSize.xBody,
+                                        fontFamily: myFonts.bodyBold,
+                                        textAlign: 'center'
+                                    }
+                                ]}>How was your this ride with John Doe?</Text>
+                                <Spacer paddingT={myHeight(1.5)} />
+
+                                {/* Rating */}
+                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', alignSelf: 'center' }}>
+                                    <TouchableOpacity activeOpacity={0.9} style={{ paddingHorizontal: myWidth(2.5) }} onPress={() => setStarI(0)}>
+                                        <Image source={require('../../../assets/home_main/star.png')}
+                                            style={{
+                                                width: myHeight(3.2),
+                                                height: myHeight(3.2),
+                                                resizeMode: 'contain',
+                                                tintColor: starI >= 0 ? myColors.star : myColors.offColor
+                                            }}
+                                        />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity activeOpacity={0.9} style={{ paddingHorizontal: myWidth(2.5) }} onPress={() => setStarI(1)}>
+                                        <Image source={require('../../../assets/home_main/star.png')}
+                                            style={{
+                                                width: myHeight(3.2),
+                                                height: myHeight(3.2),
+                                                resizeMode: 'contain',
+                                                tintColor: starI >= 1 ? myColors.star : myColors.offColor
+                                            }}
+                                        />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity activeOpacity={0.9} style={{ paddingHorizontal: myWidth(2.5) }} onPress={() => setStarI(2)}>
+                                        <Image source={require('../../../assets/home_main/star.png')}
+                                            style={{
+                                                width: myHeight(3.2),
+                                                height: myHeight(3.2),
+                                                resizeMode: 'contain',
+                                                tintColor: starI >= 2 ? myColors.star : myColors.offColor
+                                            }}
+                                        />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity activeOpacity={0.9} style={{ paddingHorizontal: myWidth(2.5) }} onPress={() => setStarI(3)}>
+                                        <Image source={require('../../../assets/home_main/star.png')}
+                                            style={{
+                                                width: myHeight(3.2),
+                                                height: myHeight(3.2),
+                                                resizeMode: 'contain',
+                                                tintColor: starI >= 3 ? myColors.star : myColors.offColor
+                                            }}
+                                        />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity activeOpacity={0.9} style={{ paddingHorizontal: myWidth(2.5) }} onPress={() => setStarI(4)}>
+                                        <Image source={require('../../../assets/home_main/star.png')}
+                                            style={{
+                                                width: myHeight(3.2),
+                                                height: myHeight(3.2),
+                                                resizeMode: 'contain',
+                                                tintColor: starI >= 4 ? myColors.star : myColors.offColor
+                                            }}
+                                        />
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                            <Spacer paddingT={myHeight(2.6)} />
+
+                            {/* DIVIDER */}
+                            <View style={{
+                                borderTopWidth: myHeight(0.1),
+                                borderColor: myColors.divider, width: '100%',
+                            }} />
+
+                            <Spacer paddingT={myHeight(1)} />
+                            <View style={{ paddingHorizontal: myWidth(4) }}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <Text style={[
+                                        styles.textCommon,
+                                        {
+                                            fontSize: myFontSize.xBody,
+                                            fontFamily: myFonts.bodyBold,
+                                        }
+                                    ]}>Cash Payable</Text>
+                                    <Text style={[
+                                        styles.textCommon,
+                                        {
+                                            fontSize: myFontSize.xBody,
+                                            fontFamily: myFonts.bodyBold,
+                                        }
+                                    ]}>$180</Text>
+                                </View>
+                                <Spacer paddingT={myHeight(3)} />
+
+                                {/* Done */}
+                                <TouchableOpacity activeOpacity={0.9} onPress={onDoneRating}
+                                    style={{
+                                        backgroundColor: myColors.primaryT,
+                                        borderRadius: myHeight(1.5),
+                                        paddingVertical: myHeight(1.4),
+                                        width: '100%', justifyContent: 'center',
+                                        alignItems: 'center', alignSelf: 'center'
+                                    }}>
+
+                                    <Text style={[
+                                        styles.textCommon,
+                                        {
+                                            fontSize: myFontSize.xBody,
+                                            fontFamily: myFonts.heading,
+                                            color: myColors.background,
+                                        }
+                                    ]}>Done</Text>
+
+                                </TouchableOpacity>
+                            </View>
+                            <Spacer paddingT={myHeight(3)} />
+
+                        </View>
+                    </Animated.View>
+                    <Spacer paddingT={myHeight(3)} />
                 </View>
             }
         </>

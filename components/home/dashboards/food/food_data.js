@@ -9,7 +9,8 @@ export const FoodOpenNow = [
         totalRating: '200+',
         delivery: 'Free Delivery',
         deliveryTime: '10 - 15 minutes',
-        status: 'open'
+        status: 'open',
+        deal: '20% OFF Max Value Deals'
     },
     {
         name: 'Pizza Hut',
@@ -21,7 +22,8 @@ export const FoodOpenNow = [
         totalRating: '200+',
         delivery: 'Free Delivery',
         deliveryTime: '10 - 15 minutes',
-        status: 'open'
+        status: 'open',
+        deal: 'Summer Deals'
     },
     {
         name: 'Burger O’Clock',
@@ -35,4 +37,45 @@ export const FoodOpenNow = [
         deliveryTime: '10 - 15 minutes',
         status: 'open'
     },
+]
+
+export const mainCourse = [
+    {
+        name: 'Classic Sandwich',
+        image: require('../../../assets/home_main/daily_special/dailyS2.jpg'),
+        price: '$8.25',
+        cals: '640',
+        description: 'Certified Angus Beef, American cheese, lettuce, tomatoes, red onions, pickles, sauce, and toasted bun.'
+    },
+    {
+        name: 'Classic Sandwich',
+        image: require('../../../assets/home_main/daily_special/dailyS2.jpg'),
+        price: '$8.25',
+        cals: '640',
+        description: 'Certified Angus Beef, American cheese, lettuce, tomatoes, red onions, pickles, sauce, and toasted bun.'
+    },
+    {
+        name: 'Classic Sandwich',
+        image: require('../../../assets/home_main/daily_special/dailyS2.jpg'),
+        price: '$8.25',
+        cals: '640',
+        description: 'Certified Angus Beef, American cheese, lettuce, tomatoes, red onions, pickles, sauce, and toasted bun.'
+    },
+    {
+        name: 'Classic Sandwich',
+        image: require('../../../assets/home_main/daily_special/dailyS2.jpg'),
+        price: '$8.25',
+        cals: '640',
+        description: 'Certified Angus Beef, American cheese, lettuce, tomatoes, red onions, pickles, sauce, and toasted bun.'
+    },
+    {
+        name: 'Classic Sandwich',
+        image: require('../../../assets/home_main/daily_special/dailyS2.jpg'),
+        price: '$8.25',
+        cals: '640',
+        description: 'Certified Angus Beef, American cheese, lettuce, tomatoes, red onions, pickles, sauce, and toasted bun.'
+    },
+]
+export const ResCategories = [
+    'Popular', 'Family Deals', 'Burgers', 'Burgers', 'Specials', 'All'
 ]

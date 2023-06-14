@@ -18,8 +18,12 @@ export const RestaurantInfo = ({ item }) => {
     return (
         <View style={styles.container}>
             {/* Image & Others*/}
-            <View>
+
+            <View style={{ borderRadius: myWidth(2.5), }}>
                 <Image style={styles.imageRes} source={item.image} />
+
+                {/* Image Effect */}
+                <View style={styles.containerImageEffect} />
                 {/* Icon */}
                 <View style={styles.containerIcon}>
                     <Image style={styles.imageIcon} source={item.icon} />
@@ -40,6 +44,18 @@ export const RestaurantInfo = ({ item }) => {
                 <TouchableOpacity activeOpacity={0.7} style={styles.containerHeart}>
                     <Image style={styles.imageHeart} source={require('../../../../assets/home_main/dashboards/heart.png')} />
                 </TouchableOpacity>
+
+                {
+                    item.deal &&
+                    <View style={{
+                        position: 'absolute', zIndex: 3, top: myHeight(5),
+                        backgroundColor: myColors.primaryT, paddingHorizontal: myWidth(3),
+                        borderTopEndRadius: myWidth(1.5), paddingVertical: myHeight(0.3),
+                        borderBottomEndRadius: myWidth(1.5)
+                    }}>
+                        <Text style={styles.textDeal}>{item.deal}</Text>
+                    </View>
+                }
             </View>
             <Spacer paddingT={myHeight(1)} />
 
@@ -55,7 +71,7 @@ export const RestaurantInfo = ({ item }) => {
                 {/* Delivery */}
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Image style={styles.imageDelivery} source={require('../../../../assets/home_main/dashboards/foods/bike.png')} />
-                    <Spacer paddingEnd={myWidth(1.5)} />
+                    <Spacer paddingEnd={myWidth(1)} />
                     <Text numberOfLines={1} style={styles.textDelivery_Time}>{item.delivery}</Text>
                 </View>
                 <Spacer paddingEnd={myWidth(1)} />
@@ -79,6 +95,8 @@ const styles = StyleSheet.create({
         backgroundColor: myColors.background,
         marginEnd: myWidth(4.6),
         overflow: 'hidden',
+        borderRadius: myWidth(2.5),
+
     },
     containerIcon: {
         position: 'absolute',
@@ -116,6 +134,11 @@ const styles = StyleSheet.create({
         padding: myHeight(0.65),
         borderRadius: myWidth(5),
     },
+    containerImageEffect: {
+        height: myHeight(13), top: 0,
+        width: myWidth(52), zIndex: 0, position: 'absolute',
+        backgroundColor: '#00000020'
+    },
 
     //Text
     textName: {
@@ -136,7 +159,7 @@ const styles = StyleSheet.create({
     },
     textDelivery_Time: {
         // flex: 1,
-        fontSize: myFontSize.small3,
+        fontSize: myFontSize.small1,
         fontFamily: myFonts.bodyBold,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
@@ -152,7 +175,14 @@ const styles = StyleSheet.create({
         includeFontPadding: false,
         padding: 0,
     },
-
+    textDeal: {
+        fontSize: myFontSize.xSmall,
+        fontFamily: myFonts.bodyBold,
+        color: myColors.background,
+        letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
+        padding: 0,
+    },
 
     //Images
     imageRes: {

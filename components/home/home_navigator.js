@@ -1,7 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator, } from "@react-navigation/native-stack";
 import { HomeScreen } from "./home_screen";
-import { RestaurantDetail } from "./restaurant_detail_screen";
+import { RestaurantDetail } from "./dashboards/food/restaurant_detail_screen";
 import { FilterScreen } from "./dashboards/food/filter_screen";
 import { FoodNavigator } from "./dashboards/food/food_navigator";
 import { RideNavigator } from "./dashboards/ride/ride_navigator";

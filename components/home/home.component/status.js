@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, Image, View, Text, FlatList, Modal, UIManager, LayoutAnimation } from 'react-native'
+import React, { useEffect, useRef, useState } from 'react';
+import { Animated, ScrollView, NativeModules, StyleSheet, TouchableOpacity, Image, View, Text, FlatList, Modal, LayoutAnimation } from 'react-native'
 import { MyError, Spacer, ios, myHeight, myWidth } from '../../common';
 import { myFontSize, myFonts, myLetSpacing } from '../../../ultils/myFonts';
 import { GestureHandlerRootView, PanGestureHandler } from 'react-native-gesture-handler';
 import { myColors } from '../../../ultils/myColors';
-import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
+// import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
-UIManager.setLayoutAnimationEnabledExperimental &&
-    UIManager.setLayoutAnimationEnabledExperimental(true);
+const { UIManager } = NativeModules;
 
+
+if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true)
+}
 export const Status = ({ notifications }) => {
     const [notiLen, setNotiLen] = useState(notifications.length.toString())
     const [notificationVisible, setNotificationVisible] = useState(notifications.length != 0 ? [notifications[0]] : null)
@@ -54,126 +57,127 @@ export const Status = ({ notifications }) => {
         }
     }, [notifications])
 
-
-    const animatedStyle = useAnimatedStyle(() => {
-        return {
-            opacity: withSpring(1),
-            transform: [{ scale: withTiming(1, { duration: 1000 }) }],
-        };
-    });
-
     return (
         <Animated.View style={[styles.containerNotification]}>
+            <View>
 
-            <GestureHandlerRootView onLayout={(event) => {
-                const { height } = event.nativeEvent.layout;
-                // console.log(notificationExpand, height)
-            }} style={{ flex: 1, alignItems: 'center' }} >
-                {notifications.length > 1 &&
-                    <PanGestureHandler
-                        onGestureEvent={(event) => {
-                            const s = event.nativeEvent.translationY
-                            if (s < -25) {
-                                if (!notificationExpand) {
-                                    console.log('ok')
-                                    // LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
-                                    // LayoutAnimation.configureNext({
-                                    //     "create": { "property": "opacity", "type": "linear" },
-                                    //     "delete": { "property": "opacity", "type": "linear" },
-                                    //     "duration": 300,
-                                    //     "update": { "type": "linear" }
-                                    // });
-                                    LayoutAnimation.configureNext({
-                                        duration: 400,
-                                        create: {
-                                            type: LayoutAnimation.Types.easeInEaseOut,
-                                            property: LayoutAnimation.Properties.opacity,
-                                        },
-                                        update: { type: LayoutAnimation.Types.easeInEaseOut },
-                                    });
-                                    setNotificationExpand(true)
+                <GestureHandlerRootView onLayout={(event) => {
+                }} style={{ flex: 1, alignItems: 'center' }} >
+                    {notifications.length > 1 &&
+                        <PanGestureHandler
+                            onGestureEvent={(event) => {
+                                const s = event.nativeEvent.translationY
+                                if (s < -25) {
+                                    if (!notificationExpand) {
+                                        // LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
+                                        // LayoutAnimation.configureNext({
+                                        //     "create": { "property": "opacity", "type": "linear" },
+                                        //     "delete": { "property": "opacity", "type": "linear" },
+                                        //     "duration": 300,
+                                        //     "update": { "type": "linear" }
+                                        // });
+                                        setNotificationExpand(true)
+                                        LayoutAnimation.configureNext({
+                                            duration: 400,
+                                            create: {
+                                                type: LayoutAnimation.Types.linear,
+                                                property: LayoutAnimation.Properties.opacity,
+                                            },
+                                            update: { type: LayoutAnimation.Types.linear },
+                                        });
+                                    }
                                 }
-                            }
-                            else if (s > 25) {
-                                if (notificationExpand) {
-                                    // LayoutAnimation.configureNext({
-                                    //     "create": { "property": "opacity", "type": "linear" },
-                                    //     "delete": { "property": "opacity", "type": "linear" },
-                                    //     "duration": 300,
-                                    //     "update": { "type": "linear" }
-                                    // });
-                                    setNotificationExpand(false)
+                                else if (s > 25) {
+                                    if (notificationExpand) {
+                                        // LayoutAnimation.configureNext({
+                                        //     "create": { "property": "opacity", "type": "linear" },
+                                        //     "delete": { "property": "opacity", "type": "linear" },
+                                        //     "duration": 300,
+                                        //     "update": { "type": "linear" }
+                                        // });
+                                        setNotificationExpand(false)
+                                        LayoutAnimation.configureNext({
+                                            duration: 200,
+                                            create: {
+                                                type: LayoutAnimation.Types.linear,
+                                                property: LayoutAnimation.Properties.opacity,
+                                            },
+                                            update: { type: LayoutAnimation.Types.linear },
+                                        });
+                                    }
+
                                 }
+                            }}
+                        >
+                            <Animated.View
+                                style={{
+                                    alignItems: 'center', marginBottom: myHeight(1),
+                                    width: '100%'
+                                }}>
+                                <View>
+                                    <Spacer paddingT={myHeight(0.5)} />
+                                    <Image style={[styles.imageUp, notificationExpand && { transform: [{ rotate: '180deg' }] }]}
+                                        source={require('../../assets/home_main/up.png')} />
+                                    <Spacer paddingT={myHeight(0.5)} />
+                                </View>
+                                <Text style={styles.textNotiSwipe}>{notificationExpand ? 'Swipe down to see less requests' : 'Swipe up to see more requests'}</Text>
+                                <View style={[styles.containerNotiCount, { right: -(myWidth(9.5) + (myWidth(1) * notiLen.length)), }]}>
+                                    <Text style={styles.textNotiCount}>{notifications.length}</Text>
+                                </View>
+                            </Animated.View>
+                        </PanGestureHandler>
+                    }
+                    <ScrollView bounces={false}
 
-                            }
-                        }}
-                    >
-                        <Animated.View
-                            style={{
-                                alignItems: 'center', marginBottom: myHeight(1),
-                                width: '100%'
-                            }}>
-                            <View>
-                                <Spacer paddingT={myHeight(0.5)} />
-                                <Image style={[styles.imageUp, notificationExpand && { transform: [{ rotate: '180deg' }] }]}
-                                    source={require('../../assets/home_main/up.png')} />
-                                <Spacer paddingT={myHeight(0.5)} />
-                            </View>
-                            <Text style={styles.textNotiSwipe}>{notificationExpand ? 'Swipe down to see less requests' : 'Swipe up to see more requests'}</Text>
-                            <View style={[styles.containerNotiCount, { right: -(myWidth(9.5) + (myWidth(1) * notiLen.length)), }]}>
-                                <Text style={styles.textNotiCount}>{notifications.length}</Text>
-                            </View>
-                        </Animated.View>
-                    </PanGestureHandler>
-                }
-                <ScrollView bounces={false} contentContainerStyle={{ flexGrow: 1 }}>
-                    <Animated.View style={animatedStyle}>
-                        {notificationVisible &&
-                            notificationVisible.map((item, i) =>
+                        contentContainerStyle={{ flexGrow: 1 }}>
+                        <Animated.View>
+                            {notificationVisible &&
+                                notificationVisible.map((item, i) =>
 
-                                <TouchableOpacity
-                                    // onLayout={(event) => console.log('item', event.nativeEvent.layout.height)}
-                                    activeOpacity={notificationExpand ? 0.8 : 1}
-                                    onPress={() => {
-                                        if (notificationExpand) {
-                                            // LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
-                                            LayoutAnimation.configureNext({
-                                                "create": { "property": "opacity", "type": "linear" },
-                                                "delete": { "property": "opacity", "type": "linear" },
-                                                "duration": 300,
-                                                "update": { "type": "linear" }
-                                            });
-                                            onNotificationsFocus(item.orderID)
+                                    <TouchableOpacity
+                                        // onLayout={(event) => console.log('item', event.nativeEvent.layout.height)}
+                                        activeOpacity={notificationExpand ? 0.8 : 1}
+                                        onPress={() => {
+                                            if (notificationExpand) {
+                                                // LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
+                                                LayoutAnimation.configureNext({
+                                                    "create": { "property": "opacity", "type": "linear" },
+                                                    "delete": { "property": "opacity", "type": "linear" },
+                                                    "duration": 300,
+                                                    "update": { "type": "linear" }
+                                                });
+                                                onNotificationsFocus(item.orderID)
+                                            }
                                         }
-                                    }
-                                    }
-                                    key={i}
-                                    style={[styles.containerNotiItem, notificationExpand && i != 0 && { borderTopWidth: myHeight(0.085) }]}>
-                                    <View style={{ flex: 1 }}>
-                                        <View style={{ flexDirection: 'row' }}>
-                                            <Text style={[styles.textNotiItem, { fontFamily: myFonts.heading }]}>Order ID: </Text>
-                                            <Text style={[styles.textNotiItem, { flex: 1 }]} numberOfLines={1} >{item.orderID}</Text>
+                                        }
+                                        key={i}
+                                        style={[styles.containerNotiItem, notificationExpand && i != 0 && { borderTopWidth: myHeight(0.085) }]}>
+                                        <View style={{ flex: 1 }}>
+                                            <View style={{ flexDirection: 'row' }}>
+                                                <Text style={[styles.textNotiItem, { fontFamily: myFonts.heading }]}>Order ID: </Text>
+                                                <Text style={[styles.textNotiItem, { flex: 1 }]} numberOfLines={1} >{item.orderID}</Text>
+                                            </View>
+                                            <View style={{ flexDirection: 'row' }}>
+                                                <Text style={[styles.textNotiItem, { fontFamily: myFonts.heading }]}>Estimated Time: </Text>
+                                                <Text style={[styles.textNotiItem, { flex: 1 }]} numberOfLines={1} >{item.estimateTime}</Text>
+                                            </View>
+                                            <View style={{ flexDirection: 'row' }}>
+                                                <Text style={[styles.textNotiItem, { fontFamily: myFonts.heading }]}>Status: </Text>
+                                                <Text style={[styles.textNotiItem, { flex: 1 }]} numberOfLines={1} >{item.status}</Text>
+                                            </View>
                                         </View>
-                                        <View style={{ flexDirection: 'row' }}>
-                                            <Text style={[styles.textNotiItem, { fontFamily: myFonts.heading }]}>Estimated Time: </Text>
-                                            <Text style={[styles.textNotiItem, { flex: 1 }]} numberOfLines={1} >{item.estimateTime}</Text>
-                                        </View>
-                                        <View style={{ flexDirection: 'row' }}>
-                                            <Text style={[styles.textNotiItem, { fontFamily: myFonts.heading }]}>Status: </Text>
-                                            <Text style={[styles.textNotiItem, { flex: 1 }]} numberOfLines={1} >{item.status}</Text>
-                                        </View>
-                                    </View>
-                                    <TouchableOpacity activeOpacity={0.6} onPress={() => null}>
-                                        <Spacer paddingT={myHeight(2.15)} />
-                                        <Image style={[styles.imageGo]} source={require('../../assets/home_main/go.png')} />
-                                        <Spacer paddingT={myHeight(2.15)} />
+                                        <TouchableOpacity activeOpacity={0.6} onPress={() => null}>
+                                            <Spacer paddingT={myHeight(2.15)} />
+                                            <Image style={[styles.imageGo]} source={require('../../assets/home_main/go.png')} />
+                                            <Spacer paddingT={myHeight(2.15)} />
+                                        </TouchableOpacity>
                                     </TouchableOpacity>
-                                </TouchableOpacity>
-                            )
-                        }
-                    </Animated.View>
-                </ScrollView>
-            </GestureHandlerRootView>
+                                )
+                            }
+                        </Animated.View>
+                    </ScrollView>
+                </GestureHandlerRootView>
+            </View>
         </Animated.View>
     )
 }

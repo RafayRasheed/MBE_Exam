@@ -107,7 +107,6 @@ export const HomeScreen = ({ navigation }) => {
 
 
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.container}>
-
                 <Spacer paddingT={myHeight(3.4)} />
                 {/* Morning & Loca */}
                 <View style={{ paddingHorizontal: myWidth(6.75) }}>

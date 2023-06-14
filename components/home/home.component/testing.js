@@ -1,56 +1,41 @@
-import React, { useRef, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, UIManager, findNodeHandle } from 'react-native';
-import Animated, { useSharedValue, useAnimatedStyle, runOnJS, withTiming } from 'react-native-reanimated';
+import React, { useRef, useEffect, useState } from 'react';
+import { Animated, ScrollView, Text, View } from 'react-native';
 
-export const MyComponent = () => {
-    const contentRef = useRef(null);
-    const myheight = useSharedValue(0);
-    const [s, setS] = useState(false)
+export const YourComponent = () => {
+    const [contentHeight, setContentHeight] = useState(0);
+    const [containerHeight, setContainerHeight] = useState(0);
+    const animatedHeight = new Animated.Value(containerHeight);
 
-    const handleContentChange = () => {
-        setS(!s)
-        runOnJS(measureContentHeight)();
+    useEffect(() => {
+        Animated.timing(animatedHeight, {
+            toValue: contentHeight,
+            duration: 300,
+            useNativeDriver: false,
+        }).start();
+    }, [contentHeight]);
+
+    const handleContentSizeChange = (width, height) => {
+        setContentHeight(height);
     };
 
-    const measureContentHeight = () => {
-        UIManager.measure(findNodeHandle(contentRef.current), (x, y, width, height) => {
-            myheight.value = height;
-        });
+    const handleContainerLayout = (event) => {
+        setContainerHeight(event.nativeEvent.layout.height);
     };
 
-
-    const animatedStyle = useAnimatedStyle(() => {
-        return {
-            height: withTiming(myheight.value, { duration: 500 })
-        };
-    });
 
     return (
-        <View style={styles.container}>
-            <TouchableOpacity onPress={handleContentChange}>
-                <Text style={styles.button}>Change Content</Text>
-            </TouchableOpacity>
-            <View ref={contentRef}>
-                <Text style={{ paddingVertical: s ? 100 : 0 }}>On jdfnb dinbi </Text>
+        <Animated.View style={{ height: animatedHeight }}>
+            <View onLayout={handleContainerLayout}>
+                <ScrollView
+                    onContentSizeChange={handleContentSizeChange}
+                    style={{ flex: 1 }}
+                >
+                    {/* Your dynamic content */}
+                    <Text style={{}}>OK</Text>
+
+                </ScrollView>
             </View>
-            <Animated.View style={[animatedStyle]} />
-        </View>
+        </Animated.View>
     );
 };
 
-
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    button: {
-        padding: 10,
-        backgroundColor: 'blue',
-        color: 'white',
-        marginBottom: 10,
-    },
-
-});

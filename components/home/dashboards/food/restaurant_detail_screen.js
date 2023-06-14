@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { myColors } from '../../ultils/myColors';
-import { Spacer, ios, myHeight, myWidth } from '../common';
-import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
-import { mainCourse } from './home_data';
+import { myColors } from '../../../../ultils/myColors';
+import { Spacer, ios, myHeight, myWidth } from '../../../common';
+import { myFontSize, myFonts, myLetSpacing } from '../../../../ultils/myFonts';
+import { ResCategories, mainCourse } from './food_data';
 export const RestaurantDetail = ({ route, navigation }) => {
+    const [i, setI] = useState(0)
     const { item } = route.params
     return (
         <View style={styles.container}>
@@ -14,18 +15,18 @@ export const RestaurantDetail = ({ route, navigation }) => {
                 <View style={{ paddingHorizontal: myWidth(4), flexDirection: 'row', justifyContent: 'space-between' }}>
                     {/* Arrow */}
                     <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.goBack()} style={styles.containerIcon}>
-                        <Image style={styles.imageDots} source={require('../assets/home_main/dashboards/back2.png')} />
+                        <Image style={styles.imageDots} source={require('../../../assets/home_main/dashboards/back2.png')} />
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'row' }}>
                         {/* Search */}
                         <TouchableOpacity activeOpacity={0.7} onPress={() => null} style={styles.containerIcon}>
-                            <Image style={styles.imageSearch} source={require('../assets/home_main/search2.png')} />
+                            <Image style={styles.imageSearch} source={require('../../../assets/home_main/search2.png')} />
                         </TouchableOpacity>
                         <Spacer paddingEnd={myWidth(4)} />
                         {/* Dots */}
                         <TouchableOpacity activeOpacity={0.7} onPress={() => null}
                             style={[styles.containerIcon]}>
-                            <Image style={styles.imageDots} source={require('../assets/home_main/dots.png')} />
+                            <Image style={styles.imageDots} source={require('../../../assets/home_main/dots.png')} />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -38,7 +39,7 @@ export const RestaurantDetail = ({ route, navigation }) => {
                     <Text numberOfLines={1} style={styles.textName}>{item.name}</Text>
                     <TouchableOpacity style={{ paddingStart: myWidth(1), paddingVertical: myHeight(0.5) }} activeOpacity={0.6}
                         onPress={() => null}>
-                        <Image style={styles.imageHeart} source={require('../assets/home_main/dashboards/heart_o.png')} />
+                        <Image style={styles.imageHeart} source={require('../../../assets/home_main/dashboards/heart_o.png')} />
                     </TouchableOpacity>
                 </View>
                 <Spacer paddingT={myHeight(0.4)} />
@@ -46,7 +47,7 @@ export const RestaurantDetail = ({ route, navigation }) => {
                 {/* Rating */}
                 <View style={{ flexDirection: "row", alignItems: 'center' }}>
                     {/* Star */}
-                    <Image style={styles.imageStar} source={require('../assets/home_main/star.png')} />
+                    <Image style={styles.imageStar} source={require('../../../assets/home_main/star.png')} />
                     <Spacer paddingEnd={myWidth(1)} />
                     {/* rating */}
                     <Text numberOfLines={1} style={styles.textRating}
@@ -55,25 +56,45 @@ export const RestaurantDetail = ({ route, navigation }) => {
                     <TouchableOpacity style={{ paddingStart: myWidth(1), paddingVertical: myHeight(0.5) }} activeOpacity={0.6}
                         onPress={() => null}>
                         <Image style={[styles.imageGo]}
-                            source={require('../assets/home_main/go.png')} />
+                            source={require('../../../assets/home_main/go.png')} />
                     </TouchableOpacity>
                 </View>
                 {/* Open until */}
                 <Text numberOfLines={1} style={styles.textOpen}>Open until 10:30pm - Tap for store information</Text>
 
                 <Spacer paddingT={myHeight(0.6)} />
-                <View style={styles.containerLine} />
-                <Spacer paddingT={myHeight(0.6)} />
-
-                <Text style={styles.textMain}>Main Courses</Text>
             </View>
+
+            <ScrollView contentContainerStyle={{ height: myHeight(6), flexGrow: 1, }} horizontal showsHorizontalScrollIndicator={false}>
+                {
+                    ResCategories.map((item, ind) =>
+                        <TouchableOpacity activeOpacity={0.7} key={ind} style={{ marginHorizontal: myWidth(5), }} onPress={() => setI(ind)}>
+                            <View style={{ paddingHorizontal: myWidth(1), paddingVertical: myHeight(0.5), }}>
+                                <Text style={[styles.textCommon, {
+                                    fontSize: myFontSize.body,
+                                    fontFamily: myFonts.bodyBold,
+                                    color: i == ind ? myColors.primaryT : myColors.text
+                                }]}>{item}</Text>
+                            </View>
+
+                            <View style={{
+                                borderRadius: myHeight(3),
+                                borderBottomWidth: myHeight(0.4), borderColor: i == ind ? myColors.primary : myColors.background
+                            }} />
+                        </TouchableOpacity>
+                    )
+                }
+            </ScrollView>
+            <View style={styles.containerLine} />
+            <Spacer paddingT={myHeight(0.6)} />
 
 
             {/* Main Courses */}
             <ScrollView contentContainerStyle={{ paddingHorizontal: myWidth(4.1) }} showsVerticalScrollIndicator={false}>
+                <Text style={styles.textMain}>Main Courses</Text>
+
                 {mainCourse.map((main, i) =>
                     <View key={i} >
-
                         <Spacer paddingT={myHeight(1.3)} />
                         <View style={{ flexDirection: 'row' }}>
                             <View style={{ flex: 1 }}>
@@ -95,7 +116,7 @@ export const RestaurantDetail = ({ route, navigation }) => {
                                 <TouchableOpacity style={styles.containerPlus} activeOpacity={0.8}
                                     onPress={() => null}>
                                     <Image style={[styles.imagePlus]}
-                                        source={require('../assets/home_main/plus.png')} />
+                                        source={require('../../../assets/home_main/plus.png')} />
                                 </TouchableOpacity>
                             </ImageBackground>
                         </View>
@@ -125,6 +146,7 @@ const styles = StyleSheet.create({
     containerLine: {
         borderTopWidth: myHeight(0.15),
         borderTopColor: myColors.divider,
+        marginTop: -myHeight(0.1),
     },
     containerPlus: {
         borderRadius: myHeight(2),
@@ -138,6 +160,13 @@ const styles = StyleSheet.create({
 
 
     //Text
+    textCommon: {
+        color: myColors.text,
+        letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
+        padding: 0,
+    },
+
     textName: {
         flex: 1,
         fontSize: myFontSize.medium0,
