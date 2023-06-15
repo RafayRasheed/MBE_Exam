@@ -65,7 +65,7 @@ export const RestaurantDetail = ({ route, navigation }) => {
                 <Spacer paddingT={myHeight(0.6)} />
             </View>
 
-            <ScrollView contentContainerStyle={{ height: myHeight(6), flexGrow: 1, }} horizontal showsHorizontalScrollIndicator={false}>
+            <ScrollView contentContainerStyle={{ flexGrow: 1, }} bounces={false} horizontal showsHorizontalScrollIndicator={false}>
                 {
                     ResCategories.map((item, ind) =>
                         <TouchableOpacity activeOpacity={0.7} key={ind} style={{ marginHorizontal: myWidth(5), }} onPress={() => setI(ind)}>
