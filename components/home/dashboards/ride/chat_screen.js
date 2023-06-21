@@ -3,8 +3,7 @@ import React, { useState } from 'react'
 import { myColors } from '../../../../ultils/myColors'
 import { Spacer, ios, myHeight, myWidth } from '../../../common'
 import { myFontSize, myFonts, myLetSpacing } from '../../../../ultils/myFonts'
-import { saveLocations } from './ride_data'
-import Animated, { BounceIn } from 'react-native-reanimated'
+
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const MyMessage = ({ message }) => {

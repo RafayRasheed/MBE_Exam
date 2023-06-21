@@ -131,7 +131,7 @@ export const HomeScreen = ({ navigation }) => {
                                         <Image style={styles.imageCate} source={cat.image} />
                                     </View>
                                     <Spacer paddingT={myHeight(1)} />
-                                    <Text style={styles.textCat}>{cat.name}</Text>
+                                    <Text numberOfLines={1} style={styles.textCat}>{cat.name}</Text>
                                 </View>
                             </View>
                         </TouchableOpacity>
@@ -414,7 +414,7 @@ const styles = StyleSheet.create({
         padding: 0,
     },
     textCat: {
-        fontSize: myFontSize.body2,
+        fontSize: myFontSize.body,
         fontFamily: myFonts.bodyBold,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,

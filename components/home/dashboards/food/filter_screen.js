@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
 
     //Text
     textCommon: {
-        fontSize: myFontSize.body,
+        fontSize: myFontSize.body2,
         fontFamily: myFonts.bodyBold,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
@@ -154,9 +154,9 @@ const styles = StyleSheet.create({
 
     //Image
     imageBack: {
-        width: myHeight(2.5),
-        height: myHeight(2.5),
-        tintColor: myColors.primaryT,
+        width: myHeight(2.6),
+        height: myHeight(2.6),
+        tintColor: myColors.text,
         resizeMode: 'contain',
     },
 

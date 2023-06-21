@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dimensions, View, Platform, StatusBar, Text } from 'react-native'
-import { MMKV } from 'react-native-mmkv';
+// import { MMKV } from 'react-native-mmkv';
 import { myColors } from '../ultils/myColors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { myFontSize, myFonts, myLetSpacing } from '../ultils/myFonts';
@@ -78,4 +78,4 @@ export const MyError = ({ message = '' }) => {
 }
 
 
-export const storage = new MMKV()
+// export const storage = new MMKV()

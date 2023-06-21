@@ -1,134 +1,371 @@
 import React, { useState } from 'react';
-import { Image, ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ImageBackground, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { myColors } from '../../../../ultils/myColors';
 import { Spacer, ios, myHeight, myWidth } from '../../../common';
 import { myFontSize, myFonts, myLetSpacing } from '../../../../ultils/myFonts';
 import { ResCategories, mainCourse } from './food_data';
+import Animated, { SlideInDown, SlideOutDown } from 'react-native-reanimated';
+import { ItemInfo } from './food_component/item_info';
+
 export const RestaurantDetail = ({ route, navigation }) => {
     const [i, setI] = useState(0)
+    const [dotModal, setDotModal] = useState(false)
     const { item } = route.params
+    const [searchModal, setSearchModal] = useState(false)
+    const [search, setSearch] = useState(null)
+
+    function onSearchStore() {
+
+    }
+    function onAddToFav() {
+
+    }
+    function onShare() {
+
+    }
+    function onViewStoreInfo() {
+
+    }
+    React.useLayoutEffect(() => {
+
+        if (dotModal) {
+            navigation.getParent().getParent().setOptions({ tabBarStyle: { display: 'none' } })
+
+        }
+        else {
+            navigation.getParent().getParent().setOptions({
+                tabBarStyle: {
+                    display: 'flex',
+                    backgroundColor: myColors.background,
+                    paddingHorizontal: myWidth(3.5),
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: myHeight(9.5),
+                    paddingBottom: ios ? myHeight(2.2) : myHeight(1.5),
+                    paddingTop: myHeight(2.5),
+                },
+            })
+        }
+
+    }, [dotModal])
+
+    //Component 
+
     return (
-        <View style={styles.container}>
-            <ImageBackground source={item.image} resizeMode={'cover'} style={styles.imageTop} >
-                <Spacer paddingT={ios ? myHeight(6) : myHeight(3)} />
-                {/* Top Arrow Search Dots */}
-                <View style={{ paddingHorizontal: myWidth(4), flexDirection: 'row', justifyContent: 'space-between' }}>
-                    {/* Arrow */}
-                    <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.goBack()} style={styles.containerIcon}>
-                        <Image style={styles.imageDots} source={require('../../../assets/home_main/dashboards/back2.png')} />
-                    </TouchableOpacity>
-                    <View style={{ flexDirection: 'row' }}>
-                        {/* Search */}
-                        <TouchableOpacity activeOpacity={0.7} onPress={() => null} style={styles.containerIcon}>
-                            <Image style={styles.imageSearch} source={require('../../../assets/home_main/search2.png')} />
-                        </TouchableOpacity>
-                        <Spacer paddingEnd={myWidth(4)} />
-                        {/* Dots */}
-                        <TouchableOpacity activeOpacity={0.7} onPress={() => null}
-                            style={[styles.containerIcon]}>
-                            <Image style={styles.imageDots} source={require('../../../assets/home_main/dots.png')} />
+        <>
+            <View style={styles.container}>
+
+                {/* Top */}
+                <ImageBackground imageStyle={{ borderRadius: 0 }} source={item.image} resizeMode={'cover'} style={styles.imageTop} >
+                    {/* Top Arrow Search Dots */}
+                    <SafeAreaView >
+                        <Spacer paddingT={ios ? myHeight(1) : myHeight(1) + StatusBar.currentHeight} />
+                        <View style={{ paddingHorizontal: myWidth(4), flexDirection: 'row', justifyContent: 'space-between' }}>
+
+                            {/* Arrow */}
+                            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.goBack()} style={styles.containerIcon}>
+                                <Image style={styles.imageDots} source={require('../../../assets/home_main/dashboards/back2.png')} />
+                            </TouchableOpacity>
+                            <View style={{ flexDirection: 'row' }}>
+                                {/* Search */}
+                                <TouchableOpacity activeOpacity={0.7} onPress={() => setSearchModal(true)} style={styles.containerIcon}>
+                                    <Image style={styles.imageSearch} source={require('../../../assets/home_main/search2.png')} />
+                                </TouchableOpacity>
+                                <Spacer paddingEnd={myWidth(4)} />
+                                {/* Dots */}
+                                <TouchableOpacity activeOpacity={0.7} onPress={() => setDotModal(true)}
+                                    style={[styles.containerIcon]}>
+                                    <Image style={styles.imageDots} source={require('../../../assets/home_main/dots.png')} />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </SafeAreaView>
+                </ImageBackground>
+
+                <Spacer paddingT={myHeight(0.4)} />
+                {/* Content */}
+                <View style={{
+                    paddingHorizontal: myWidth(4),
+                    borderRadius: myWidth(5), backgroundColor: myColors.background,
+                    // marginTop: -myWidth(5)
+                }}>
+                    <Spacer paddingT={myHeight(1)} />
+
+                    {/* Name */}
+                    <View style={{ flexDirection: "row", alignItems: 'center' }}>
+                        <Text numberOfLines={1} style={styles.textName}>{item.name}</Text>
+                        <TouchableOpacity style={{ paddingStart: myWidth(1), paddingVertical: myHeight(0.5) }} activeOpacity={0.6}
+                            onPress={() => null}>
+                            <Image style={styles.imageHeart} source={require('../../../assets/home_main/dashboards/heart_o.png')} />
                         </TouchableOpacity>
                     </View>
-                </View>
-            </ImageBackground>
+                    <Spacer paddingT={myHeight(0.4)} />
 
-            <Spacer paddingT={myHeight(0.4)} />
-            <View style={{ paddingHorizontal: myWidth(4) }}>
-                {/* Name */}
-                <View style={{ flexDirection: "row", alignItems: 'center' }}>
-                    <Text numberOfLines={1} style={styles.textName}>{item.name}</Text>
-                    <TouchableOpacity style={{ paddingStart: myWidth(1), paddingVertical: myHeight(0.5) }} activeOpacity={0.6}
-                        onPress={() => null}>
-                        <Image style={styles.imageHeart} source={require('../../../assets/home_main/dashboards/heart_o.png')} />
+                    <TouchableOpacity activeOpacity={0.8}
+                        onPress={() => navigation.navigate('RestaurantMoreInfo', { restaurant: item })}>
+                        {/* Rating */}
+                        <View style={{ flexDirection: "row", alignItems: 'center' }}>
+                            {/* Star */}
+                            <Image style={styles.imageStar} source={require('../../../assets/home_main/star.png')} />
+                            <Spacer paddingEnd={myWidth(1)} />
+                            {/* rating */}
+                            <Text numberOfLines={1} style={styles.textRating}
+                            >{item.rating} ({item.totalRating} ratings) - {item.country} - $$</Text>
+                            {/* Go */}
+                            <View style={{ paddingStart: myWidth(1), paddingVertical: myHeight(0.5) }} >
+                                <Image style={[styles.imageGo]}
+                                    source={require('../../../assets/home_main/go.png')} />
+                            </View>
+                        </View>
+                        {/* Open until */}
+                        <Text numberOfLines={1} style={styles.textOpen}>Open until 10:30pm - Tap for store information</Text>
                     </TouchableOpacity>
-                </View>
-                <Spacer paddingT={myHeight(0.4)} />
 
-                {/* Rating */}
-                <View style={{ flexDirection: "row", alignItems: 'center' }}>
-                    {/* Star */}
-                    <Image style={styles.imageStar} source={require('../../../assets/home_main/star.png')} />
-                    <Spacer paddingEnd={myWidth(1)} />
-                    {/* rating */}
-                    <Text numberOfLines={1} style={styles.textRating}
-                    >{item.rating} ({item.totalRating} ratings) - {item.country} - $$</Text>
-                    {/* Go */}
-                    <TouchableOpacity style={{ paddingStart: myWidth(1), paddingVertical: myHeight(0.5) }} activeOpacity={0.6}
-                        onPress={() => null}>
-                        <Image style={[styles.imageGo]}
-                            source={require('../../../assets/home_main/go.png')} />
-                    </TouchableOpacity>
+                    <Spacer paddingT={myHeight(0.6)} />
                 </View>
-                {/* Open until */}
-                <Text numberOfLines={1} style={styles.textOpen}>Open until 10:30pm - Tap for store information</Text>
 
-                <Spacer paddingT={myHeight(0.6)} />
+
+                {/* Res Category */}
+                <View>
+                    <ScrollView contentContainerStyle={{ flexGrow: 1, }} bounces={false} horizontal showsHorizontalScrollIndicator={false}>
+                        {
+                            ResCategories.map((item, ind) =>
+                                <TouchableOpacity activeOpacity={0.7} key={ind} style={{ marginHorizontal: myWidth(5), }} onPress={() => setI(ind)}>
+                                    <View style={{ paddingHorizontal: myWidth(1), paddingVertical: myHeight(0.5), }}>
+                                        <Text style={[styles.textCommon, {
+                                            fontSize: myFontSize.body,
+                                            fontFamily: myFonts.bodyBold,
+                                            color: i == ind ? myColors.primaryT : myColors.text
+                                        }]}>{item}</Text>
+                                    </View>
+
+                                    <View style={{
+                                        borderRadius: myHeight(3),
+                                        borderBottomWidth: myHeight(0.4), borderColor: i == ind ? myColors.primary : myColors.background
+                                    }} />
+                                </TouchableOpacity>
+                            )
+                        }
+                    </ScrollView>
+                </View>
+
+                <View style={styles.containerLine} />
+                {/* Main Courses */}
+                <ScrollView contentContainerStyle={{ paddingHorizontal: myWidth(4.1) }} showsVerticalScrollIndicator={false}>
+                    <Spacer paddingT={myHeight(0.6)} />
+                    <Text style={styles.textMain}>Main Courses</Text>
+
+                    {mainCourse.map((item, i) =>
+                        <TouchableOpacity key={i} activeOpacity={0.8} onPress={() => navigation.navigate('ItemDetail', { item })}>
+                            <ItemInfo navigate={navigation.navigate} item={item} />
+                        </TouchableOpacity>
+                    )}
+                </ScrollView>
+
+
+
             </View>
 
-            <ScrollView contentContainerStyle={{ flexGrow: 1, }} bounces={false} horizontal showsHorizontalScrollIndicator={false}>
-                {
-                    ResCategories.map((item, ind) =>
-                        <TouchableOpacity activeOpacity={0.7} key={ind} style={{ marginHorizontal: myWidth(5), }} onPress={() => setI(ind)}>
-                            <View style={{ paddingHorizontal: myWidth(1), paddingVertical: myHeight(0.5), }}>
+
+            {/* Dot  Modal */}
+            {
+                dotModal &&
+                <TouchableOpacity activeOpacity={1} onPress={() => setDotModal(false)} style={{ height: '100%', width: '100%', position: 'absolute', justifyContent: 'flex-end', backgroundColor: '#00000030' }}>
+                    <View>
+                        <Animated.View
+                            entering={SlideInDown.duration(300)}
+                            exiting={SlideOutDown}
+                            style={{
+                                paddingHorizontal: myWidth(4.5),
+                                backgroundColor: myColors.background,
+                                borderTopStartRadius: myWidth(4),
+                                borderTopEndRadius: myWidth(4),
+
+                            }}>
+                            <Spacer paddingT={myHeight(0.8)} />
+
+
+                            {/* <Spacer paddingT={myHeight(1.7)} /> */}
+
+                            {/* Search */}
+                            <TouchableOpacity activeOpacity={0.8} onPress={onSearchStore} style={{ paddingVertical: myHeight(2.6), flexDirection: 'row', alignItems: "center" }}>
+                                <Image source={require('../../../assets/home_main/search2.png')}
+                                    style={{
+                                        width: myHeight(3.2),
+                                        height: myHeight(3.2),
+                                        resizeMode: 'contain',
+                                        tintColor: myColors.primaryT
+                                    }}
+                                />
+                                <Spacer paddingEnd={myWidth(3)} />
                                 <Text style={[styles.textCommon, {
-                                    fontSize: myFontSize.body,
+                                    fontSize: myFontSize.xBody,
                                     fontFamily: myFonts.bodyBold,
-                                    color: i == ind ? myColors.primaryT : myColors.text
-                                }]}>{item}</Text>
-                            </View>
+                                }]}>Search the store</Text>
+                            </TouchableOpacity>
 
+                            {/* Divider */}
                             <View style={{
-                                borderRadius: myHeight(3),
-                                borderBottomWidth: myHeight(0.4), borderColor: i == ind ? myColors.primary : myColors.background
+                                width: myWidth(88) - myHeight(3.2), height: myHeight(0.15), alignSelf: 'flex-end',
+                                backgroundColor: myColors.dot,
                             }} />
-                        </TouchableOpacity>
-                    )
-                }
-            </ScrollView>
-            <View style={styles.containerLine} />
-            <Spacer paddingT={myHeight(0.6)} />
+                            {/* Favroute */}
+                            <TouchableOpacity activeOpacity={0.8} onPress={onAddToFav} style={{ paddingVertical: myHeight(2.6), flexDirection: 'row', alignItems: "center" }}>
+                                <Image source={require('../../../assets/home_main/dashboards/heart_o.png')}
+                                    style={{
+                                        width: myHeight(3.2),
+                                        height: myHeight(3.2),
+                                        resizeMode: 'contain',
+                                        tintColor: myColors.primaryT
+                                    }}
+                                />
+                                <Spacer paddingEnd={myWidth(3)} />
+                                <Text style={[styles.textCommon, {
+                                    fontSize: myFontSize.xBody,
+                                    fontFamily: myFonts.bodyBold,
+                                }]}>Add to Favorites</Text>
+                            </TouchableOpacity>
+                            {/* Divider */}
+                            <View style={{
+                                width: myWidth(88) - myHeight(3.2), height: myHeight(0.15), alignSelf: 'flex-end',
+                                backgroundColor: myColors.dot,
+                            }} />
 
+                            {/* Share */}
+                            <TouchableOpacity activeOpacity={0.8} onPress={onShare}
+                                style={{ flexDirection: 'row', alignItems: "center", paddingVertical: myHeight(2.6) }}>
+                                <Image source={require('../../../assets/home_main/share.png')}
+                                    style={{
+                                        width: myHeight(3.2),
+                                        height: myHeight(3.2),
+                                        resizeMode: 'contain',
+                                        tintColor: myColors.primaryT
+                                    }}
+                                />
+                                <Spacer paddingEnd={myWidth(3)} />
+                                <Text style={[styles.textCommon, {
+                                    fontSize: myFontSize.xBody,
+                                    fontFamily: myFonts.bodyBold,
+                                }]}>Share</Text>
+                            </TouchableOpacity>
 
-            {/* Main Courses */}
-            <ScrollView contentContainerStyle={{ paddingHorizontal: myWidth(4.1) }} showsVerticalScrollIndicator={false}>
-                <Text style={styles.textMain}>Main Courses</Text>
+                            {/* Divider */}
+                            <View style={{
+                                width: myWidth(88) - myHeight(3.2), height: myHeight(0.15), alignSelf: 'flex-end',
+                                backgroundColor: myColors.dot,
+                            }} />
 
-                {mainCourse.map((main, i) =>
-                    <View key={i} >
-                        <Spacer paddingT={myHeight(1.3)} />
-                        <View style={{ flexDirection: 'row' }}>
-                            <View style={{ flex: 1 }}>
-                                {/* name */}
-                                <Text numberOfLines={1} style={styles.textMainName}>{main.name}</Text>
+                            {/* View Store */}
+                            <TouchableOpacity activeOpacity={0.8} onPress={onViewStoreInfo}
+                                style={{ flexDirection: 'row', alignItems: "center", paddingVertical: myHeight(2.6) }}>
+                                <Image source={require('../../../assets/home_main/dashboards/ride/wrong.png')}
+                                    style={{
+                                        width: myHeight(3.2),
+                                        height: myHeight(3.2),
+                                        resizeMode: 'contain',
+                                        tintColor: myColors.primaryT
+                                    }}
+                                />
+                                <Spacer paddingEnd={myWidth(3)} />
+                                <Text style={[styles.textCommon, {
+                                    fontSize: myFontSize.xBody,
+                                    fontFamily: myFonts.bodyBold,
+                                }]}>View store info</Text>
+                            </TouchableOpacity>
 
-                                <Spacer paddingT={myHeight(0.5)} />
-                                {/* Price & Cal */}
-                                <Text numberOfLines={1} style={[styles.textRating, { fontFamily: myFonts.bodyBold }]}
-                                >{main.price} - <Text style={[styles.textRating, { color: myColors.textL6 }]}
-                                >{main.cals} Cals</Text></Text>
+                            {/* <Spacer paddingT={myHeight(4)} /> */}
 
-                                <Spacer paddingT={myHeight(0.5)} />
-                                {/* Description */}
-                                <Text numberOfLines={3} style={[styles.textRating, { color: myColors.textL6 }]}>{main.description}</Text>
-                            </View>
-                            <Spacer paddingEnd={myWidth(5.5)} />
-                            <ImageBackground source={main.image} style={styles.imageMain}>
-                                <TouchableOpacity style={styles.containerPlus} activeOpacity={0.8}
-                                    onPress={() => null}>
-                                    <Image style={[styles.imagePlus]}
-                                        source={require('../../../assets/home_main/plus.png')} />
-                                </TouchableOpacity>
-                            </ImageBackground>
-                        </View>
-                        <Spacer paddingT={myHeight(0.86)} />
-
+                            <Spacer paddingT={myHeight(1)} />
+                        </Animated.View>
                     </View>
-                )}
-            </ScrollView>
 
-        </View>
+                </TouchableOpacity>
+            }
+
+
+            {
+                searchModal &&
+                <SafeAreaView style={{
+                    height: '100%', width: '100%', position: 'absolute', backgroundColor: myColors.background,
+                    paddingTop: !ios && StatusBar.currentHeight,
+                }}>
+                    <Spacer paddingT={myHeight(0.5)} />
+                    {/* Top */}
+
+                    {/* Search */}
+                    <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        paddingHorizontal: myWidth(3),
+                        paddingVertical: myHeight(0.2),
+                        borderRadius: myWidth(1.5),
+                        backgroundColor: myColors.dot,
+                        marginHorizontal: myWidth(4)
+
+                    }}>
+                        {/* Arrow */}
+                        <TouchableOpacity activeOpacity={0.7} onPress={() => setSearchModal(false)} style={{}}>
+                            <Image style={{
+                                height: myHeight(2.5),
+                                width: myHeight(2.5),
+                                resizeMode: 'contain',
+                                tintColor: myColors.text
+                            }} source={require('../../../assets/home_main/dashboards/back2.png')} />
+                        </TouchableOpacity>
+                        <Spacer paddingEnd={myWidth(2)} />
+                        <TextInput placeholder=" Search Any Item"
+                            placeholderTextColor={myColors.textL5}
+                            autoCorrect={false}
+                            selectionColor={myColors.primaryT}
+                            style={{
+                                flex: 1,
+                                textAlignVertical: 'center',
+                                paddingVertical: ios ? myHeight(0.8) : myHeight(100) > 600 ? myHeight(0.4) : myHeight(0),
+                                fontSize: myFontSize.xxSmall,
+                                color: myColors.text,
+                                includeFontPadding: false,
+                                fontFamily: myFonts.bodyBold,
+                            }}
+                            cursorColor={myColors.primaryT}
+                            value={search} onChangeText={setSearch}
+                        // value={search} onChangeText={(val) => null}
+                        />
+                    </View>
+
+
+                    {/* Icon Empty Or Content */}
+                    {
+                        search ?
+                            <View style={{ flex: 1 }}>
+                                <ScrollView contentContainerStyle={{ paddingHorizontal: myWidth(4.1) }} showsVerticalScrollIndicator={false}>
+                                    <Spacer paddingT={myHeight(1.3)} />
+
+                                    {mainCourse.map((main, i) =>
+                                        <ItemInfo key={i} plus={false} item={main} />
+                                    )}
+                                </ScrollView>
+
+                            </View>
+                            :
+                            <View style={{ flex: 1, justifyContent: 'center' }}>
+                                <Image style={{
+                                    height: myHeight(14),
+                                    width: myHeight(14),
+                                    resizeMode: 'contain',
+                                    alignSelf: 'center',
+                                }} source={require('../../../assets/home_main/dashboards/foods/iconEm.png')} />
+                            </View>
+                    }
+
+                </SafeAreaView>
+            }
+
+        </>
+
     )
 }
+
+
 
 const styles = StyleSheet.create({
     container: {
@@ -215,9 +452,12 @@ const styles = StyleSheet.create({
 
     //Image
     imageTop: {
-        height: myHeight(23),
-        width: '100%',
-        resizeMode: 'cover',
+        height: myHeight(27),
+        width: myWidth(100),
+        borderRadius: 0,
+        // borderBottomStartRadius: myWidth(10),
+        // borderBottomEndRadius: myWidth(10),
+        // overflow: 'hidden'
 
 
         // backgroundColor: 'blue',

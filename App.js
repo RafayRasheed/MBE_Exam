@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { View, Text, SafeAreaView, StatusBar, Platform, TouchableOpacity, StyleSheet } from 'react-native';
-import { MMKV } from 'react-native-mmkv';
 import { myColors } from './ultils/myColors';
 import { myHeight, printWithPlat } from './components/common';
 import { StartupScreen } from './components/startup/startup_screens';
@@ -9,7 +8,7 @@ import { enableScreens } from 'react-native-screens';
 // import { enableLatestRenderer } from 'react-native-maps';
 
 // enableLatestRenderer();
-const storage = new MMKV()
+
 
 
 

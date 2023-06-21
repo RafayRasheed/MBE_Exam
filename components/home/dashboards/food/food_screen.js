@@ -93,13 +93,14 @@ export const FoodScreen = ({ navigation }) => {
                     {/* Open Now */}
                     <View style={styles.containerHeading}>
                         <Text style={styles.textHeading}>Open Now</Text>
-                        <TouchableOpacity style={{ paddingVertical: myHeight(0.4), paddingStart: myWidth(2) }} activeOpacity={0.6} onPress={() => null}>
+                        <TouchableOpacity style={{ paddingVertical: myHeight(0.4), paddingStart: myWidth(2) }} activeOpacity={0.6}
+                            onPress={() => navigation.navigate('RestaurantAll', { name: 'Open Now', restuarants: FoodOpenNow })}>
                             <Text style={styles.textSeeAll}>See all</Text>
                         </TouchableOpacity>
                     </View>
                     <Spacer paddingT={myHeight(2)} />
 
-                    <ScrollView horizontal contentContainerStyle={{ paddingHorizontal: myWidth(4) }}
+                    <ScrollView horizontal contentContainerStyle={{ paddingHorizontal: myWidth(5) }}
                         showsHorizontalScrollIndicator={false} >
                         {
                             FoodOpenNow.map((item, i) =>
@@ -118,7 +119,9 @@ export const FoodScreen = ({ navigation }) => {
                     {/*Popular Stores */}
                     <View style={styles.containerHeading}>
                         <Text style={styles.textHeading}>Popular Stores</Text>
-                        <TouchableOpacity style={{ paddingVertical: myHeight(0.4), paddingStart: myWidth(2) }} activeOpacity={0.6} onPress={() => null}>
+                        <TouchableOpacity style={{ paddingVertical: myHeight(0.4), paddingStart: myWidth(2) }} activeOpacity={0.6}
+                            onPress={() => navigation.navigate('RestaurantAll', { name: 'Popular Stores', restuarants: FoodOpenNow })}>
+
                             <Text style={styles.textSeeAll}>See all</Text>
                         </TouchableOpacity>
                     </View>

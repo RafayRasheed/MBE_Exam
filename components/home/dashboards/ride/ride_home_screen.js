@@ -278,7 +278,7 @@ export const RideHome = ({ route, navigation }) => {
 
 
 
-    const w = myWidth(8.2)
+    const w = myWidth(12) - myHeight(2)
     const offset = useSharedValue(0);
     const animatedStyles = useAnimatedStyle(() => {
         return {
@@ -737,6 +737,7 @@ export const RideHome = ({ route, navigation }) => {
                 </View>
             }
 
+            {/* Drop Loc  */}
             {
                 dropOfLocModal &&
                 <View style={{
@@ -1002,15 +1003,13 @@ export const RideHome = ({ route, navigation }) => {
             {/* Booking Detail */}
             {
                 bookingDetailModal &&
-                <View style={{
-                    display: captainModal || connectedToDriverModal ? 'none' : 'flex',
-                    backgroundColor: 'transparent', height: '100%',
-                    width: '100%', position: 'absolute', zIndex: 0
-                }}>
+                <>
                     <SafeAreaView style={{ backgroundColor: 'transparent' }}></SafeAreaView>
 
                     <SafeAreaView style={{
-                        flex: 1,
+                        display: captainModal || connectedToDriverModal ? 'none' : 'flex',
+                        backgroundColor: 'transparent', height: '100%',
+                        width: '100%', position: 'absolute', zIndex: 0
                     }}>
 
                         {/* Top */}
@@ -1400,24 +1399,21 @@ export const RideHome = ({ route, navigation }) => {
                     </SafeAreaView>
 
 
-                </View>
+                </>
 
             }
 
             {/*Schedule Booking Detail */}
             {
                 scheduleBookingDetailModal &&
-                <View style={{
-                    display: feedbackModal || captainModal || connectedToDriverModal ? 'none' : 'flex',
-                    backgroundColor: 'transparent', height: '100%',
-                    width: '100%', position: 'absolute', zIndex: 0
-                }}>
+                <>
                     <SafeAreaView style={{ backgroundColor: 'transparent' }}></SafeAreaView>
 
                     <SafeAreaView style={{
-                        flex: 1
+                        display: feedbackModal || captainModal || connectedToDriverModal ? 'none' : 'flex',
+                        backgroundColor: 'transparent', height: myHeight(100),
+                        width: '100%', position: 'absolute', zIndex: 0
                     }}>
-
                         {/* Top */}
                         <View style={{
                             width: "100%", flexDirection: 'row',
@@ -1830,7 +1826,7 @@ export const RideHome = ({ route, navigation }) => {
                         </Animated.View>
                     </SafeAreaView>
 
-                </View>
+                </>
 
             }
 
@@ -2068,108 +2064,119 @@ export const RideHome = ({ route, navigation }) => {
             {
                 promoModal &&
 
-                <KeyboardAwareScrollView
-                    bounces={false}
-                    contentContainerStyle={{
-                        height: '100%',
-                        backgroundColor: '#00000030',
-                    }}
-                >
+                <SafeAreaView style={{
+                    height: '100%',
+                    backgroundColor: '#00000030',
 
-                    <TouchableOpacity activeOpacity={1}
-                        style={{
-                            flex: 1, paddingHorizontal: myWidth(4.5),
+                }}>
+                    <KeyboardAwareScrollView
+                        showsVerticalScrollIndicator={false}
+                        bounces={false}
+                        style={{ backgroundColor: '#00000030' }}
+                        contentContainerStyle={{
+                            flex: 1
+
+                            // position: 'absolute',
                         }}
-                        onPress={() => setPromoModal(false)}
                     >
-                    </TouchableOpacity>
-                    <Animated.View
-                        entering={SlideInDown.duration(300)}
-                        style={{
-                            paddingHorizontal: myWidth(4.5),
-                            backgroundColor: myColors.background,
-                            width: "100%", position: 'absolute', bottom: 0,
-                            borderTopStartRadius: myWidth(4),
-                            borderTopEndRadius: myWidth(4),
-                        }}>
-                        <Spacer paddingT={myHeight(0.8)} />
-
-                        {/* Line */}
-                        <View style={{
-                            width: myWidth(30), height: myHeight(0.7),
-                            backgroundColor: myColors.dot, borderRadius: myHeight(2),
-                            alignSelf: 'center',
-                        }} />
-                        <Spacer paddingT={myHeight(1.5)} />
-
-                        <Text style={[
-                            styles.textCommon,
-                            {
-                                fontSize: myFontSize.xBody,
-                                fontFamily: myFonts.heading,
-                            }
-                        ]}>Add Promo</Text>
-                        <Spacer paddingT={myHeight(1.5)} />
-
-                        {/* Input */}
-                        <View style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            borderRadius: myHeight(0.8),
-                            paddingHorizontal: myWidth(2.5),
-                            borderWidth: myHeight(0.09),
-                            borderColor: myColors.primaryT,
-                            backgroundColor: myColors.background,
-                            elevation: 3,
-                            shadowColor: '#000',
-                            shadowOffset: { width: 0, height: 2 },
-                            shadowOpacity: 0.1,
-                            shadowRadius: 4,
-                        }}>
-
-                            <TextInput placeholder="Enter promo code"
-                                keyboardType={'number-pad'}
-                                placeholderTextColor={myColors.offColor}
-                                selectionColor={myColors.primaryT}
-                                cursorColor={myColors.primaryT}
-                                value={promoCode} onChangeText={setPromoCode}
-                                style={{
-                                    flex: 1,
-                                    textAlignVertical: 'center',
-                                    paddingVertical: ios ? myHeight(1.2) : myHeight(100) > 600 ? myHeight(0.8) : myHeight(0.1),
-                                    fontSize: myFontSize.body,
-                                    color: myColors.text,
-                                    includeFontPadding: false,
-                                    fontFamily: myFonts.heading,
-                                }}
-                            />
-                        </View>
-
-                        <Spacer paddingT={myHeight(8)} />
-                        {/* Activate Code Button */}
-                        <TouchableOpacity activeOpacity={0.8} onPress={onActivateCode}
+                        <TouchableOpacity activeOpacity={1}
                             style={{
-                                backgroundColor: myColors.primaryT,
-                                borderRadius: myHeight(0.5),
-                                paddingVertical: myHeight(1),
-                                alignItems: 'center',
-                                width: '100%', justifyContent: 'center',
-                            }}>
+                                flex: 1, paddingHorizontal: myWidth(4.5),
 
-                            <Text style={[
-                                styles.textCommon,
-                                {
-                                    fontSize: myFontSize.body,
-                                    fontFamily: myFonts.heading,
-                                    color: myColors.background,
-                                }
-                            ]}>Activate Code</Text>
-
+                            }}
+                            onPress={() => setPromoModal(false)}
+                        >
                         </TouchableOpacity>
-                        <Spacer paddingT={myHeight(4)} />
 
-                    </Animated.View>
-                </KeyboardAwareScrollView>
+                        <SafeAreaView>
+                            <Animated.View
+                                entering={SlideInDown.duration(300)}
+                                style={{
+                                    paddingHorizontal: myWidth(4.5),
+                                    backgroundColor: myColors.background,
+                                    borderTopStartRadius: myWidth(4),
+                                    borderTopEndRadius: myWidth(4),
+                                }}>
+                                <Spacer paddingT={myHeight(0.8)} />
+
+                                {/* Line */}
+                                <View style={{
+                                    width: myWidth(30), height: myHeight(0.7),
+                                    backgroundColor: myColors.dot, borderRadius: myHeight(2),
+                                    alignSelf: 'center',
+                                }} />
+                                <Spacer paddingT={myHeight(1.5)} />
+
+                                <Text style={[
+                                    styles.textCommon,
+                                    {
+                                        fontSize: myFontSize.xBody,
+                                        fontFamily: myFonts.heading,
+                                    }
+                                ]}>Add Promo</Text>
+                                <Spacer paddingT={myHeight(1.5)} />
+
+                                {/* Input */}
+                                <View style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    borderRadius: myHeight(0.8),
+                                    paddingHorizontal: myWidth(2.5),
+                                    borderWidth: myHeight(0.09),
+                                    borderColor: myColors.primaryT,
+                                    backgroundColor: myColors.background,
+                                    elevation: 3,
+                                    shadowColor: '#000',
+                                    shadowOffset: { width: 0, height: 2 },
+                                    shadowOpacity: 0.1,
+                                    shadowRadius: 4,
+                                }}>
+
+                                    <TextInput placeholder="Enter promo code"
+                                        keyboardType={'number-pad'}
+                                        placeholderTextColor={myColors.offColor}
+                                        selectionColor={myColors.primaryT}
+                                        cursorColor={myColors.primaryT}
+                                        value={promoCode} onChangeText={setPromoCode}
+                                        style={{
+                                            flex: 1,
+                                            textAlignVertical: 'center',
+                                            paddingVertical: ios ? myHeight(1.2) : myHeight(100) > 600 ? myHeight(0.8) : myHeight(0.1),
+                                            fontSize: myFontSize.body,
+                                            color: myColors.text,
+                                            includeFontPadding: false,
+                                            fontFamily: myFonts.heading,
+                                        }}
+                                    />
+                                </View>
+
+                                <Spacer paddingT={myHeight(8)} />
+                                {/* Activate Code Button */}
+                                <TouchableOpacity activeOpacity={0.8} onPress={onActivateCode}
+                                    style={{
+                                        backgroundColor: myColors.primaryT,
+                                        borderRadius: myHeight(0.5),
+                                        paddingVertical: myHeight(1),
+                                        alignItems: 'center',
+                                        width: '100%', justifyContent: 'center',
+                                    }}>
+
+                                    <Text style={[
+                                        styles.textCommon,
+                                        {
+                                            fontSize: myFontSize.body,
+                                            fontFamily: myFonts.heading,
+                                            color: myColors.background,
+                                        }
+                                    ]}>Activate Code</Text>
+
+                                </TouchableOpacity>
+                                <Spacer paddingT={ios ? myHeight(6.5) : myHeight(4)} />
+
+                            </Animated.View>
+                        </SafeAreaView>
+                    </KeyboardAwareScrollView>
+                </SafeAreaView >
 
             }
 
