@@ -13,6 +13,7 @@ import { RestaurantMoreInfo } from "./rest_more_info_screen";
 import { ItemCartScreen } from "./item_cart_screen";
 import { enableScreens } from "react-native-screens";
 import { ItemCheckoutScreen } from "./item_checkout_screen";
+import { DoneOrder } from "./done_order";
 
 
 const FoodTAB = createNativeStackNavigator();
@@ -43,24 +44,24 @@ export const FoodNavigator = ({ navigation, route }) => {
 
 
     useEffect(() => {
-        if (hideBottom) {
-            navigation.getParent().setOptions({ tabBarStyle: { height: 0, display: 'none', } })
+        // if (hideBottom) {
+        //     navigation.getParent().setOptions({ tabBarStyle: { height: 0, display: 'none', } })
 
-        } else {
-            console.log('On')
-            navigation.getParent().setOptions({
-                tabBarStyle: {
-                    display: 'flex',
-                    backgroundColor: myColors.background,
-                    paddingHorizontal: myWidth(3.5),
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    height: myHeight(9.5),
-                    paddingBottom: ios ? myHeight(2.2) : myHeight(1.5),
-                    paddingTop: myHeight(2.5),
-                },
-            })
-        }
+        // } else {
+        //     console.log('On')
+        //     navigation.getParent().setOptions({
+        //         tabBarStyle: {
+        //             display: 'flex',
+        //             backgroundColor: myColors.background,
+        //             paddingHorizontal: myWidth(3.5),
+        //             alignItems: 'center',
+        //             justifyContent: 'center',
+        //             height: myHeight(9.5),
+        //             paddingBottom: ios ? myHeight(2.2) : myHeight(1.5),
+        //             paddingTop: myHeight(2.5),
+        //         },
+        //     })
+        // }
     }, [hideBottom])
     return (
         <>
@@ -81,6 +82,8 @@ export const FoodNavigator = ({ navigation, route }) => {
                 <FoodTAB.Screen component={RestaurantMoreInfo} name="RestaurantMoreInfo" />
                 <FoodTAB.Screen component={ItemCartScreen} name="ItemCartScreen" />
                 <FoodTAB.Screen component={ItemCheckoutScreen} name="ItemCheckoutScreen" />
+                <FoodTAB.Screen component={DoneOrder} name="DoneOrder" />
+
 
 
             </FoodTAB.Navigator>

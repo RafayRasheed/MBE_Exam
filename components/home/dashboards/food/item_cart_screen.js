@@ -395,7 +395,7 @@ export const ItemCartScreen = ({ navigation, route }) => {
 
                         </Animated.View>
                     </KeyboardAwareScrollView>
-                </View >
+                </View>
 
             }
         </>

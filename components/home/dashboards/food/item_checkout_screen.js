@@ -3,7 +3,7 @@ import { StyleSheet, TextInput, TouchableOpacity, View, SafeAreaView, Image, Tex
 import { myColors } from '../../../../ultils/myColors';
 import { Spacer, ios, myHeight, myWidth } from '../../../common';
 import { myFonts, myLetSpacing, myFontSize } from '../../../../ultils/myFonts';
-import Animated, { SlideInDown, SlideOutDown } from 'react-native-reanimated';
+import Animated, { FadeIn, SlideInDown, SlideInUp, SlideOutDown, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Collapsible from 'react-native-collapsible';
 import { saveLocations } from '../ride/ride_data';
@@ -60,13 +60,44 @@ const PricingRow = ({ title, value, fontSize, fontFamily }) => (
 export const ItemCheckoutScreen = ({ navigation, route }) => {
     const { item } = route.params
     const [deliveryClose, setDeliveryClose] = useState(true)
+    const [showInputInstruction, setShowInputInstruction] = useState(false)
     const [paymentClose, setPaymentClose] = useState(true)
+    const [pricingClose, setPricingClose] = useState(false)
+    const [useWallet, setUseWallet] = useState(false)
+    const [instructionText, setInstructionText] = useState(null)
 
+
+    //For Toggle
+    const w = myWidth(10) - myHeight(1.8)
+    const offset = useSharedValue(0);
+    const animatedStyles = useAnimatedStyle(() => {
+        return {
+            transform: [{ translateX: offset.value * w }],
+        };
+    });
+    const onPressToggle = () => {
+        if (!useWallet) {
+            offset.value = withTiming(1, {
+                duration: 200,
+            });
+            setTimeout(() =>
+                setUseWallet(true)
+                , 50)
+
+        } else {
+            offset.value = withTiming(0, {
+                duration: 200,
+            });
+            setUseWallet(false)
+
+
+        }
+    };
     return (
-        <>
-            {/* <StatusBar backgroundColor={promoModal ? '#00000050' : myColors.background} /> */}
+        <SafeAreaView style={{ flex: 1, backgroundColor: myColors.background }}>
 
-            <SafeAreaView style={{ flex: 1, backgroundColor: myColors.background }}>
+            {/* Top Content */}
+            <View>
                 <Spacer paddingT={myHeight(1)} />
                 {/* Top */}
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: myWidth(4) }}>
@@ -117,138 +148,423 @@ export const ItemCheckoutScreen = ({ navigation, route }) => {
                     <Number_text name={'Checkout'} number={3} fill={true} />
                 </View>
 
-                <View style={{ paddingHorizontal: myWidth(4), }}>
-                    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                <Spacer paddingT={myHeight(1)} />
 
-                        {/* Delivery  Card*/}
-                        <View style={{
-                            backgroundColor: myColors.background,
-                            elevation: 6,
-                            shadowColor: '#000',
-                            shadowOffset: { width: 0, height: 2 },
-                            shadowOpacity: 0.25,
-                            shadowRadius: 2,
-                            paddingHorizontal: myWidth(3.5),
-                            borderWidth: myHeight(0.1),
-                            borderColor: myColors.dot
-                        }}>
+            </View>
+
+            {/* All Cards */}
+            <ScrollView bounces={false} showsVerticalScrollIndicator={false}
+            >
+                <View style={{ paddingHorizontal: myWidth(4), }}>
+                    <Spacer paddingT={myHeight(3)} />
+
+                    {/* Delivery  Card*/}
+                    <View style={{
+                        backgroundColor: myColors.background,
+                        elevation: 3.5,
+                        shadowColor: '#000',
+                        shadowOffset: { width: 0, height: 2 },
+                        shadowOpacity: 0.25,
+                        shadowRadius: 2,
+                        paddingHorizontal: myWidth(3.5),
+                        borderWidth: myHeight(0.1),
+                        borderColor: myColors.dot
+                    }}>
+                        <Spacer paddingT={myHeight(1)} />
+                        {/* Loc Address & go */}
+                        <View style={{ flexDirection: 'row', alignItems: "center" }}>
+                            <Image style={{
+                                height: myHeight(2.5),
+                                width: myHeight(2.5),
+                                resizeMode: 'contain',
+                                tintColor: myColors.primaryT,
+                            }} source={require('../../../assets/home_main/dashboards/location.png')} />
+
+                            <Spacer paddingEnd={myWidth(2)} />
+                            <Text numberOfLines={1} style={[styles.textCommon, {
+                                flex: 1,
+                                fontSize: myFontSize.body2,
+                                fontFamily: myFonts.bodyBold,
+                            }]}>Delivery address</Text>
+
+                            {/* Go */}
+                            <TouchableOpacity style={{
+                                padding: myWidth(1), transform: [{ rotate: deliveryClose ? '90deg' : '270deg' }]
+                            }}
+                                activeOpacity={0.8} onPress={() => setDeliveryClose(!deliveryClose)}>
+                                <Image style={{
+                                    height: myHeight(1.8),
+                                    width: myHeight(1.8),
+                                    resizeMode: 'contain',
+                                    tintColor: myColors.primaryT,
+                                }} source={require('../../../assets/home_main/go.png')} />
+                            </TouchableOpacity>
+                        </View>
+
+                        <Spacer paddingT={myHeight(1)} />
+
+                        <Text numberOfLines={1} style={[styles.textCommon, {
+                            fontSize: myFontSize.body2,
+                            fontFamily: myFonts.body,
+                        }]}>1 24th B Commercial Street Karachi</Text>
+                        <Spacer paddingT={myHeight(1.5)} />
+
+                        <Collapsible collapsed={deliveryClose}>
+                            {/* Save Place */}
+
+                            <View style={{ alignItems: 'center', flexDirection: 'row' }}>
+                                <View style={{
+                                    borderRadius: myHeight(2), padding: myHeight(0.7), paddingTop: myHeight(0.5),
+                                    backgroundColor: myColors.primaryL2
+                                }}>
+                                    <Image style={{
+                                        height: myHeight(2.1),
+                                        width: myHeight(2.1),
+                                        resizeMode: 'contain',
+                                    }}
+                                        source={require('../../../assets/home_main/dashboards/starF.png')} />
+                                </View>
+                                <Spacer paddingEnd={myWidth(2)} />
+                                <Text style={[styles.textCommon, {
+                                    fontSize: myFontSize.body2,
+                                    fontFamily: myFonts.heading,
+                                }]}>SAVED PLACE</Text>
+                            </View>
+                            <Spacer paddingT={myHeight(0.6)} />
+
+                            {
+                                saveLocations.map((place, i) =>
+                                    <TouchableOpacity key={i} activeOpacity={0.8} onPress={() => null}>
+                                        <Text style={[styles.textCommon, {
+                                            fontSize: myFontSize.body2,
+                                            fontFamily: myFonts.body,
+                                            paddingVertical: myHeight(0.3)
+                                        }]}>{place.name}</Text>
+                                    </TouchableOpacity>)
+                            }
+                            <Spacer paddingT={myHeight(2)} />
+                            {/* Add Instruction && Input & Button */}
+                            {
+                                !showInputInstruction ?
+                                    <TouchableOpacity style={{}} activeOpacity={0.8} onPress={() => setShowInputInstruction(true)} >
+                                        <Text style={[styles.textCommon, {
+                                            fontSize: myFontSize.body,
+                                            fontFamily: myFonts.bodyBold,
+                                            color: myColors.primaryT,
+                                        }]}><Text style={{ fontSize: myFontSize.body3 }}>+</Text> Add  delivery instruction for your rider</Text>
+                                    </TouchableOpacity>
+                                    :
+                                    <Animated.View
+                                        entering={FadeIn.duration(400)}
+                                    >
+                                        <View style={{
+
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            borderRadius: myHeight(0.8),
+                                            paddingHorizontal: myWidth(2.5),
+                                            borderWidth: myHeight(0.09),
+                                            borderColor: myColors.primaryT,
+                                            backgroundColor: myColors.background,
+
+                                        }}>
+
+                                            <TextInput placeholder="Add Instruction here..."
+                                                placeholderTextColor={myColors.offColor}
+                                                selectionColor={myColors.primaryT}
+                                                cursorColor={myColors.primaryT}
+                                                value={instructionText} onChangeText={setInstructionText}
+                                                style={{
+                                                    flex: 1,
+                                                    textAlignVertical: 'center',
+                                                    paddingVertical: ios ? myHeight(0.8) : myHeight(100) > 600 ? myHeight(0.6) : myHeight(0),
+                                                    fontSize: myFontSize.body,
+                                                    color: myColors.text,
+                                                    includeFontPadding: false,
+                                                    fontFamily: myFonts.body,
+                                                }}
+                                            />
+                                        </View>
+                                        <Spacer paddingT={myHeight(0.6)} />
+
+                                        <Text style={[styles.textCommon, {
+                                            fontSize: myFontSize.body,
+                                            fontFamily: myFonts.body,
+                                            textAlign: 'right',
+                                            color: myColors.textL4
+                                        }]}>0/300</Text>
+                                        <Spacer paddingT={myHeight(1.8)} />
+
+                                        {/* Update button */}
+                                        <TouchableOpacity activeOpacity={0.8} onPress={null}
+                                            style={{
+                                                backgroundColor: myColors.primaryT,
+                                                borderRadius: myHeight(0.8),
+                                                paddingVertical: myHeight(1),
+                                                alignItems: 'center',
+                                                width: '100%', justifyContent: 'center',
+
+                                            }}>
+
+                                            <Text style={[
+                                                styles.textCommon,
+                                                {
+                                                    fontSize: myFontSize.body,
+                                                    fontFamily: myFonts.bodyBold,
+                                                    color: myColors.background,
+                                                }
+                                            ]}>Update</Text>
+                                        </TouchableOpacity>
+                                    </Animated.View>
+
+                            }
+                            <Spacer paddingT={myHeight(2)} />
+
+                        </Collapsible>
+
+                    </View>
+
+                    <Spacer paddingT={myHeight(2)} />
+
+                    {/* Payment Card*/}
+                    <View style={{
+                        backgroundColor: myColors.background,
+                        elevation: 3.5,
+                        shadowColor: '#000',
+                        shadowOffset: { width: 0, height: 2 },
+                        shadowOpacity: 0.25,
+                        shadowRadius: 2,
+                        paddingHorizontal: myWidth(3.5),
+                        borderWidth: myHeight(0.1),
+                        borderColor: myColors.dot
+                    }}>
+                        <Spacer paddingT={myHeight(1)} />
+                        {/* payment Method & go */}
+                        <View style={{ flexDirection: 'row', alignItems: "center" }}>
+                            <Image style={{
+                                height: myHeight(2.5),
+                                width: myHeight(2.5),
+                                resizeMode: 'contain',
+                                tintColor: myColors.primaryT,
+                            }} source={require('../../../assets/home_main/dashboards/wallet.png')} />
+
+                            <Spacer paddingEnd={myWidth(2)} />
+                            <Text numberOfLines={1} style={[styles.textCommon, {
+                                flex: 1,
+                                fontSize: myFontSize.body2,
+                                fontFamily: myFonts.bodyBold,
+                            }]}>Payment method</Text>
+
+                            {/* Go */}
+                            <TouchableOpacity style={{
+                                padding: myWidth(1), transform: [{ rotate: paymentClose ? '90deg' : '270deg' }]
+                            }}
+                                activeOpacity={0.8} onPress={() => setPaymentClose(!paymentClose)}>
+                                <Image style={{
+                                    height: myHeight(1.8),
+                                    width: myHeight(1.8),
+                                    resizeMode: 'contain',
+                                    tintColor: myColors.primaryT,
+                                }} source={require('../../../assets/home_main/go.png')} />
+                            </TouchableOpacity>
+                        </View>
+
+
+                        <Spacer paddingT={myHeight(1.5)} />
+                        {/* Cash  & Price */}
+                        <View style={{ flexDirection: 'row', alignItems: "center" }}>
+                            <Image style={{
+                                height: myHeight(2.5),
+                                width: myHeight(2.5),
+                                resizeMode: 'contain',
+                                tintColor: myColors.primaryT,
+                            }} source={require('../../../assets/home_main/dashboards/cash2.png')} />
+
+                            <Spacer paddingEnd={myWidth(2)} />
+                            <Text numberOfLines={1} style={[styles.textCommon, {
+                                flex: 1,
+                                fontSize: myFontSize.body2,
+                                fontFamily: myFonts.bodyBold,
+                            }]}>Cash</Text>
+
+                            <Text style={[
+                                styles.textCommon,
+                                {
+                                    fontSize: myFontSize.body2,
+                                    fontFamily: myFonts.heading,
+                                }
+                            ]}>Rs. 1,563.91</Text>
+                        </View>
+                        <Spacer paddingT={myHeight(1)} />
+
+                        <Collapsible collapsed={paymentClose}>
                             <Spacer paddingT={myHeight(1)} />
-                            {/* Loc Address & go */}
+
+                            {/* wallet  & Toggle */}
                             <View style={{ flexDirection: 'row', alignItems: "center" }}>
                                 <Image style={{
                                     height: myHeight(2.5),
                                     width: myHeight(2.5),
                                     resizeMode: 'contain',
                                     tintColor: myColors.primaryT,
-                                }} source={require('../../../assets/home_main/dashboards/location.png')} />
+                                }} source={require('../../../assets/home_main/dashboards/walletFill.png')} />
 
                                 <Spacer paddingEnd={myWidth(2)} />
                                 <Text numberOfLines={1} style={[styles.textCommon, {
                                     flex: 1,
                                     fontSize: myFontSize.body2,
                                     fontFamily: myFonts.bodyBold,
-                                }]}>Delivery address</Text>
+                                }]}>Wallet</Text>
 
                                 {/* Go */}
                                 <TouchableOpacity style={{
-                                    padding: myWidth(1), transform: [{ rotate: deliveryClose ? '90deg' : '270deg' }]
+
                                 }}
-                                    activeOpacity={0.8} onPress={() => setDeliveryClose(!deliveryClose)}>
-                                    <Image style={{
-                                        height: myHeight(1.8),
-                                        width: myHeight(1.8),
-                                        resizeMode: 'contain',
-                                        tintColor: myColors.primaryT,
-                                    }} source={require('../../../assets/home_main/go.png')} />
+                                    activeOpacity={0.8} onPress={onPressToggle}>
+                                    <Animated.View style={{
+                                        width: myWidth(12),
+                                        height: myHeight(2.3),
+                                        backgroundColor: useWallet ? myColors.primaryT : myColors.offColor7,
+                                        borderRadius: myHeight(2),
+                                        justifyContent: 'center',
+                                        paddingHorizontal: myWidth(1),
+                                    }} >
+
+                                        <Animated.View style={[{
+                                            height: myHeight(1.8),
+                                            width: myHeight(1.8),
+                                            backgroundColor: myColors.background,
+                                            borderRadius: myHeight(2),
+                                            borderWidth: myHeight(0.06),
+
+                                        }, animatedStyles]} />
+                                    </Animated.View>
                                 </TouchableOpacity>
                             </View>
+                            <Spacer paddingT={myHeight(1.5)} />
 
-                            <Spacer paddingT={myHeight(1)} />
+                        </Collapsible>
 
+                    </View>
+
+                    <Spacer paddingT={myHeight(2.3)} />
+
+                    {/* Pricing Card*/}
+                    <View style={{
+                        backgroundColor: myColors.background,
+                        elevation: 3.5,
+                        shadowColor: '#000',
+                        shadowOffset: { width: 0, height: 2 },
+                        shadowOpacity: 0.25,
+                        shadowRadius: 2,
+                        paddingHorizontal: myWidth(3.5),
+                        borderWidth: myHeight(0.1),
+                        borderColor: myColors.dot
+                    }}>
+
+                        <Spacer paddingT={myHeight(1)} />
+                        {/*Order Summary & go */}
+                        <View style={{ flexDirection: 'row', alignItems: "center" }}>
+                            <Image style={{
+                                height: myHeight(2.5),
+                                width: myHeight(2.5),
+                                resizeMode: 'contain',
+                                tintColor: myColors.primaryT,
+                            }} source={require('../../../assets/home_main/dashboards/doc.png')} />
+
+                            <Spacer paddingEnd={myWidth(2)} />
                             <Text numberOfLines={1} style={[styles.textCommon, {
+                                flex: 1,
                                 fontSize: myFontSize.body2,
-                                fontFamily: myFonts.body,
-                            }]}>1 24th B Commercial Street Karachi</Text>
-                            <Spacer paddingT={myHeight(1)} />
+                                fontFamily: myFonts.bodyBold,
+                            }]}>Order Summary</Text>
 
-                            <Collapsible collapsed={deliveryClose}>
-                                {/* Save Place */}
-                                <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                                    <View style={{
-                                        borderRadius: myHeight(2), padding: myHeight(0.7), paddingTop: myHeight(0.5),
-                                        backgroundColor: myColors.primaryL2
-                                    }}>
-                                        <Image style={{
-                                            height: myHeight(2.1),
-                                            width: myHeight(2.1),
-                                            resizeMode: 'contain',
-                                        }}
-                                            source={require('../../../assets/home_main/dashboards/starF.png')} />
-                                    </View>
-                                    <Spacer paddingEnd={myWidth(2)} />
-                                    <Text style={[styles.textCommon, {
-                                        fontSize: myFontSize.body2,
-                                        fontFamily: myFonts.heading,
-                                    }]}>SAVED PLACE</Text>
-                                </View>
-                                <Spacer paddingT={myHeight(0.6)} />
-
-                                {
-                                    saveLocations.map((place) =>
-                                        <TouchableOpacity activeOpacity={0.8} onPress={() => null}>
-                                            <Text style={[styles.textCommon, {
-                                                fontSize: myFontSize.body2,
-                                                fontFamily: myFonts.body,
-                                            }]}>{place.name}</Text>
-                                        </TouchableOpacity>)
-                                }
-                                <Spacer paddingT={myHeight(1)} />
-
-                            </Collapsible>
-
+                            {/* Go */}
+                            <TouchableOpacity style={{
+                                padding: myWidth(1), transform: [{ rotate: pricingClose ? '90deg' : '270deg' }]
+                            }}
+                                activeOpacity={0.8} onPress={() => setPricingClose(pricingClose)}>
+                                <Image style={{
+                                    height: myHeight(1.8),
+                                    width: myHeight(1.8),
+                                    resizeMode: 'contain',
+                                    tintColor: myColors.primaryT,
+                                }} source={require('../../../assets/home_main/go.png')} />
+                            </TouchableOpacity>
                         </View>
 
-                        <Spacer paddingT={myHeight(2.3)} />
-                        {/* Pricing CArd*/}
 
-                        <PricingRow title={'Subtotal'} value={'Rs. 1,300.00'} fontSize={myFontSize.xxSmall} fontFamily={myFonts.heading} />
-                        <Spacer paddingT={myHeight(1)} />
-                        <PricingRow title={'Delivery Fee'} value={'Rs. 79.00'} fontSize={myFontSize.xxSmall} fontFamily={myFonts.body} />
-                        <Spacer paddingT={myHeight(0.5)} />
-                        <PricingRow title={'GST (13%)'} value={'Rs. 63'} fontSize={myFontSize.xxSmall} fontFamily={myFonts.body} />
+                        <Spacer paddingT={myHeight(1.5)} />
+                        {/* Cash  & Price */}
+                        <View style={{ flexDirection: 'row', alignItems: "center" }}>
 
-                        <Spacer paddingT={myHeight(1.7)} />
-                        <PricingRow title={'Total'} value={'Rs. 1,563.92'} fontSize={myFontSize.body3} fontFamily={myFonts.heading} />
-
-                    </ScrollView>
-
-                    {/* Confirm button */}
-                    <TouchableOpacity activeOpacity={0.9} onPress={null}
-                        style={{
-                            backgroundColor: myColors.primaryT,
-                            borderRadius: myHeight(0.8),
-                            paddingVertical: myHeight(1.3),
-                            marginVertical: myHeight(1.3),
-                            alignItems: 'center',
-                            width: '100%', justifyContent: 'center',
-
-                        }}>
-
-                        <Text style={[
-                            styles.textCommon,
-                            {
-                                fontSize: myFontSize.body,
+                            <Text numberOfLines={1} style={[styles.textCommon, {
+                                flex: 1,
+                                fontSize: myFontSize.xxSmall,
                                 fontFamily: myFonts.bodyBold,
-                                color: myColors.background,
-                            }
-                        ]}>Confirm Order</Text>
-                    </TouchableOpacity>
+                            }]}>{item.name}</Text>
+
+                            <Text style={[
+                                styles.textCommon,
+                                {
+                                    fontSize: myFontSize.body2,
+                                    fontFamily: myFonts.bodyBold,
+                                }
+                            ]}>Rs. 990</Text>
+                        </View>
+                        {/* <PricingRow title={item.name} value={'Rs. 1,300'} fontSize={myFontSize.xxSmall} fontFamily={myFonts.heading} /> */}
+                        <Spacer paddingT={myHeight(1)} />
+
+
+
+                        <Collapsible collapsed={pricingClose}>
+                            {/* Divider */}
+                            <View style={{ width: '100%', height: myHeight(0.13), backgroundColor: myColors.text3 }} />
+                            <Spacer paddingT={myHeight(1)} />
+
+                            <PricingRow title={'Subtotal'} value={'Rs. 480'} fontSize={myFontSize.xxSmall} fontFamily={myFonts.bodyBold} />
+                            <Spacer paddingT={myHeight(0.65)} />
+                            <PricingRow title={'Delivery Fee'} value={'Rs. 80'} fontSize={myFontSize.xxSmall} fontFamily={myFonts.bodyBold} />
+                            <Spacer paddingT={myHeight(0.65)} />
+                            <PricingRow title={'GST (13%)'} value={'Rs. 63'} fontSize={myFontSize.xxSmall} fontFamily={myFonts.bodyBold} />
+
+
+                            <Spacer paddingT={myHeight(1)} />
+
+                        </Collapsible>
+
+                    </View>
+
+                    <Spacer paddingT={myHeight(1)} />
+
+
                 </View>
+            </ScrollView>
 
-            </SafeAreaView>
+            {/* Confirm button */}
+            <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('DoneOrder')}
+                style={{
+                    backgroundColor: myColors.primaryT,
+                    borderRadius: myHeight(0.8),
+                    paddingVertical: myHeight(1.3),
+                    marginVertical: myHeight(1.5),
+                    marginHorizontal: myWidth(4),
+                    alignItems: 'center',
+                    justifyContent: 'center',
 
+                }}>
 
-        </>
+                <Text style={[
+                    styles.textCommon,
+                    {
+                        fontSize: myFontSize.body,
+                        fontFamily: myFonts.bodyBold,
+                        color: myColors.background,
+                    }
+                ]}>Confirm Order</Text>
+            </TouchableOpacity>
+        </SafeAreaView>
+
     )
 }
 
