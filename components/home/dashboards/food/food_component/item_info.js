@@ -61,24 +61,22 @@ export const ItemInfo = ({ item, navigate, plus = true }) => {
             }}>
                 {/* Plus */}
 
-                {
-                    plus &&
-                    <TouchableOpacity onPress={() => navigate('ItemCartScreen', { item: item })} style={{
-                        borderRadius: myHeight(2),
-                        padding: myHeight(0.5),
-                        position: 'absolute',
-                        zIndex: 1,
-                        bottom: -myHeight(0.3),
-                        right: -myHeight(0.6),
-                        backgroundColor: myColors.primaryT,
-                    }} activeOpacity={0.8}>
-                        <Image style={[{
-                            height: myHeight(1.2),
-                            width: myHeight(1.2),
-                            resizeMode: 'cover'
-                        }]}
-                            source={require('../../../../assets/home_main/plus.png')} />
-                    </TouchableOpacity>}
+                <TouchableOpacity onPress={() => navigate('ItemCartScreen', { item: item })} style={{
+                    borderRadius: myHeight(2),
+                    padding: myHeight(0.5),
+                    position: 'absolute',
+                    zIndex: 1,
+                    bottom: -myHeight(0.3),
+                    right: -myHeight(0.6),
+                    backgroundColor: myColors.primaryT,
+                }} activeOpacity={0.8}>
+                    <Image style={[{
+                        height: myHeight(1.2),
+                        width: myHeight(1.2),
+                        resizeMode: 'cover'
+                    }]}
+                        source={require('../../../../assets/home_main/plus.png')} />
+                </TouchableOpacity>
             </ImageBackground>
         </View>
 

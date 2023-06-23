@@ -67,6 +67,7 @@ export const ItemCheckoutScreen = ({ navigation, route }) => {
     const [instructionText, setInstructionText] = useState(null)
 
 
+
     //For Toggle
     const w = myWidth(10) - myHeight(1.8)
     const offset = useSharedValue(0);
@@ -94,6 +95,9 @@ export const ItemCheckoutScreen = ({ navigation, route }) => {
         }
     };
     return (
+
+
+
         <SafeAreaView style={{ flex: 1, backgroundColor: myColors.background }}>
 
             {/* Top Content */}

@@ -91,8 +91,9 @@ export const DoneOrder = ({ navigation, }) => {
                     }
                 ]}>Thank you for your time! It{'\n'}will take some time to{'\n'}prepare...</Text>
             </View>
+
             {/* Ok button */}
-            <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.goBack()}
+            <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('RestRating')}
                 style={{
                     backgroundColor: myColors.primaryT,
                     borderRadius: myHeight(0.8),
@@ -103,10 +104,11 @@ export const DoneOrder = ({ navigation, }) => {
                     justifyContent: 'center',
 
                 }}>
+
                 <Text style={[
                     styles.textCommon,
                     {
-                        fontSize: myFontSize.xBody,
+                        fontSize: myFontSize.body,
                         fontFamily: myFonts.bodyBold,
                         color: myColors.background,
                     }

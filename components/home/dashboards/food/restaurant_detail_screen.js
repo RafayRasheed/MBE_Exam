@@ -6,6 +6,7 @@ import { myFontSize, myFonts, myLetSpacing } from '../../../../ultils/myFonts';
 import { ResCategories, mainCourse } from './food_data';
 import Animated, { SlideInDown, SlideOutDown } from 'react-native-reanimated';
 import { ItemInfo } from './food_component/item_info';
+import { CartStatus } from './food_component/cart_status';
 
 export const RestaurantDetail = ({ route, navigation }) => {
     const [i, setI] = useState(0)
@@ -54,6 +55,7 @@ export const RestaurantDetail = ({ route, navigation }) => {
     return (
         <>
             <View style={styles.container}>
+                <CartStatus />
 
                 {/* Top */}
                 <ImageBackground imageStyle={{ borderRadius: 0 }} source={item.image} resizeMode={'cover'} style={styles.imageTop} >
@@ -160,9 +162,9 @@ export const RestaurantDetail = ({ route, navigation }) => {
                             <ItemInfo navigate={navigation.navigate} item={item} />
                         </TouchableOpacity>
                     )}
+
+                    <Spacer paddingT={myHeight(7)} />
                 </ScrollView>
-
-
 
             </View>
 
@@ -341,7 +343,7 @@ export const RestaurantDetail = ({ route, navigation }) => {
                                     <Spacer paddingT={myHeight(1.3)} />
 
                                     {mainCourse.map((main, i) =>
-                                        <ItemInfo key={i} plus={false} item={main} />
+                                        <ItemInfo key={i} navigate={navigation.navigate} item={main} />
                                     )}
                                 </ScrollView>
 

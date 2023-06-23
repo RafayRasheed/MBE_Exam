@@ -147,6 +147,78 @@ export const ItemDetail = ({ navigation, route }) => {
                     }
 
                 </View>
+
+                <Spacer paddingT={myHeight(2)} />
+
+                {/* Number of Items  */}
+                <View style={{ paddingHorizontal: myWidth(4), }}>
+
+                    <Text numberOfLines={1} style={[styles.textCommon, {
+                        fontSize: myFontSize.xBody,
+                        fontFamily: myFonts.heading,
+                    }]}>Chicken McMuffin Additions</Text>
+                    <Spacer paddingT={myHeight(1)} />
+                    <View style={{ flexDirection: 'row', alignSelf: 'flex-start' }}>
+                        <View style={{ flex: 1 }}>
+                            <Text numberOfLines={1} style={[styles.textCommon, {
+                                fontSize: myFontSize.xBody,
+                                fontFamily: myFonts.body,
+                            }]}>Chicken Patty [130.0 Cals]</Text>
+                            <Spacer paddingT={myHeight(0.5)} />
+
+                            <Text numberOfLines={1} style={[styles.textCommon, {
+                                fontSize: myFontSize.body3,
+                                fontFamily: myFonts.body,
+                            }]}>CA $1.39</Text>
+                            <Spacer paddingT={myHeight(1)} />
+
+                            <Text numberOfLines={1} style={[styles.textCommon, {
+                                fontSize: myFontSize.body3,
+                                fontFamily: myFonts.body,
+                                color: '#4CD964'
+                            }]}>Popular</Text>
+                        </View>
+
+                        {/* Plus Minus */}
+                        <View style={{
+                            flexDirection: 'row', alignItems: 'center',
+                            alignSelf: 'flex-start', marginTop: -myHeight(0.4)
+                        }}>
+                            {/* minus */}
+                            <TouchableOpacity activeOpacity={0.75} onPress={() => null}>
+                                <Image style={{
+                                    height: myHeight(3.8),
+                                    width: myHeight(3.8),
+                                    resizeMode: 'contain',
+                                    marginTop: myHeight(0.6)
+
+                                }} source={require('../../../assets/home_main/dashboards/minusBtn.png')} />
+                            </TouchableOpacity>
+
+                            <Spacer paddingEnd={myWidth(2.5)} />
+                            {/* count */}
+                            <Text numberOfLines={1} style={[styles.textCommon, {
+                                fontSize: myFontSize.body3,
+                                fontFamily: myFonts.bodyBold,
+                            }]}>3</Text>
+
+                            <Spacer paddingEnd={myWidth(2.5)} />
+                            {/* plus */}
+                            <TouchableOpacity activeOpacity={0.75} onPress={() => null}>
+                                <Image style={{
+                                    height: myHeight(3.8),
+                                    width: myHeight(3.8),
+                                    marginTop: myHeight(0.6),
+                                    resizeMode: 'contain',
+                                }} source={require('../../../assets/home_main/dashboards/plusBtn.png')} />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <Spacer paddingT={myHeight(1)} />
+
+                </View>
+
+
             </ScrollView>
 
         </SafeAreaView>

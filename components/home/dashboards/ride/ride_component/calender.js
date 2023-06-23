@@ -1,7 +1,7 @@
 import { Image, Button, TouchableOpacity, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import { myColors } from '../../../../../ultils/myColors'
-import { myWidth, myHeight, Spacer } from '../../../../common'
+import { myWidth, myHeight, Spacer, ios } from '../../../../common'
 import { myFontSize, myFonts, myLetSpacing } from '../../../../../ultils/myFonts'
 import { Calendar, NewCalendarList } from 'react-native-calendars'
 // import { Calendar, LocaleConfig } from 'react-native-calendars';
@@ -24,15 +24,17 @@ export const CalenderDate = ({ show, value, time = null }) => {
     return (
         <TouchableOpacity onPress={() => show(false)} style={styles.container}>
 
+
             <DateTimePickerModal
                 minimumDate={time ? null : new Date()}
                 accentColor={myColors.primaryT}
                 buttonTextColorIOS={myColors.primaryT}
                 isVisible={true}
-                modalStyleIOS={{ backgroundColor: '#00000030', margin: 0, }}
+                modalStyleIOS={{ backgroundColor: '#00000030', margin: 0, marginBottom: ios ? myHeight(1) : 0, }}
                 mode={time ? 'time' : 'date'}
                 onConfirm={handleConfirm}
                 onCancel={hideDatePicker}
+
             />
 
 

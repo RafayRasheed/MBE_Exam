@@ -13,7 +13,8 @@ import { RestaurantMoreInfo } from "./rest_more_info_screen";
 import { ItemCartScreen } from "./item_cart_screen";
 import { enableScreens } from "react-native-screens";
 import { ItemCheckoutScreen } from "./item_checkout_screen";
-import { DoneOrder } from "./done_order";
+import { DoneOrder } from "./rest_done_order";
+import { RestRating, } from "./rest_rating_screen";
 
 
 const FoodTAB = createNativeStackNavigator();
@@ -83,6 +84,7 @@ export const FoodNavigator = ({ navigation, route }) => {
                 <FoodTAB.Screen component={ItemCartScreen} name="ItemCartScreen" />
                 <FoodTAB.Screen component={ItemCheckoutScreen} name="ItemCheckoutScreen" />
                 <FoodTAB.Screen component={DoneOrder} name="DoneOrder" />
+                <FoodTAB.Screen component={RestRating} name="RestRating" />
 
 
 

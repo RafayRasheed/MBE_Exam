@@ -25,17 +25,21 @@ export const RestaurantMoreInfo = ({ navigation, route }) => {
                     style={{
                         backgroundColor: myColors.background,
                         position: 'absolute',
-                        paddingHorizontal: myWidth(3.5),
-                        paddingVertical: myHeight(1),
                         borderRadius: myWidth(2),
-                        margin: myHeight(1.5)
+                        margin: myHeight(1.5),
+                        backgroundColor: myColors.background,
+                        borderRadius: myHeight(1),
+                        height: myHeight(3.8),
+                        width: myHeight(3.8),
+                        justifyContent: 'center',
+                        alignItems: 'center',
                     }}>
                     <Image style={{
-                        height: myHeight(1.8),
-                        width: myHeight(1.8) * 0.5,
+                        height: myHeight(3),
+                        width: myHeight(3),
                         resizeMode: 'contain',
                         tintColor: myColors.text
-                    }} source={require('../../../assets/startup/arrowL.png')} />
+                    }} source={require('../../../assets/home_main/dashboards/back2.png')} />
                 </TouchableOpacity>
             </View>
 
