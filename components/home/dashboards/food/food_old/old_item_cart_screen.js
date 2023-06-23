@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, TextInput, TouchableOpacity, View, SafeAreaView, Image, Text, ScrollView, StatusBar } from 'react-native';
-import { myColors } from '../../../../ultils/myColors';
-import { Spacer, ios, myHeight, myWidth } from '../../../common';
-import { myFonts, myLetSpacing, myFontSize } from '../../../../ultils/myFonts';
+import { myColors } from '../../../../../ultils/myColors';
+import { Spacer, ios, myHeight, myWidth } from '../../../../common';
+import { myFonts, myLetSpacing, myFontSize } from '../../../../../ultils/myFonts';
 import Animated, { SlideInDown, SlideOutDown } from 'react-native-reanimated';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { CalenderDate } from '../ride/ride_component/calender';
+import { CalenderDate } from '../../ride/ride_component/calender';
 
 // Component Circle Number
 const Number_text = ({ number, name, fill = true }) => (
@@ -58,7 +58,7 @@ const PricingRow = ({ title, value, fontSize, fontFamily }) => (
 
 export const ItemCartScreen = ({ navigation, route }) => {
     const { item } = route.params
-    const [promoModal, setPromoModal] = useState(false)
+    const [promoModal, setPromoModal] = useState(true)
     const [promoCode, setPromoCode] = useState(null)
     const [dateTimeModal, setDateTimeModal] = useState(false)
     const [showCalenderModal, setShowCalenderModal] = useState(false)

@@ -5,7 +5,7 @@ import { myWidth, myHeight, Spacer } from '../../../../common'
 import { myFontSize, myFonts, myLetSpacing } from '../../../../../ultils/myFonts'
 
 
-export const CartStatus = () => {
+export const CartStatus = ({ navigate }) => {
     return (
         <TouchableOpacity activeOpacity={0.95} style={{
             flexDirection: 'row', paddingHorizontal: myWidth(4),
@@ -13,7 +13,8 @@ export const CartStatus = () => {
             width: myWidth(90), alignSelf: 'center',
             justifyContent: 'space-between', position: 'absolute', bottom: 0, zIndex: 10,
             borderRadius: myWidth(1.5), alignItems: 'center', marginVertical: myHeight(1)
-        }}>
+        }}
+            onPress={() => navigate('ItemCartScreen',)}>
             <View style={{
                 height: myHeight(3.2),
                 minWidth: myHeight(3.2),

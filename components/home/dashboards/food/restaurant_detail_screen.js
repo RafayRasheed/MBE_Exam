@@ -25,7 +25,7 @@ export const RestaurantDetail = ({ route, navigation }) => {
 
     }
     function onViewStoreInfo() {
-
+        navigation.navigate('RestaurantMoreInfo', { restaurant: item })
     }
     React.useLayoutEffect(() => {
 
@@ -55,7 +55,7 @@ export const RestaurantDetail = ({ route, navigation }) => {
     return (
         <>
             <View style={styles.container}>
-                <CartStatus />
+                <CartStatus navigate={navigation.navigate} />
 
                 {/* Top */}
                 <ImageBackground imageStyle={{ borderRadius: 0 }} source={item.image} resizeMode={'cover'} style={styles.imageTop} >

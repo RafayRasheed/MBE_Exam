@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { StyleSheet, TextInput, TouchableOpacity, View, SafeAreaView, Image, Text, ScrollView, StatusBar } from 'react-native';
-import { myColors } from '../../../../ultils/myColors';
-import { Spacer, ios, myHeight, myWidth } from '../../../common';
-import { myFonts, myLetSpacing, myFontSize } from '../../../../ultils/myFonts';
+import { myColors } from '../../../../../ultils/myColors';
+import { Spacer, ios, myHeight, myWidth } from '../../../../common';
+import { myFonts, myLetSpacing, myFontSize } from '../../../../../ultils/myFonts';
 import Animated, { FadeIn, SlideInDown, SlideInUp, SlideOutDown, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Collapsible from 'react-native-collapsible';
-import { saveLocations } from '../ride/ride_data';
+import { saveLocations } from '../../ride/ride_data';
 
 // Component Circle Number
 const Number_text = ({ number, name, fill = true }) => (
@@ -57,7 +57,7 @@ const PricingRow = ({ title, value, fontSize, fontFamily }) => (
 )
 
 
-export const ItemCheckoutScreen = ({ navigation, route }) => {
+export const OldItemCheckout = ({ navigation, route }) => {
     const { item } = route.params
     const [deliveryClose, setDeliveryClose] = useState(true)
     const [showInputInstruction, setShowInputInstruction] = useState(false)

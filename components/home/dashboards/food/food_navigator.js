@@ -4,25 +4,23 @@ import { FilterScreen } from "./filter_screen";
 import { RestaurantDetail } from "./restaurant_detail_screen";
 import React, { useEffect, useState } from "react";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
-import { ios, myHeight, myWidth } from "../../../common";
-import { Platform, StatusBar } from "react-native";
+import { ios, } from "../../../common";
+import { StatusBar } from "react-native";
 import { myColors } from "../../../../ultils/myColors";
 import { ItemDetail } from "./item_detail_screen";
 import { RestaurantAll } from "./restuarant_all_screen";
 import { RestaurantMoreInfo } from "./rest_more_info_screen";
-import { ItemCartScreen } from "./item_cart_screen";
-import { enableScreens } from "react-native-screens";
-import { ItemCheckoutScreen } from "./item_checkout_screen";
+
 import { DoneOrder } from "./rest_done_order";
 import { RestRating, } from "./rest_rating_screen";
+import { ResturantCart } from "./rest_cart_screen";
+import { ResturantCheckout } from "./rest_checkout_screen";
 
 
 const FoodTAB = createNativeStackNavigator();
 androidStatusHide = ['RestaurantDetail']
-hideBottomList = ['ItemCartScreen', 'ItemCheckoutScreen']
 export const FoodNavigator = ({ navigation, route }) => {
     const [hideStatus, setHideStatus] = useState(false)
-    const [hideBottom, setHideBottom] = useState(false)
     React.useLayoutEffect(() => {
         if (!ios) {
 
@@ -33,37 +31,11 @@ export const FoodNavigator = ({ navigation, route }) => {
                 setHideStatus(false)
             }
         }
-        if (hideBottomList.includes(getFocusedRouteNameFromRoute(route))) {
 
-            setHideBottom(true)
-
-        }
-        else {
-            setHideBottom(false)
-        }
     }, [navigation, route])
 
 
-    useEffect(() => {
-        // if (hideBottom) {
-        //     navigation.getParent().setOptions({ tabBarStyle: { height: 0, display: 'none', } })
 
-        // } else {
-        //     console.log('On')
-        //     navigation.getParent().setOptions({
-        //         tabBarStyle: {
-        //             display: 'flex',
-        //             backgroundColor: myColors.background,
-        //             paddingHorizontal: myWidth(3.5),
-        //             alignItems: 'center',
-        //             justifyContent: 'center',
-        //             height: myHeight(9.5),
-        //             paddingBottom: ios ? myHeight(2.2) : myHeight(1.5),
-        //             paddingTop: myHeight(2.5),
-        //         },
-        //     })
-        // }
-    }, [hideBottom])
     return (
         <>
             <StatusBar backgroundColor={hideStatus ? 'transparent' : myColors.background} translucent={hideStatus} />
@@ -81,8 +53,8 @@ export const FoodNavigator = ({ navigation, route }) => {
                 <FoodTAB.Screen component={ItemDetail} name="ItemDetail" />
                 <FoodTAB.Screen component={RestaurantAll} name="RestaurantAll" />
                 <FoodTAB.Screen component={RestaurantMoreInfo} name="RestaurantMoreInfo" />
-                <FoodTAB.Screen component={ItemCartScreen} name="ItemCartScreen" />
-                <FoodTAB.Screen component={ItemCheckoutScreen} name="ItemCheckoutScreen" />
+                <FoodTAB.Screen component={ResturantCart} name="ItemCartScreen" />
+                <FoodTAB.Screen component={ResturantCheckout} name="ResCheckoutScreen" />
                 <FoodTAB.Screen component={DoneOrder} name="DoneOrder" />
                 <FoodTAB.Screen component={RestRating} name="RestRating" />
 

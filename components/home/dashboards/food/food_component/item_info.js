@@ -5,6 +5,9 @@ import { myWidth, myHeight, Spacer } from '../../../../common'
 import { myFontSize, myFonts, myLetSpacing } from '../../../../../ultils/myFonts'
 
 export const ItemInfo = ({ item, navigate, plus = true }) => {
+    function onPlus() {
+
+    }
     return (
         <View style={{ flexDirection: 'row', paddingTop: myHeight(1.3), paddingBottom: myHeight(0.86) }}>
             <View style={{ flex: 1 }}>
@@ -61,7 +64,7 @@ export const ItemInfo = ({ item, navigate, plus = true }) => {
             }}>
                 {/* Plus */}
 
-                <TouchableOpacity onPress={() => navigate('ItemCartScreen', { item: item })} style={{
+                <TouchableOpacity onPress={onPlus} style={{
                     borderRadius: myHeight(2),
                     padding: myHeight(0.5),
                     position: 'absolute',
