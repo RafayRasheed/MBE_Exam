@@ -10,11 +10,8 @@ import { myColors } from "../../../../ultils/myColors";
 import { ItemDetail } from "./item_detail_screen";
 import { RestaurantAll } from "./restuarant_all_screen";
 import { RestaurantMoreInfo } from "./rest_more_info_screen";
+import { RestCartNavigator } from "./restaurant_cart/res_cart_navigator";
 
-import { DoneOrder } from "./rest_done_order";
-import { RestRating, } from "./rest_rating_screen";
-import { ResturantCart } from "./rest_cart_screen";
-import { ResturantCheckout } from "./rest_checkout_screen";
 
 
 const FoodTAB = createNativeStackNavigator();
@@ -53,10 +50,8 @@ export const FoodNavigator = ({ navigation, route }) => {
                 <FoodTAB.Screen component={ItemDetail} name="ItemDetail" />
                 <FoodTAB.Screen component={RestaurantAll} name="RestaurantAll" />
                 <FoodTAB.Screen component={RestaurantMoreInfo} name="RestaurantMoreInfo" />
-                <FoodTAB.Screen component={ResturantCart} name="ItemCartScreen" />
-                <FoodTAB.Screen component={ResturantCheckout} name="ResCheckoutScreen" />
-                <FoodTAB.Screen component={DoneOrder} name="DoneOrder" />
-                <FoodTAB.Screen component={RestRating} name="RestRating" />
+                <FoodTAB.Screen component={RestCartNavigator} name="RestCartNavigator" />
+
 
 
 

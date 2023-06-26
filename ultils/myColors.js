@@ -19,6 +19,7 @@ export const myColors = {
     text2: '#1F2937',
     text3: '#242424',
     dot: '#D9D9D9',
+    dot2: '#C5C5C5',
     background: '#FFFFFF',
     offColor: '#9B9B9B',
     offColor2: "#B7B7B7",

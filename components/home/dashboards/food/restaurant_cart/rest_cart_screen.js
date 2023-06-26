@@ -1,27 +1,30 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, TextInput, TouchableOpacity, View, SafeAreaView, Image, Text, ScrollView, StatusBar, Easing } from 'react-native';
-import { Spacer, ios, myHeight, myWidth } from '../../../common';
-import { myColors } from '../../../../ultils/myColors';
-import { myFonts, myLetSpacing, myFontSize } from '../../../../ultils/myFonts';
+import { Spacer, ios, myHeight, myWidth } from '../../../../common';
+import { myColors } from '../../../../../ultils/myColors';
+import { myFonts, myLetSpacing, myFontSize } from '../../../../../ultils/myFonts';
 import Animated, { FadeIn, SlideInDown, SlideOutDown } from 'react-native-reanimated';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Collapsible from 'react-native-collapsible';
+import { Schedule } from './rest_cart_component/schedule';
 const items = [
     {
         name: 'Big Mac 1',
         add: '590 Cals',
         num: '4',
         price: 'CAD $12.99',
-        image: require('../../../assets/home_main/daily_special/dailyS2.jpg')
+        image: require('../../../../assets/home_main/daily_special/dailyS2.jpg')
     },
     {
         name: 'Chicken Patty',
         add: '590 Cals',
         num: '3',
         price: 'CAD $10.99',
-        image: require('../../../assets/home_main/daily_special/dailyS2.jpg')
+        image: require('../../../../assets/home_main/daily_special/dailyS2.jpg')
     },
 ]
+
+
 // Component Circle Number
 const PricingRow = ({ title, value, fontSize, fontFamily, color = myColors.text }) => (
     <View style={{
@@ -50,6 +53,10 @@ export const ResturantCart = ({ navigation }) => {
     const [showNote, setShowNote] = useState(false)
 
 
+
+    function onCheckout() {
+        navigation.navigate('ResturantCheckout', { promoSet: promoCodeUpdate })
+    }
     function onActivateCode() {
         setPromoModal(false)
         setPromoCodeUpdate(promoCode)
@@ -94,7 +101,7 @@ export const ResturantCart = ({ navigation }) => {
                                 width: myHeight(2.8),
                                 resizeMode: 'contain',
                                 tintColor: myColors.text
-                            }} source={require('../../../assets/home_main/dashboards/back2.png')} />
+                            }} source={require('../../../../assets/home_main/dashboards/back2.png')} />
                         </TouchableOpacity>
 
                         <Spacer paddingEnd={myWidth(2)} />
@@ -201,7 +208,7 @@ export const ResturantCart = ({ navigation }) => {
                                             resizeMode: 'contain',
                                             marginTop: myHeight(0.6)
 
-                                        }} source={require('../../../assets/home_main/dashboards/minusBtn.png')} />
+                                        }} source={require('../../../../assets/home_main/dashboards/minusBtn.png')} />
                                     </TouchableOpacity>
 
                                     <Spacer paddingEnd={myWidth(2.5)} />
@@ -219,7 +226,7 @@ export const ResturantCart = ({ navigation }) => {
                                             width: myHeight(3.4),
                                             marginTop: myHeight(0.6),
                                             resizeMode: 'contain',
-                                        }} source={require('../../../assets/home_main/dashboards/plusBtn.png')} />
+                                        }} source={require('../../../../assets/home_main/dashboards/plusBtn.png')} />
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -240,7 +247,7 @@ export const ResturantCart = ({ navigation }) => {
                             height: myHeight(2.1),
                             width: myHeight(2.1),
                             resizeMode: 'contain',
-                        }} source={require('../../../assets/home_main/dashboards/plus2.png')} />
+                        }} source={require('../../../../assets/home_main/dashboards/plus2.png')} />
 
                         <Spacer paddingEnd={myWidth(2) + myHeight(0.2)} />
                         <Text numberOfLines={1} style={[styles.textCommon, {
@@ -259,7 +266,7 @@ export const ResturantCart = ({ navigation }) => {
                                 width: myHeight(1.8),
                                 resizeMode: 'contain',
                                 tintColor: myColors.primaryT,
-                            }} source={require('../../../assets/home_main/go.png')} />
+                            }} source={require('../../../../assets/home_main/go.png')} />
                         </View>
 
                     </TouchableOpacity>
@@ -336,7 +343,7 @@ export const ResturantCart = ({ navigation }) => {
                             <Text style={[
                                 styles.textCommon,
                                 {
-                                    fontSize: myFontSize.xBody,
+                                    fontSize: myFontSize.body2,
                                     fontFamily: myFonts.heading,
                                     color: myColors.background,
                                 }
@@ -346,14 +353,14 @@ export const ResturantCart = ({ navigation }) => {
 
 
                     <Spacer paddingT={myHeight(1)} />
-                    {/* promo && add promo & go */}
+                    {/* promo && add promo  */}
                     <TouchableOpacity style={{ flexDirection: 'row', alignItems: "center" }}
                         activeOpacity={0.8} onPress={() => setPromoModal(true)}>
                         <Image style={{
                             height: myHeight(2.5),
                             width: myHeight(2.5),
                             resizeMode: 'contain',
-                        }} source={require('../../../assets/home_main/dashboards/promo.png')} />
+                        }} source={require('../../../../assets/home_main/dashboards/promo.png')} />
 
                         <Spacer paddingEnd={myWidth(2)} />
                         <Text numberOfLines={1} style={[styles.textCommon, {
@@ -369,55 +376,59 @@ export const ResturantCart = ({ navigation }) => {
                     <View style={{ borderTopWidth: myHeight(0.15), borderColor: myColors.dot, }} />
                     <Spacer paddingT={myHeight(1.5)} />
 
-                    {/* no on items */}
-                    <PricingRow title={'items'} value={'4'} fontFamily={myFonts.body} fontSize={myFontSize.body2} />
+                    {/* Pricing */}
+                    <View>
 
-                    <Spacer paddingT={myHeight(2)} />
-                    {/* Subtotal  */}
-                    <PricingRow title={'Subtotal'} value={'CAD $18.98'} fontFamily={myFonts.bodyBold} fontSize={myFontSize.xBody} />
+                        {/* no on items */}
+                        <PricingRow title={'items'} value={'4'} fontFamily={myFonts.body} fontSize={myFontSize.body2} />
 
-                    <Spacer paddingT={myHeight(1.5)} />
-                    {/* Delivery Fees */}
-                    <PricingRow title={' Delivery Fees'} value={'CAD $0.99'} fontFamily={myFonts.body} fontSize={myFontSize.small3} />
+                        <Spacer paddingT={myHeight(2)} />
+                        {/* Subtotal  */}
+                        <PricingRow title={'Subtotal'} value={'CAD $18.98'} fontFamily={myFonts.bodyBold} fontSize={myFontSize.xBody} />
+
+                        <Spacer paddingT={myHeight(1.5)} />
+                        {/* Delivery Fees */}
+                        <PricingRow title={' Delivery Fees'} value={'CAD $0.99'} fontFamily={myFonts.body} fontSize={myFontSize.small3} />
+
+                        <Spacer paddingT={myHeight(1)} />
+                        {/* Delivery Fees */}
+                        <PricingRow title={' Fees & Estimated Tax'} value={'CAD $2.46'} fontFamily={myFonts.body} fontSize={myFontSize.small3} />
+
+                        <Spacer paddingT={myHeight(2)} />
+                        {/* Divider */}
+                        <View style={{ borderTopWidth: myHeight(0.15), borderColor: myColors.dot, }} />
+
+                        <Spacer paddingT={myHeight(1.5)} />
+                        {/* Total */}
+                        <PricingRow title={'Total'} value={'CAD $21.44'} fontFamily={myFonts.heading} fontSize={myFontSize.xBody} color={myColors.primaryT} />
+                    </View>
 
                     <Spacer paddingT={myHeight(1)} />
-                    {/* Delivery Fees */}
-                    <PricingRow title={' Fees & Estimated Tax'} value={'CAD $2.46'} fontFamily={myFonts.body} fontSize={myFontSize.small3} />
+                    {/* Go to Checkout */}
+                    <TouchableOpacity activeOpacity={0.9} onPress={onCheckout}
+                        style={{
+                            backgroundColor: myColors.primaryT,
+                            borderRadius: myHeight(0.8),
+                            paddingVertical: myHeight(1.1),
+                            marginVertical: myHeight(1.5),
+                            // marginHorizontal: myWidth(10),
+                            alignItems: 'center',
+                            justifyContent: 'center',
 
-                    <Spacer paddingT={myHeight(2)} />
-                    {/* Divider */}
-                    <View style={{ borderTopWidth: myHeight(0.15), borderColor: myColors.dot, }} />
+                        }}>
 
-                    <Spacer paddingT={myHeight(1.5)} />
-                    {/* Total */}
-                    <PricingRow title={'Total'} value={'CAD $21.44'} fontFamily={myFonts.heading} fontSize={myFontSize.xBody} color={myColors.primaryT} />
-
+                        <Text style={[
+                            styles.textCommon,
+                            {
+                                fontSize: myFontSize.body2,
+                                fontFamily: myFonts.heading,
+                                color: myColors.background,
+                            }
+                        ]}>Go to Checkout</Text>
+                    </TouchableOpacity>
                 </ScrollView>
 
 
-                {/* Go to Checkout */}
-                <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('ResCheckoutScreen')}
-                    style={{
-                        backgroundColor: myColors.primaryT,
-                        borderRadius: myHeight(0.8),
-                        paddingVertical: myHeight(1.1),
-                        marginVertical: myHeight(1.5),
-                        marginHorizontal: myWidth(4),
-                        marginHorizontal: myWidth(10),
-                        alignItems: 'center',
-                        justifyContent: 'center',
-
-                    }}>
-
-                    <Text style={[
-                        styles.textCommon,
-                        {
-                            fontSize: myFontSize.xBody,
-                            fontFamily: myFonts.heading,
-                            color: myColors.background,
-                        }
-                    ]}>Go to Checkout</Text>
-                </TouchableOpacity>
 
             </SafeAreaView>
 
@@ -539,6 +550,8 @@ export const ResturantCart = ({ navigation }) => {
                 </View>
 
             }
+
+
 
         </>
     )
