@@ -25,7 +25,8 @@ export const ItemDetail = ({ navigation, route }) => {
                             width: myHeight(3.8),
                             justifyContent: 'center',
                             alignItems: 'center',
-                            margin: myHeight(1.5)
+                            marginVertical: myHeight(1.2),
+                            marginHorizontal: myWidth(4)
                         }}>
                         <Image style={{
                             height: myHeight(3.2),

@@ -109,6 +109,7 @@ export const ItemCartScreen = ({ navigation, route }) => {
     function formT(date) {
         const a = date.toLocaleTimeString().split(' ')
         const b = a[0].split(':')
+
         return `${b[0]}:${b[1]} ${a[1]}`
     }
 

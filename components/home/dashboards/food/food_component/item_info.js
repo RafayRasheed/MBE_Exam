@@ -63,7 +63,7 @@ export const ItemInfo = ({ item, navigate, plus = true }) => {
                 resizeMode: 'cover'
             }}>
                 {/* Plus */}
-
+                {/* 
                 <TouchableOpacity onPress={onPlus} style={{
                     borderRadius: myHeight(2),
                     padding: myHeight(0.5),
@@ -79,7 +79,7 @@ export const ItemInfo = ({ item, navigate, plus = true }) => {
                         resizeMode: 'cover'
                     }]}
                         source={require('../../../../assets/home_main/plus.png')} />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </ImageBackground>
         </View>
 

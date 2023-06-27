@@ -7,7 +7,7 @@ import { Calendar, NewCalendarList } from 'react-native-calendars'
 // import { Calendar, LocaleConfig } from 'react-native-calendars';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-export const CalenderDate = ({ show, value, time = null }) => {
+export const CalenderDate = ({ show, value, time = null, currDate = null, }) => {
 
 
     const hideDatePicker = () => {
@@ -28,6 +28,7 @@ export const CalenderDate = ({ show, value, time = null }) => {
             <DateTimePickerModal
                 minimumDate={time ? null : new Date()}
                 accentColor={myColors.primaryT}
+                date={currDate ? currDate : new Date()}
                 buttonTextColorIOS={myColors.primaryT}
                 isVisible={true}
                 modalStyleIOS={{ backgroundColor: '#00000030', margin: 0, marginBottom: ios ? myHeight(1) : 0, }}

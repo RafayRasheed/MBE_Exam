@@ -3,14 +3,69 @@ import { myFonts, myLetSpacing, myFontSize } from '../../../../../../ultils/myFo
 
 import { myColors } from '../../../../../../ultils/myColors';
 import { StyleSheet, TextInput, TouchableOpacity, View, SafeAreaView, Image, Text, ScrollView, StatusBar, Easing } from 'react-native';
+import { CalenderDate } from '../../../ride/ride_component/calender';
+import { useEffect, useState } from 'react';
 
 
-export const Schedule = ({ setDateTime, hideModal, setDeleivry }) => {
+export const Schedule = ({ setDateTime, setShowModal, setDeleivry }) => {
+    const [showCalenderModal, setShowCalenderModal] = useState(false)
+    const [PickUpDate, setPickUpDate] = useState(null)
+    const [PickUpTime, setPickUpTime] = useState(null)
+
     function onUpdate() {
-        setDateTime('jhyvb')
-        hideModal(false)
-        setDeleivry(false)
+
+        if (PickUpDate && PickUpTime) {
+            const dt = `${PickUpDate}, ${PickUpTime}`
+            setDateTime(dt)
+            setDeleivry(false)
+            hideModal()
+
+        }
+
     }
+    function hideModal() {
+        setShowModal(false)
+    }
+
+    function formatTime(date) {
+        const t = formT(date)
+
+        setPickUpTime(t)
+
+    }
+    function formatDate(date) {
+        const t = formD(date)
+
+        setPickUpDate(t)
+
+    }
+    function formD(date) {
+        a = date.toDateString().split(' ')
+        const t = `${a[1]} ${a[2]}`
+        return t
+    }
+
+    function formT(date) {
+        const a = date.toLocaleTimeString().split(' ')
+        const b = a[0].split(':')
+
+        return `${b[0]}:${b[1]} ${a[1]}`
+    }
+
+
+
+    // useEffect(() => {
+    //     if (!PickUpDate && !PickUpTime) {
+
+    //         const date = formD(new Date())
+    //         const time = formT(new Date())
+
+    //         setPickUpTime(time)
+    //         setPickUpDate(date)
+
+    //         // formatDate(new Date())
+    //     }
+    // }, [])
 
 
     return (
@@ -35,7 +90,7 @@ export const Schedule = ({ setDateTime, hideModal, setDeleivry }) => {
                         <Spacer paddingEnd={myWidth(3)} />
                         {/* Back */}
                         <TouchableOpacity
-                            activeOpacity={0.7} onPress={() => navigation.goBack()}
+                            activeOpacity={0.7} onPress={hideModal}
                             style={{
                                 height: myHeight(3.8),
                                 width: myHeight(3.8),
@@ -72,7 +127,7 @@ export const Schedule = ({ setDateTime, hideModal, setDeleivry }) => {
 
                     {/*Calender && Select Date */}
                     <TouchableOpacity activeOpacity={0.85}
-                        onPress={() => null}
+                        onPress={() => setShowCalenderModal(true)}
                         style={{
                             flexDirection: 'row', alignItems: 'center',
                             paddingVertical: myHeight(1.4), paddingHorizontal: myWidth(4),
@@ -92,14 +147,14 @@ export const Schedule = ({ setDateTime, hideModal, setDeleivry }) => {
                             fontSize: myFontSize.body2,
                             fontFamily: myFonts.bodyBold,
                             color: myColors.textL4
-                        }]}>Select Date</Text>
+                        }]}>{PickUpDate ? PickUpDate : 'Select Date'}</Text>
                     </TouchableOpacity>
 
                     <Spacer paddingT={myHeight(2)} />
 
                     {/*Clock && Select Time */}
                     <TouchableOpacity activeOpacity={0.85}
-                        onPress={() => null}
+                        onPress={() => setShowCalenderModal('time')}
                         style={{
                             flexDirection: 'row', alignItems: 'center',
                             paddingVertical: myHeight(1.4), paddingHorizontal: myWidth(4),
@@ -119,7 +174,7 @@ export const Schedule = ({ setDateTime, hideModal, setDeleivry }) => {
                             fontSize: myFontSize.body2,
                             fontFamily: myFonts.bodyBold,
                             color: myColors.textL4
-                        }]}>Select Time</Text>
+                        }]}>{PickUpTime ? PickUpTime : 'Select Time'}</Text>
                     </TouchableOpacity>
 
 
@@ -147,6 +202,12 @@ export const Schedule = ({ setDateTime, hideModal, setDeleivry }) => {
                     }
                 ]}>Update</Text>
             </TouchableOpacity>
+
+
+            {
+                showCalenderModal &&
+                <CalenderDate show={setShowCalenderModal} time={showCalenderModal == 'time' ? true : null} value={showCalenderModal == 'time' ? formatTime : formatDate} />
+            }
         </SafeAreaView>
 
     )
