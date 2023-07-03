@@ -181,6 +181,8 @@ export const Schedule = ({ setDateTime, setShowModal, setDeleivry }) => {
                 </View>
 
             </SafeAreaView>
+
+            {/* Update Button */}
             <TouchableOpacity activeOpacity={0.9} onPress={onUpdate}
                 style={{
                     backgroundColor: myColors.primaryT,

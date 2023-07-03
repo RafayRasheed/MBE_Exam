@@ -6,14 +6,14 @@ import Animated, { SlideInDown } from 'react-native-reanimated';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { myColors } from '../../../../../ultils/myColors';
 import { Schedule } from './rest_cart_component/schedule';
-import { Delivery } from './rest_cart_component/delivery';
+import { PickOrder } from './rest_cart_component/pickOrder';
 
 export const ResturantCheckout = ({ navigation, route }) => {
     const { promoSet } = route.params
 
     const [onDelivery, setOnDelivery] = useState(true)
     const [isStandardDelivery, setIsStandardDelivery] = useState(true)
-    const [scheduleTIme, setScheduleTime] = useState(null)
+    const [scheduleTime, setScheduleTime] = useState(null)
 
 
     //Modals
@@ -24,9 +24,12 @@ export const ResturantCheckout = ({ navigation, route }) => {
     const [promoCodeUpdate, setPromoCodeUpdate] = useState(promoSet)
     const [promoModal, setPromoModal] = useState(false)
 
-    const [showDeliveryModal, setShowDeliveryModal] = useState(false)
     const [addressName, setAddressName] = useState('Home')
     const [address, setAddress] = useState('Scarborough, ON M1V 5C4')
+
+    const [showOrderPickModal, setShowOrderPickModal] = useState(null)
+    const [orderPick, setOrderPick] = useState('Meet at my door')
+    const [orderPickInstru, setOrderPickInstru] = useState(null)
 
     const tips = ['$1.50', '$2.50', '$3.50', 'Other']
     const [tipIndex, setTipIndex] = useState(0)
@@ -42,10 +45,21 @@ export const ResturantCheckout = ({ navigation, route }) => {
         setPromoCodeUpdate(promoCode)
     }
 
+    function onDeliveryLoc() {
+        navigation.navigate('Address', { name: 'Delivery Address' })
+    }
+    function onPickOrder() {
+        setShowOrderPickModal(true)
+    }
+
+    function onPaymentMethod() {
+        navigation.navigate('RestaurantPayment')
+    }
 
 
-    const MidRow = ({ icon, title, line, showModal }) => (
-        <TouchableOpacity activeOpacity={0.8} onPress={() => showModal(true)}>
+
+    const MidRow = ({ icon, title, line, showModal, showGO = true }) => (
+        <TouchableOpacity activeOpacity={0.8} onPress={showModal}>
             <Spacer paddingT={myHeight(2)} />
 
             <View style={{ flexDirection: 'row', }}
@@ -77,7 +91,7 @@ export const ResturantCheckout = ({ navigation, route }) => {
                     width: myHeight(2),
                     resizeMode: 'contain',
                     marginTop: myHeight(0.4),
-                    tintColor: myColors.dot2
+                    tintColor: showGO ? myColors.dot2 : myColors.background
                 }} source={require('../../../../assets/home_main/go.png')} />
 
             </View>
@@ -346,28 +360,21 @@ export const ResturantCheckout = ({ navigation, route }) => {
 
                         {/*Delivery Loc */}
                         <MidRow icon={require('../../../../assets/home_main/dashboards/foods/home2.png')}
-                            title={addressName} line={address} showModal={setShowDeliveryModal} />
+                            title={addressName} line={address} showModal={onDeliveryLoc} />
 
                         {/* Divider */}
                         <View style={{ borderTopWidth: myHeight(0.18), borderColor: myColors.dot, }} />
 
                         {/*place order */}
                         <MidRow icon={require('../../../../assets/home_main/dashboards/foods/bag.png')}
-                            title={'Leave it at my door'} line={'Add instructions for delivery'} />
+                            title={orderPick} line={orderPickInstru ? orderPickInstru : 'Add instructions for delivery'} showModal={onPickOrder} />
 
                         {/* Divider */}
                         <View style={{ borderTopWidth: myHeight(0.18), borderColor: myColors.dot, }} />
 
-                        {/*order place */}
+                        {/*Call */}
                         <MidRow icon={require('../../../../assets/home_main/dashboards/foods/phone2.png')}
-                            title={'(647) 773-5918'} line={'Call me when outside'} />
-
-                        {/* Divider */}
-                        <View style={{ borderTopWidth: myHeight(0.18), borderColor: myColors.dot, }} />
-
-                        {/*Order */}
-                        <MidRow icon={require('../../../../assets/home_main/dashboards/foods/order.png')}
-                            title={'View Order'} line={'4 Items'} />
+                            title={'(647) 773-5918'} line={'Call me when outside'} showGO={false} />
 
                         {/* Divider */}
                         <View style={{ borderTopWidth: myHeight(0.18), borderColor: myColors.dot, }} />
@@ -498,8 +505,8 @@ export const ResturantCheckout = ({ navigation, route }) => {
 
                     <Spacer paddingT={myHeight(2)} />
                     {/* wallet && payment & num */}
-                    <View style={{ flexDirection: 'row', alignItems: "center" }}
-                        activeOpacity={0.8} onPress={() => null}>
+                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: "center" }}
+                        activeOpacity={0.8} onPress={onPaymentMethod}>
                         <Spacer paddingEnd={myHeight(0.2)} />
 
                         <Image style={{
@@ -522,7 +529,7 @@ export const ResturantCheckout = ({ navigation, route }) => {
                             color: myColors.textL5
                         }]}>Master Card 4329</Text>
 
-                    </View>
+                    </TouchableOpacity>
 
                     {/* Place Order */}
                     <TouchableOpacity activeOpacity={0.9} onPress={onPlaceOrder}
@@ -674,11 +681,15 @@ export const ResturantCheckout = ({ navigation, route }) => {
                 <Schedule setDeleivry={setIsStandardDelivery} setShowModal={setShowScheduleModal} setDateTime={setDateTime} />
             }
 
-            {/* Delivry Modal*/}
+
+            {/* Pick Order Modal */}
             {
-                showDeliveryModal &&
-                <Delivery setAddress={setAddress} setAddressName={setAddressName} setShowModal={setShowDeliveryModal} />
+                showOrderPickModal &&
+                <PickOrder name={orderPick} setShowModal={setShowOrderPickModal}
+                    setPick={setOrderPick} setInst={setOrderPickInstru} instruct={orderPickInstru}
+                />
             }
+
         </>
     )
 }

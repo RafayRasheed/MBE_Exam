@@ -215,6 +215,104 @@ export const mainCourse = [
         description: 'Certified Angus Beef, American cheese, lettuce, tomatoes, red onions, pickles, sauce, and toasted bun.'
     },
 ]
+
 export const ResCategories = [
     'Popular', 'Family Deals', 'Burgers', 'Burgers', 'Specials', 'All'
+]
+
+export const foodCategories = [
+    {
+        id: 'cat1',
+        name: 'Fast Foods',
+        image: require('../../../assets/home_main/dashboards/foods/category/fast2.png'),
+    },
+
+    {
+        id: 'cat2',
+        name: 'Desi',
+        image: require('../../../assets/home_main/dashboards/foods/category/desi2.png'),
+    },
+    {
+        id: 'cat3',
+        name: 'BBQ',
+        image: require('../../../assets/home_main/dashboards/foods/category/bbq2.png'),
+    },
+    {
+        id: 'cat4',
+        name: 'Sea Foods',
+        image: require('../../../assets/home_main/dashboards/foods/category/fish2.png'),
+    },
+
+    {
+        id: 'cat4',
+        name: 'Chineese',
+        image: require('../../../assets/home_main/dashboards/foods/category/chineese2.png'),
+    },
+    {
+        id: 'cat5',
+        name: 'Deserts',
+        image: require('../../../assets/home_main/dashboards/foods/category/desert2.png'),
+    },
+
+    {
+        id: 'cat6',
+        name: 'Drinks',
+        image: require('../../../assets/home_main/dashboards/foods/category/drink2.png'),
+    },
+]
+
+export const savePlaces = [
+    {
+        id: 'cat10',
+        name: 'Home',
+        address: '100 Dynamic Drive, Toronto, ON'
+    },
+
+
+    {
+        id: 'cat11',
+        name: 'Office',
+        address: '100 Dynamic Drive, Toronto, ON'
+    },
+]
+
+export const recentPlaces = [
+    {
+        id: 'cat1',
+        name: 'Home',
+        address: '100 Dynamic Drive, Toronto, ON'
+    },
+]
+
+export const searchPlaces = [
+    {
+        id: 'cat2',
+        address: 'Tauheed Commercial',
+        city: 'Karachi, Pakistan'
+    },
+    {
+        id: 'cat3',
+        address: 'Tauheed Commercial',
+        city: 'Karachi, Pakistan'
+    },
+    {
+        id: 'cat4',
+        address: 'Tauheed Estate',
+        city: 'Karachi, Pakistan'
+    },
+    {
+        id: 'cat5',
+        address: 'Tauheed Enterprise',
+        city: 'Karachi, Pakistan'
+    },
+    {
+        id: 'cat6',
+        address: 'Tauheed Commercial',
+        city: 'Karachi, Pakistan'
+    },
+    {
+        id: 'cat7',
+        address: 'Tauheed Commercial',
+        city: 'Karachi, Pakistan'
+    },
 ]

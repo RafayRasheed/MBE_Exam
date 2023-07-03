@@ -109,7 +109,7 @@ export const SignUp = ({ navigation }) => {
         <SafeAreaView style={styles.container}>
             {isLoading && <Loader />}
             {errorMessage && <MyError message={errorMessage} />}
-            <KeyboardAwareScrollView contentContainerStyle={{ flex: 1, justifyContent: 'space-between' }}>
+            <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between' }}>
                 <View>
                     {/* Content */}
                     <View style={styles.containerContent}>

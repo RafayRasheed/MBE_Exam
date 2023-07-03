@@ -11,6 +11,8 @@ import { ItemDetail } from "./item_detail_screen";
 import { RestaurantAll } from "./restuarant_all_screen";
 import { RestaurantMoreInfo } from "./rest_more_info_screen";
 import { RestCartNavigator } from "./restaurant_cart/res_cart_navigator";
+import { Address } from "./address_screen";
+import { SaveAddress } from "./address_save_screen";
 
 
 
@@ -50,6 +52,8 @@ export const FoodNavigator = ({ navigation, route }) => {
                 <FoodTAB.Screen component={ItemDetail} name="ItemDetail" />
                 <FoodTAB.Screen component={RestaurantAll} name="RestaurantAll" />
                 <FoodTAB.Screen component={RestaurantMoreInfo} name="RestaurantMoreInfo" />
+                <FoodTAB.Screen component={Address} name="Address" />
+                <FoodTAB.Screen component={SaveAddress} name="SaveAddress" />
                 <FoodTAB.Screen component={RestCartNavigator} name="RestCartNavigator" />
 
 

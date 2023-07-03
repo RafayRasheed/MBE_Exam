@@ -7,6 +7,7 @@ import { StatusBar } from "react-native";
 import { myColors } from "../../../../../ultils/myColors";
 import { ResturantCart } from "./rest_cart_screen";
 import { ResturantCheckout } from "./rest_checkout_screen";
+import { RestaurantPayment } from "./res_payment_screen";
 
 
 
@@ -44,6 +45,7 @@ export const RestCartNavigator = ({ navigation, route }) => {
             >
                 <RestCart.Screen component={ResturantCart} name="ResturantCart" />
                 <RestCart.Screen component={ResturantCheckout} name="ResturantCheckout" />
+                <RestCart.Screen component={RestaurantPayment} name="RestaurantPayment" />
                 {/* <RestCart.Screen component={} name="RestaurantDetail" /> */}
 
 
