@@ -9,6 +9,7 @@ import Collapsible from 'react-native-collapsible';
 
 export const RestaurantPayment = ({ navigation }) => {
     const [isCash, setIsCash] = useState(null)
+    const [isCard, setIsCard] = useState(null)
 
 
 
@@ -167,70 +168,68 @@ export const RestaurantPayment = ({ navigation }) => {
                     <Spacer paddingT={myHeight(3)} />
 
                     {/* Card */}
-                    {
-                        !isCash &&
-                        <View>
+
+                    <View>
+                        <Text style={[styles.textCommon, {
+                            fontSize: myFontSize.body3,
+                            fontFamily: myFonts.bodyBold,
+                        }]}>Payment Method</Text>
+
+
+                        <Spacer paddingT={myHeight(1)} />
+                        {/* Add Payment Method */}
+                        <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('ResAddCard')}>
                             <Text style={[styles.textCommon, {
-                                fontSize: myFontSize.body3,
+                                fontSize: myFontSize.body2,
                                 fontFamily: myFonts.bodyBold,
-                            }]}>Payment Method</Text>
+                                color: myColors.primaryT
+                            }]}>Add Payment Method</Text>
+                        </TouchableOpacity>
 
-
-                            <Spacer paddingT={myHeight(1)} />
-                            {/* Add Payment Method */}
-                            <TouchableOpacity activeOpacity={0.8} onPress={() => null}>
-                                <Text style={[styles.textCommon, {
-                                    fontSize: myFontSize.body2,
-                                    fontFamily: myFonts.bodyBold,
-                                    color: myColors.primaryT
-                                }]}>Add Payment Method</Text>
-                            </TouchableOpacity>
-
-                            <Spacer paddingT={myHeight(2.7)} />
-                            {/* Visa Select */}
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <View style={{ width: myHeight(2.5) * 2.5, alignItems: 'center' }}>
-                                    <Image source={require('../../../../assets/home_main/dashboards/ride/visa.png')}
-                                        style={{
-                                            width: myHeight(2.5) * 2.5,
-                                            height: myHeight(2.5),
-                                            resizeMode: 'contain',
-                                            // tintColor: myColors.text
-                                        }}
-                                    />
-                                </View>
-                                <Spacer paddingEnd={myWidth(4)} />
-                                <Text style={[
-                                    styles.textCommon,
-                                    {
-                                        flex: 1,
-                                        fontSize: myFontSize.xBody,
-                                        fontFamily: myFonts.heading,
-                                    }
-                                ]}>******707</Text>
-
-                                {/* Select Visa */}
-                                <TouchableOpacity activeOpacity={0.6} onPress={() => setIsCash(false)}
+                        <Spacer paddingT={myHeight(2.7)} />
+                        {/* Visa Select */}
+                        <TouchableOpacity activeOpacity={0.85} onPress={() => setIsCard(!isCard)} style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <View style={{ width: myHeight(2.5) * 2.5, alignItems: 'center' }}>
+                                <Image source={require('../../../../assets/home_main/dashboards/ride/visa.png')}
                                     style={{
-                                        width: myHeight(3),
-                                        height: myHeight(3),
-                                        borderWidth: myHeight(0.1),
-                                        borderRadius: myHeight(3),
-                                        borderColor: myColors.primaryT,
-                                        padding: myHeight(0.2)
-
-                                    }}>
-                                    <View style={{
-                                        flex: 1, backgroundColor: isCash == false ? myColors.primaryT : myColors.offColor7,
-                                        borderRadius: myHeight(3),
-                                    }} />
-
-                                </TouchableOpacity>
+                                        width: myHeight(2.5) * 2.5,
+                                        height: myHeight(2.5),
+                                        resizeMode: 'contain',
+                                        // tintColor: myColors.text
+                                    }}
+                                />
                             </View>
+                            <Spacer paddingEnd={myWidth(4)} />
+                            <Text style={[
+                                styles.textCommon,
+                                {
+                                    flex: 1,
+                                    fontSize: myFontSize.xBody,
+                                    fontFamily: myFonts.heading,
+                                }
+                            ]}>******707</Text>
 
-                        </View>
+                            {/* Select Visa */}
+                            <View activeOpacity={0.6} onPress={() => setIsCard(!isCard)}
+                                style={{
+                                    width: myHeight(3),
+                                    height: myHeight(3),
+                                    borderWidth: myHeight(0.1),
+                                    borderRadius: myHeight(3),
+                                    borderColor: myColors.primaryT,
+                                    padding: myHeight(0.2)
 
-                    }
+                                }}>
+                                <View style={{
+                                    flex: 1, backgroundColor: isCard ? myColors.primaryT : myColors.offColor7,
+                                    borderRadius: myHeight(3),
+                                }} />
+
+                            </View>
+                        </TouchableOpacity>
+
+                    </View>
+
 
                 </View>
 

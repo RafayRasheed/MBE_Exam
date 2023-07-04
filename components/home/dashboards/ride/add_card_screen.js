@@ -5,8 +5,8 @@ import { MyError, Spacer, ios, myHeight, myWidth } from '../../../common'
 import { myFontSize, myFonts, myLetSpacing } from '../../../../ultils/myFonts'
 import Animated, { SlideInDown, SlideInLeft, SlideInUp, SlideOutDown, SlideOutLeft } from 'react-native-reanimated'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { Calender, CalenderDate } from './ride_component/calender'
 import { Loader } from '../../../common'
+import { CalenderDate } from './ride_component/calender'
 
 export const AddCard = ({ navigation }) => {
     const [card, setCard] = useState(null);

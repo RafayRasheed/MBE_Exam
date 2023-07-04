@@ -72,21 +72,22 @@ export const FoodScreen = ({ navigation }) => {
                         <Text style={styles.textFind}>Let’s Find {'\n'}Some Foods!</Text>
 
                         <Spacer paddingT={myHeight(2.2)} />
-                        {/* Search */}
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <View style={styles.containerSearchPortion}>
+                        {/* Search & FIlter*/}
+                        <View activeOpacity={0.8} onPress={() => navigation.navigate('RestaurantSearch')}
+                            style={{ flexDirection: 'row', alignItems: 'center' }}>
+
+                            {/* Search */}
+                            <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('RestaurantSearch')} style={styles.containerSearchPortion}>
                                 <Image style={styles.imageSearch} source={require('../../../assets/home_main/dashboards/search.png')} />
                                 <Spacer paddingEnd={myWidth(3.5)} />
-                                <TextInput placeholder=" Search Any Item"
-                                    placeholderTextColor={myColors.textL5}
-                                    autoCorrect={false}
-                                    selectionColor={myColors.primaryT}
-                                    style={styles.containerSearch}
-                                    cursorColor={myColors.primaryT}
-                                    value={search} onChangeText={setSearch}
-                                // value={search} onChangeText={(val) => null}
-                                />
-                            </View>
+
+                                <Text style={[styles.textCommon, {
+                                    fontSize: myFontSize.xxSmall,
+                                    color: myColors.textL4,
+                                    fontFamily: myFonts.bodyBold,
+                                }]}>Search any restaurants</Text>
+                            </TouchableOpacity>
+
                             <Spacer paddingEnd={myWidth(3.7)} />
                             {/* Filter */}
                             <TouchableOpacity onPress={() => navigation.navigate('FilterScreen')} activeOpacity={0.6}
@@ -96,40 +97,41 @@ export const FoodScreen = ({ navigation }) => {
                             </TouchableOpacity>
                         </View>
 
-                        <Spacer paddingT={myHeight(2.5)} />
-                        {/* See All for Categories */}
-                        <TouchableOpacity style={{ paddingVertical: myHeight(0.4), paddingStart: myWidth(2) }} activeOpacity={0.6}
-                            onPress={() => setAllCatModal(true)}>
-                            <Text style={[styles.textSeeAll, { textAlign: 'right', marginEnd: myWidth(2.4) }]}>See all</Text>
-                        </TouchableOpacity>
 
-                        {/* <Spacer paddingT={myHeight(0.4)} /> */}
-                        {/* Categories */}
-                        <View style={{ flexDirection: "row", }}>
-                            {
-                                foodCategories.slice(0, 4).map((item, i) =>
-                                    <View key={i} style={{ alignItems: 'center', width: myWidth(23) }}>
-                                        <TouchableOpacity key={i} activeOpacity={0.8} onPress={() => navigation.navigate('RestaurantAll', { name: item.name, restuarants: FoodOpenNow })}
-                                            style={{
-                                                width: myWidth(18.6), height: myWidth(18.6),
-                                                backgroundColor: myColors.offColor5, alignItems: 'center', justifyContent: 'center'
-                                            }}
-                                        >
-                                            {/* Image */}
-                                            <View>
-                                                <Image style={{ maxHeight: myWidth(15), maxWidth: myWidth(15), resizeMode: 'contain' }} source={item.image} />
-                                            </View>
-                                        </TouchableOpacity>
+                        {/* CATEGORY  */}
+                        {/* <View>
 
-                                        <Spacer paddingT={myHeight(1)} />
-                                        <Text numberOfLines={1} style={[styles.textCommon, {
-                                            fontSize: myFontSize.body,
-                                            fontFamily: myFonts.bodyBold,
-                                        }]}>{item.name}</Text>
-                                    </View>
-                                )
-                            }
-                        </View>
+                            <Spacer paddingT={myHeight(2.5)} />
+                            <TouchableOpacity style={{ paddingVertical: myHeight(0.4), paddingStart: myWidth(2) }} activeOpacity={0.6}
+                                onPress={() => setAllCatModal(true)}>
+                                <Text style={[styles.textSeeAll, { textAlign: 'right', marginEnd: myWidth(2.4) }]}>See all</Text>
+                            </TouchableOpacity>
+
+                            <View style={{ flexDirection: "row", }}>
+                                {
+                                    foodCategories.slice(0, 4).map((item, i) =>
+                                        <View key={i} style={{ alignItems: 'center', width: myWidth(23) }}>
+                                            <TouchableOpacity key={i} activeOpacity={0.8} onPress={() => navigation.navigate('RestaurantAll', { name: item.name, restuarants: FoodOpenNow })}
+                                                style={{
+                                                    width: myWidth(18.6), height: myWidth(18.6),
+                                                    backgroundColor: myColors.offColor5, alignItems: 'center', justifyContent: 'center'
+                                                }}
+                                            >
+                                                <View>
+                                                    <Image style={{ maxHeight: myWidth(15), maxWidth: myWidth(15), resizeMode: 'contain' }} source={item.image} />
+                                                </View>
+                                            </TouchableOpacity>
+
+                                            <Spacer paddingT={myHeight(1)} />
+                                            <Text numberOfLines={1} style={[styles.textCommon, {
+                                                fontSize: myFontSize.body,
+                                                fontFamily: myFonts.bodyBold,
+                                            }]}>{item.name}</Text>
+                                        </View>
+                                    )
+                                }
+                            </View>
+                        </View> */}
 
                         <Spacer paddingT={myHeight(3.5)} />
 
@@ -269,12 +271,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     containerFilter: {
-        // height: myHeight(4.6),
-        // width: myWidth(10),
-        // justifyContent: 'center',
-        // alignItems: 'center',
-        paddingVertical: myHeight(1.5),
-        paddingHorizontal: myWidth(2.8),
+        height: myHeight(4.8),
+        width: myHeight(4.8),
+        justifyContent: 'center',
+        alignItems: 'center',
+        // paddingVertical: myHeight(1.5),
+        // paddingHorizontal: myWidth(2.8),
         backgroundColor: myColors.primaryT,
         borderRadius: myWidth(2),
 
@@ -283,10 +285,12 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
+        height: myHeight(5),
+
         paddingHorizontal: myWidth(3),
-        paddingVertical: myHeight(0.2),
+        // paddingVertical: myHeight(0.2),
         backgroundColor: myColors.offColor5,
-        borderRadius: myWidth(3.5),
+        borderRadius: myWidth(3),
     },
     containerSearch: {
         flex: 1,

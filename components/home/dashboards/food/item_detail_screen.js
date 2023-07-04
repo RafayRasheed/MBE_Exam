@@ -5,6 +5,7 @@ import { Spacer, ios, myHeight, myWidth } from '../../../common';
 import { myFontSize, myFonts, myLetSpacing } from '../../../../ultils/myFonts';
 import { ResCategories, mainCourse } from './food_data';
 import Animated, { SlideInDown, SlideOutDown } from 'react-native-reanimated';
+import { AddCartStatus } from './food_component/add_cart_status';
 
 export const ItemDetail = ({ navigation, route }) => {
     const { item } = route.params
@@ -14,6 +15,8 @@ export const ItemDetail = ({ navigation, route }) => {
         <SafeAreaView style={{
             flex: 1, backgroundColor: myColors.background,
         }}>
+            <AddCartStatus items={10} price={'Rs. 52021'} navigation={navigation} />
+
             <ScrollView showsVerticalScrollIndicator={false}>
                 {/* TOP IMAGE */}
                 <ImageBackground source={item.image} style={{ width: myWidth(100), height: myHeight(27), }}>
@@ -219,6 +222,7 @@ export const ItemDetail = ({ navigation, route }) => {
 
                 </View>
 
+                <Spacer paddingT={myHeight(7)} />
 
             </ScrollView>
 

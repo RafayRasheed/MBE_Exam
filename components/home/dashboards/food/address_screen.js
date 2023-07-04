@@ -12,7 +12,7 @@ export const Address = ({ route, navigation }) => {
 
     const { name } = route.params
     const [search, setSearch] = useState(null)
-    const [selectedLoc, setSelectedLoc] = useState(savePlaces[0].id)
+    const [selectedLoc, setSelectedLoc] = useState(savePlaces[1].id)
 
     function goToSaveAddress() {
         navigation.navigate('SaveAddress')
@@ -90,7 +90,7 @@ export const Address = ({ route, navigation }) => {
                     }}
                         source={require('../../../assets/home_main/dashboards/search.png')} />
                     <Spacer paddingEnd={myWidth(3)} />
-                    <TextInput placeholder=" Search Address"
+                    <TextInput placeholder=" Search Restaurants"
                         placeholderTextColor={myColors.textL4}
                         autoCorrect={false}
                         selectionColor={myColors.primaryT}
@@ -201,7 +201,7 @@ export const Address = ({ route, navigation }) => {
                                             recentPlaces.map((item, i) =>
                                                 <View key={i} style={{
                                                     borderWidth: myHeight(0.1), borderColor: selectedLoc == item.id ? myColors.primaryT : myColors.background,
-                                                    paddingHorizontal: myWidth(2), borderRadius: myWidth(4),
+                                                    paddingHorizontal: myWidth(2), borderRadius: myWidth(2),
                                                     marginVertical: myHeight(0.5)
                                                 }}>
 
@@ -256,7 +256,6 @@ export const Address = ({ route, navigation }) => {
 
                                                     </TouchableOpacity>
                                                     <Spacer paddingT={myHeight(0.7)} />
-
 
                                                 </View>
 
@@ -280,16 +279,16 @@ export const Address = ({ route, navigation }) => {
                                             savePlaces.map((item, i) =>
                                                 <View key={i} style={{
                                                     borderWidth: myHeight(0.1), borderColor: selectedLoc == item.id ? myColors.primaryT : myColors.background,
-                                                    paddingHorizontal: myWidth(2), borderRadius: myWidth(4),
+                                                    paddingHorizontal: myWidth(2), borderRadius: myWidth(2),
                                                     marginVertical: myHeight(0.5)
                                                 }}>
 
-                                                    {
+                                                    {/* {
                                                         i != 0 &&
                                                         <View style={{ borderTopWidth: myHeight(0.18), borderColor: myColors.dot, }} />
-                                                    }
+                                                    } */}
 
-                                                    <Spacer paddingT={myHeight(1.2)} />
+                                                    <Spacer paddingT={myHeight(0.7)} />
                                                     <TouchableOpacity activeOpacity={0.8}
                                                         onPress={onSelectLocation} style={{ flexDirection: 'row' }}>
                                                         <View style={{
@@ -334,7 +333,7 @@ export const Address = ({ route, navigation }) => {
                                                         </View>
 
                                                     </TouchableOpacity>
-                                                    <Spacer paddingT={myHeight(1.2)} />
+                                                    <Spacer paddingT={myHeight(0.7)} />
 
 
                                                 </View>

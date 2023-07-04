@@ -12,8 +12,8 @@ export const RestaurantDetail = ({ route, navigation }) => {
     const [i, setI] = useState(0)
     const [dotModal, setDotModal] = useState(false)
     const { item } = route.params
-    const [searchModal, setSearchModal] = useState(false)
-    const [search, setSearch] = useState(null)
+    // const [searchModal, setSearchModal] = useState(false)
+    // const [search, setSearch] = useState(null)
 
     function onSearchStore() {
 
@@ -55,7 +55,7 @@ export const RestaurantDetail = ({ route, navigation }) => {
     return (
         <>
             <View style={styles.container}>
-                <CartStatus navigate={navigation.navigate} />
+                <CartStatus items={10} price={'Rs. 52021'} navigate={navigation.navigate} />
 
                 {/* Top */}
                 <ImageBackground imageStyle={{ borderRadius: 0 }} source={item.image} resizeMode={'cover'} style={styles.imageTop} >
@@ -70,10 +70,10 @@ export const RestaurantDetail = ({ route, navigation }) => {
                             </TouchableOpacity>
                             <View style={{ flexDirection: 'row' }}>
                                 {/* Search */}
-                                <TouchableOpacity activeOpacity={0.7} onPress={() => setSearchModal(true)} style={styles.containerIcon}>
+                                {/* <TouchableOpacity activeOpacity={0.7} onPress={() => null} style={styles.containerIcon}>
                                     <Image style={styles.imageSearch} source={require('../../../assets/home_main/search2.png')} />
-                                </TouchableOpacity>
-                                <Spacer paddingEnd={myWidth(4)} />
+                                </TouchableOpacity> */}
+                                {/* <Spacer paddingEnd={myWidth(4)} /> */}
                                 {/* Dots */}
                                 <TouchableOpacity activeOpacity={0.7} onPress={() => setDotModal(true)}
                                     style={[styles.containerIcon]}>
@@ -285,82 +285,6 @@ export const RestaurantDetail = ({ route, navigation }) => {
             }
 
 
-            {
-                searchModal &&
-                <SafeAreaView style={{
-                    height: '100%', width: '100%', position: 'absolute', backgroundColor: myColors.background,
-                    paddingTop: !ios && StatusBar.currentHeight,
-                }}>
-                    <Spacer paddingT={myHeight(0.5)} />
-                    {/* Top */}
-
-                    {/* Search */}
-                    <View style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        paddingHorizontal: myWidth(3),
-                        paddingVertical: myHeight(0.2),
-                        borderRadius: myWidth(1.5),
-                        backgroundColor: myColors.dot,
-                        marginHorizontal: myWidth(4)
-
-                    }}>
-                        {/* Arrow */}
-                        <TouchableOpacity activeOpacity={0.7} onPress={() => setSearchModal(false)} style={{}}>
-                            <Image style={{
-                                height: myHeight(2.5),
-                                width: myHeight(2.5),
-                                resizeMode: 'contain',
-                                tintColor: myColors.text
-                            }} source={require('../../../assets/home_main/dashboards/back2.png')} />
-                        </TouchableOpacity>
-                        <Spacer paddingEnd={myWidth(2)} />
-                        <TextInput placeholder=" Search Any Item"
-                            placeholderTextColor={myColors.textL5}
-                            autoCorrect={false}
-                            selectionColor={myColors.primaryT}
-                            style={{
-                                flex: 1,
-                                textAlignVertical: 'center',
-                                paddingVertical: ios ? myHeight(0.8) : myHeight(100) > 600 ? myHeight(0.4) : myHeight(0),
-                                fontSize: myFontSize.xxSmall,
-                                color: myColors.text,
-                                includeFontPadding: false,
-                                fontFamily: myFonts.bodyBold,
-                            }}
-                            cursorColor={myColors.primaryT}
-                            value={search} onChangeText={setSearch}
-                        // value={search} onChangeText={(val) => null}
-                        />
-                    </View>
-
-
-                    {/* Icon Empty Or Content */}
-                    {
-                        search ?
-                            <View style={{ flex: 1 }}>
-                                <ScrollView contentContainerStyle={{ paddingHorizontal: myWidth(4.1) }} showsVerticalScrollIndicator={false}>
-                                    <Spacer paddingT={myHeight(1.3)} />
-
-                                    {mainCourse.map((main, i) =>
-                                        <ItemInfo key={i} navigate={navigation.navigate} item={main} />
-                                    )}
-                                </ScrollView>
-
-                            </View>
-                            :
-                            <View style={{ flex: 1, justifyContent: 'center' }}>
-                                <Image style={{
-                                    height: myHeight(14),
-                                    width: myHeight(14),
-                                    resizeMode: 'contain',
-                                    alignSelf: 'center',
-                                }} source={require('../../../assets/home_main/dashboards/foods/iconEm.png')} />
-                            </View>
-                    }
-
-                </SafeAreaView>
-            }
 
         </>
 

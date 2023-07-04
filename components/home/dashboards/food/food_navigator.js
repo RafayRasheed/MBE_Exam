@@ -13,6 +13,9 @@ import { RestaurantMoreInfo } from "./rest_more_info_screen";
 import { RestCartNavigator } from "./restaurant_cart/res_cart_navigator";
 import { Address } from "./address_screen";
 import { SaveAddress } from "./address_save_screen";
+import { RestaurantSearch } from "./res_search_screen";
+import { DoneOrder } from "./rest_done_order";
+import { RestRating } from "./rest_rating_screen";
 
 
 
@@ -42,7 +45,6 @@ export const FoodNavigator = ({ navigation, route }) => {
                 screenOptions={{
                     animation: 'fade',
                     headerShown: false,
-
                 }}
                 initialRouteName="FoodScreen"
             >
@@ -55,6 +57,9 @@ export const FoodNavigator = ({ navigation, route }) => {
                 <FoodTAB.Screen component={Address} name="Address" />
                 <FoodTAB.Screen component={SaveAddress} name="SaveAddress" />
                 <FoodTAB.Screen component={RestCartNavigator} name="RestCartNavigator" />
+                <FoodTAB.Screen component={RestaurantSearch} name="RestaurantSearch" />
+                <FoodTAB.Screen component={DoneOrder} name="DoneOrder" />
+                <FoodTAB.Screen component={RestRating} name="RestRating" />
 
 
 

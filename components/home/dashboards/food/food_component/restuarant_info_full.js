@@ -98,7 +98,7 @@ export const RestaurantFullInfo = ({ item }) => {
 
             <Spacer paddingT={myHeight(1)} />
             {/* Name & Rating */}
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ flexDirection: 'row', }}>
                 {/*icon & Name */}
                 <View style={{ flex: 1, flexDirection: 'row', alignItems: "center" }}>
                     {item.featured &&
@@ -108,10 +108,37 @@ export const RestaurantFullInfo = ({ item }) => {
                     {/* Name */}
                     <Text numberOfLines={1} style={styles.textName}>{item.name}</Text>
                 </View>
-                {/* Rating */}
-                <View style={styles.containerRating}>
-                    <Image style={styles.imageStar} source={require('../../../../assets/home_main/star.png')} />
-                    <Text style={styles.textRating}>{item.rating}<Text style={{ color: myColors.textL }}>{` (${item.totalRating})`}</Text></Text>
+
+                {/* Icon */}
+                <View style={{ marginTop: -myHeight(4.5), marginRight: myWidth(4) }}>
+                    <Image source={item.icon} style={{
+                        height: myHeight(6.5),
+                        width: myHeight(6.5),
+                        resizeMode: 'cover',
+                        borderWidth: myHeight(0.2),
+                        borderColor: myColors.background,
+                        borderRadius: myHeight(100),
+                        overflow: 'hidden'
+                    }} />
+
+                    {
+                        item.verified &&
+                        <View style={{
+                            position: 'absolute',
+                            zIndex: 2,
+                            right: myWidth(1.5),
+                            bottom: myHeight(0.8),
+                            backgroundColor: myColors.darkBlue,
+                            padding: myHeight(0.085),
+                            borderRadius: myHeight(2),
+                        }}>
+                            <Image style={{
+                                height: myHeight(1.4),
+                                width: myHeight(1.4),
+                                resizeMode: 'contain',
+                            }} source={require('../../../../assets/home_main/dashboards/foods/check.png')} />
+                        </View>
+                    }
                 </View>
             </View>
 
@@ -120,7 +147,7 @@ export const RestaurantFullInfo = ({ item }) => {
             <Spacer paddingT={myHeight(0.5)} />
 
             {/* Delivery */}
-            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
+            <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between' }}>
                 {/* Delivery */}
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Image style={styles.imageDelivery} source={require('../../../../assets/home_main/dashboards/foods/bike.png')} />
@@ -128,6 +155,11 @@ export const RestaurantFullInfo = ({ item }) => {
                     <Text numberOfLines={1} style={styles.textDelivery_Time}>{item.delivery}</Text>
                 </View>
                 <Spacer paddingEnd={myWidth(1)} />
+                {/* Rating */}
+                <View style={styles.containerRating}>
+                    <Image style={styles.imageStar} source={require('../../../../assets/home_main/star.png')} />
+                    <Text style={styles.textRating}>{item.rating}<Text style={{ color: myColors.textL }}>{` (${item.totalRating})`}</Text></Text>
+                </View>
             </View>
 
         </View>
@@ -187,6 +219,12 @@ const styles = StyleSheet.create({
     },
 
     //Text
+    textCommon: {
+        color: myColors.text,
+        letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
+        padding: 0,
+    },
     textName: {
         flex: 1,
         fontSize: myFontSize.xBody,

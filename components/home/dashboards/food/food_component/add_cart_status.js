@@ -5,7 +5,10 @@ import { myWidth, myHeight, Spacer } from '../../../../common'
 import { myFontSize, myFonts, myLetSpacing } from '../../../../../ultils/myFonts'
 
 
-export const CartStatus = ({ items, price, navigate }) => {
+export const AddCartStatus = ({ items, price, navigation }) => {
+    function onAddToCart() {
+        navigation.goBack()
+    }
     return (
         <TouchableOpacity activeOpacity={0.95} style={{
             flexDirection: 'row', paddingHorizontal: myWidth(4),
@@ -14,7 +17,7 @@ export const CartStatus = ({ items, price, navigate }) => {
             justifyContent: 'space-between', position: 'absolute', bottom: 0, zIndex: 10,
             borderRadius: myWidth(1.5), alignItems: 'center', marginVertical: myHeight(1)
         }}
-            onPress={() => navigate('RestCartNavigator',)}>
+            onPress={onAddToCart}>
             <View style={{
                 height: myHeight(3.2),
                 minWidth: myHeight(3.2),
@@ -42,7 +45,7 @@ export const CartStatus = ({ items, price, navigate }) => {
                     color: myColors.background,
 
                 }
-            ]}>View your cart</Text>
+            ]}>Add to Cart</Text>
 
 
             <Text style={[

@@ -35,10 +35,8 @@ export const ResturantCheckout = ({ navigation, route }) => {
     const [tipIndex, setTipIndex] = useState(0)
 
 
-
-
     function onPlaceOrder() {
-
+        navigation.navigate('DoneOrder')
     }
     function onActivateCode() {
         setPromoModal(false)
