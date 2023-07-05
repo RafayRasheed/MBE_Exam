@@ -121,8 +121,8 @@ export const DoneOrder = ({ navigation, }) => {
                 </View>
             </View>
 
-            {/* Track Order button */}
-            <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.replace('TrackingNavigator')}
+            {/* OK button */}
+            <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.replace('HomeScreen')}
                 onLongPress={() => navigation.navigate('RestRating')}
                 style={{
                     backgroundColor: myColors.primaryT,
@@ -142,7 +142,7 @@ export const DoneOrder = ({ navigation, }) => {
                         fontFamily: myFonts.bodyBold,
                         color: myColors.background,
                     }
-                ]}>Track Order</Text>
+                ]}>OK</Text>
             </TouchableOpacity>
         </SafeAreaView>
     )

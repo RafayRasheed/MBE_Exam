@@ -166,7 +166,7 @@ export const Status = ({ notifications, navigate }) => {
                                                 <Text style={[styles.textNotiItem, { flex: 1 }]} numberOfLines={1} >{item.status}</Text>
                                             </View>
                                         </View>
-                                        <TouchableOpacity activeOpacity={0.6} onPress={() => navigate('TrackingNavigator')}>
+                                        <TouchableOpacity activeOpacity={0.6} onPress={() => navigate('OrderTracking')}>
                                             <Spacer paddingT={myHeight(2.15)} />
                                             <Image style={[styles.imageGo]} source={require('../../assets/home_main/go.png')} />
                                             <Spacer paddingT={myHeight(2.15)} />

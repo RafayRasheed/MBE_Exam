@@ -62,7 +62,7 @@ export const OrderTracking = ({ navigation }) => {
     ]
     return (
         <>
-            <StatusBar backgroundColor={otpModal ? '#00000030' : myColors.background} />
+            <StatusBar backgroundColor={orderModal ? '#00000030' : myColors.background} />
 
             <SafeAreaView style={{
                 flex: 1,
