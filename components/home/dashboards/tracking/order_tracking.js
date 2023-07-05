@@ -10,6 +10,7 @@ import Animated, { SlideInDown } from 'react-native-reanimated';
 export const OrderTracking = ({ navigation }) => {
     const [i, setI] = useState(0)
     const [otpModal, setOtpModal] = useState(false)
+    const [orderModal, setOrderModal] = useState(false)
 
 
     const TwoLine = ({ line1, line2, colorOn }) => (
@@ -41,6 +42,24 @@ export const OrderTracking = ({ navigation }) => {
         }
     }, [i])
 
+    const items = [
+        {
+            name: 'Large Burger',
+            value: 'Whopper',
+        },
+        {
+            name: 'Small Burger',
+            value: 'Original Chicken Sandwich',
+        },
+        {
+            name: 'Zinger Burger',
+            value: 'Whopper Cheese',
+        },
+        {
+            name: 'Drink',
+            value: '1.5 Litre Coke',
+        },
+    ]
     return (
         <>
             <StatusBar backgroundColor={otpModal ? '#00000030' : myColors.background} />
@@ -92,7 +111,7 @@ export const OrderTracking = ({ navigation }) => {
                 <Spacer paddingT={myHeight(2)} />
 
                 {/* Content */}
-                <View style={{ paddingHorizontal: myWidth(4) }}>
+                <View style={{ paddingHorizontal: myWidth(4), flex: 1 }}>
 
                     {/* Order ID */}
                     <Text style={[styles.textCommon, {
@@ -188,9 +207,9 @@ export const OrderTracking = ({ navigation }) => {
                     </View>
 
                     {/* Buttons */}
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={{ alignItems: 'center' }}>
                         {/* Otp button */}
-                        <TouchableOpacity activeOpacity={0.8} onPress={() => setOtpModal(true)}
+                        {/* <TouchableOpacity activeOpacity={0.8} onPress={() => setOtpModal(true)}
                             style={{
                                 paddingVertical: myHeight(0.5), width: myWidth(43), alignItems: 'center',
                                 borderWidth: myHeight(0.16), borderColor: myColors.primaryT,
@@ -201,9 +220,9 @@ export const OrderTracking = ({ navigation }) => {
                                 fontFamily: myFonts.body,
                                 color: myColors.primaryT
                             }]}>OTP: 1234</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                         {/* Dosra button */}
-                        <TouchableOpacity activeOpacity={0.92} onPress={() => setOtpModal(true)}
+                        {/* <TouchableOpacity activeOpacity={0.92} onPress={() => setOtpModal(true)}
                             style={{
                                 paddingVertical: myHeight(0.5), width: myWidth(43), alignItems: 'center',
                                 borderWidth: myHeight(0.16), borderColor: myColors.primaryT,
@@ -214,16 +233,36 @@ export const OrderTracking = ({ navigation }) => {
                                 fontFamily: myFonts.body,
                                 color: myColors.background
                             }]}>View Order</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
 
                 </View>
+                <TouchableOpacity activeOpacity={0.9} onPress={() => setOrderModal(true)}
+                    style={{
+                        backgroundColor: myColors.primaryT,
+                        borderRadius: myHeight(0.8),
+                        paddingVertical: myHeight(1.1),
+                        marginVertical: myHeight(3),
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginHorizontal: myWidth(4)
+
+                    }}>
+                    <Text style={[
+                        styles.textCommon,
+                        {
+                            fontSize: myFontSize.body2,
+                            fontFamily: myFonts.heading,
+                            color: myColors.background,
+                        }
+                    ]}>View Order</Text>
+                </TouchableOpacity>
 
             </SafeAreaView>
 
             {
                 otpModal &&
-                <TouchableOpacity activeOpacity={0.85} onPress={() => setOtpModal(false)} style={{
+                {/* <TouchableOpacity activeOpacity={0.85} onPress={() => setOtpModal(false)} style={{
                     height: '100%',
                     width: '100%',
                     position: 'absolute',
@@ -249,11 +288,9 @@ export const OrderTracking = ({ navigation }) => {
                         }]}>Confirming your delivery with your PIN</Text>
 
                         <Spacer paddingT={myHeight(2)} />
-                        {/* Divider */}
                         <View style={{ borderTopWidth: myHeight(0.18), borderColor: myColors.dot, }} />
 
                         <Spacer paddingT={myHeight(2)} />
-                        {/* All Text */}
                         <View>
                             <Text style={[styles.textCommon, {
                                 fontSize: myFontSize.body2,
@@ -290,7 +327,6 @@ export const OrderTracking = ({ navigation }) => {
                             }]}>The PIN will will reset for every delivery.</Text>
                         </View>
 
-                        {/* Place Order */}
                         <TouchableOpacity activeOpacity={0.9} onPress={() => setOtpModal(false)}
                             style={{
                                 backgroundColor: myColors.primaryT,
@@ -309,6 +345,113 @@ export const OrderTracking = ({ navigation }) => {
                                     color: myColors.background,
                                 }
                             ]}>Great, got it</Text>
+                        </TouchableOpacity>
+
+                    </Animated.View>
+                </TouchableOpacity> */}
+
+
+            }
+
+            {
+                orderModal &&
+                <TouchableOpacity activeOpacity={0.85} onPress={() => setOrderModal(false)} style={{
+                    height: '100%',
+                    width: '100%',
+                    position: 'absolute',
+                    backgroundColor: '#00000030',
+
+                }}>
+
+                    <View style={{ flex: 1 }} />
+                    <Animated.View
+                        entering={SlideInDown.duration(200)}
+                        style={{
+                            paddingHorizontal: myWidth(4.5),
+                            backgroundColor: myColors.background,
+                            borderTopStartRadius: myWidth(6),
+                            borderTopEndRadius: myWidth(6),
+                        }}>
+
+                        <Spacer paddingT={myHeight(3)} />
+                        <Text style={[styles.textCommon, {
+                            fontSize: myFontSize.body2,
+                            fontFamily: myFonts.bodyBold,
+                        }]}>View Order Details</Text>
+
+                        <Spacer paddingT={myHeight(1.5)} />
+                        {/* Name */}
+                        <Text style={[
+                            styles.textCommon,
+                            {
+                                fontSize: myFontSize.medium0,
+                                fontFamily: myFonts.heading,
+                            }
+                        ]}>Burger King</Text>
+
+                        <Spacer paddingT={myHeight(1.5)} />
+                        {/* Quantity */}
+                        <Text style={[styles.textCommon, {
+                            fontSize: myFontSize.body2,
+                            fontFamily: myFonts.bodyBold,
+                        }]}>Value Bundle for 4</Text>
+
+
+                        <Spacer paddingT={myHeight(1.5)} />
+                        {/* Items */}
+                        {
+                            items.map((item, i) =>
+
+                                <Text key={i} style={[styles.textCommon, {
+                                    fontSize: myFontSize.body2,
+                                    fontFamily: myFonts.heading,
+                                    color: myColors.textL5,
+                                    paddingBottom: myHeight(1),
+                                }]}>{item.name}: <Text style={{
+                                    color: myColors.textL4, fontFamily: myFonts.heading,
+                                    fontFamily: myFonts.bodyBold,
+                                }}>{item.value}</Text></Text>)
+                        }
+
+                        <Spacer paddingT={myHeight(1)} />
+                        {/* Divider */}
+                        <View style={{ borderTopWidth: myHeight(0.18), borderColor: myColors.dot, }} />
+                        <Spacer paddingT={myHeight(1.5)} />
+
+                        {/* Total Price */}
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text style={[styles.textCommon, {
+                                flex: 1,
+                                fontSize: myFontSize.body3,
+                                fontFamily: myFonts.heading,
+                            }]}>Subtotal</Text>
+                            <Text style={[styles.textCommon, {
+                                fontSize: myFontSize.body3,
+                                fontFamily: myFonts.heading,
+                            }]}>CA $29.99</Text>
+                        </View>
+
+
+
+                        {/* OK Buttonr */}
+                        <TouchableOpacity activeOpacity={0.9} onPress={() => setOrderModal(false)}
+                            style={{
+                                backgroundColor: myColors.primaryT,
+                                borderRadius: myHeight(0.8),
+                                paddingVertical: myHeight(1.1),
+                                marginVertical: myHeight(3),
+                                alignItems: 'center',
+                                justifyContent: 'center',
+
+                            }}>
+                            <Text style={[
+                                styles.textCommon,
+                                {
+                                    fontSize: myFontSize.body2,
+                                    fontFamily: myFonts.heading,
+                                    color: myColors.background,
+                                }
+                            ]}>OK</Text>
                         </TouchableOpacity>
 
                     </Animated.View>
