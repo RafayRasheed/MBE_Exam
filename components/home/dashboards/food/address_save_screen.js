@@ -24,52 +24,52 @@ export const SaveAddress = ({ route, navigation }) => {
     return (
 
         <SafeAreaView style={{ flex: 1, backgroundColor: myColors.background, }}>
-            <KeyboardAwareScrollView showsVerticalScrollIndicator={false}
+            <KeyboardAwareScrollView bounces={false} showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ flexGrow: 1, }}>
+
+                {/* Top  */}
+                <View style={{ overflow: 'hidden', paddingBottom: myHeight(1), }}>
+                    <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        backgroundColor: myColors.background,
+                        // elevation: 6.5, shadowColor: '#000',
+                        // shadowOffset: { width: 0, height: 2.5 },
+                        // shadowOpacity: 0.2,
+                        // shadowRadius: 2,
+                        // paddingVertical: myHeight(1)
+                        paddingTop: myHeight(1)
+
+                    }}>
+                        <Spacer paddingEnd={myWidth(3)} />
+                        {/* Back */}
+                        <TouchableOpacity
+                            activeOpacity={0.7} onPress={() => navigation.goBack()}
+                            style={{
+                                height: myHeight(3.8),
+                                width: myHeight(3.8),
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}>
+                            <Image style={{
+                                height: myHeight(2.8),
+                                width: myHeight(2.8),
+                                resizeMode: 'contain',
+                                tintColor: myColors.text
+                            }} source={require('../../../assets/home_main/dashboards/back2.png')} />
+                        </TouchableOpacity>
+
+                        <Spacer paddingEnd={myWidth(2)} />
+                        {/* Name */}
+                        <Text style={[styles.textCommon, {
+                            fontSize: myFontSize.body,
+                            fontFamily: myFonts.bodyBold,
+                        }]}>Address Details</Text>
+                    </View>
+                </View>
 
                 <ScrollView showsVerticalScrollIndicator={false}
                     contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between' }}>
-                    {/* Top  */}
-                    <View style={{ overflow: 'hidden', paddingBottom: myHeight(1), }}>
-                        <View style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            backgroundColor: myColors.background,
-                            // elevation: 6.5, shadowColor: '#000',
-                            // shadowOffset: { width: 0, height: 2.5 },
-                            // shadowOpacity: 0.2,
-                            // shadowRadius: 2,
-                            // paddingVertical: myHeight(1)
-                            paddingTop: myHeight(1)
-
-                        }}>
-                            <Spacer paddingEnd={myWidth(3)} />
-                            {/* Back */}
-                            <TouchableOpacity
-                                activeOpacity={0.7} onPress={() => navigation.goBack()}
-                                style={{
-                                    height: myHeight(3.8),
-                                    width: myHeight(3.8),
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                }}>
-                                <Image style={{
-                                    height: myHeight(2.8),
-                                    width: myHeight(2.8),
-                                    resizeMode: 'contain',
-                                    tintColor: myColors.text
-                                }} source={require('../../../assets/home_main/dashboards/back2.png')} />
-                            </TouchableOpacity>
-
-                            <Spacer paddingEnd={myWidth(2)} />
-                            {/* Name */}
-                            <Text style={[styles.textCommon, {
-                                fontSize: myFontSize.body,
-                                fontFamily: myFonts.bodyBold,
-                            }]}>Address Details</Text>
-                        </View>
-                    </View>
-
                     {/* MAP Ayegaāaaaaaaaaa */}
                     <View style={{ width: '100%', height: myHeight(20), backgroundColor: myColors.primaryL }} />
 

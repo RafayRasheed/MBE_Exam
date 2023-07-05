@@ -9,6 +9,7 @@ import { getFocusedRouteNameFromRoute, useNavigation } from "@react-navigation/n
 import { myColors } from '../../ultils/myColors';
 import { ios, myHeight, myWidth } from '../common';
 import { Platform, StatusBar } from 'react-native';
+import { TrackingNavigator } from './dashboards/tracking/tracking_navigator';
 
 
 const HomeTAB = createNativeStackNavigator();
@@ -59,6 +60,7 @@ export const HomeNavigator = ({ navigation, route }) => {
             <HomeTAB.Screen component={FilterScreen} name="FilterScreen" />
             <HomeTAB.Screen component={RestaurantDetail} name="RestaurantDetail" />
             <HomeTAB.Screen component={RideNavigator} name="RideNavigator" />
+            <HomeTAB.Screen component={TrackingNavigator} name="TrackingNavigator" />
 
 
         </HomeTAB.Navigator>

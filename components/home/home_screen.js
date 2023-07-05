@@ -262,7 +262,7 @@ export const HomeScreen = ({ navigation }) => {
                 {notifications.length > 0 && <Spacer paddingT={myHeight(20)} />}
             </ScrollView>
 
-            <Status notifications={notifications} />
+            <Status notifications={notifications} navigate={navigation.navigate} />
             {/* Notification Section */}
 
         </SafeAreaView>

@@ -122,7 +122,7 @@ export const DoneOrder = ({ navigation, }) => {
             </View>
 
             {/* Track Order button */}
-            <TouchableOpacity activeOpacity={0.9} onPress={() => null}
+            <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('TrackingNavigator')}
                 onLongPress={() => navigation.navigate('RestRating')}
                 style={{
                     backgroundColor: myColors.primaryT,

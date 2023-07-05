@@ -31,7 +31,7 @@ export const ResAddCard = ({ navigation }) => {
         if (verifyCard() && verifyExpiry() && verifyCVV() && verifyName()) {
             setTimeout(() => {
                 setLoading(false)
-                navigation.navigate('CardDone')
+                navigation.navigate('ResCardDone')
             }, 1000)
         } else {
             setLoading(false)

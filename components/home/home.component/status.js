@@ -12,7 +12,7 @@ const { UIManager } = NativeModules;
 if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true)
 }
-export const Status = ({ notifications }) => {
+export const Status = ({ notifications, navigate }) => {
     const [notiLen, setNotiLen] = useState(notifications.length.toString())
     const [notificationVisible, setNotificationVisible] = useState(notifications.length != 0 ? [notifications[0]] : null)
     const [notificationExpand, setNotificationExpand] = useState(false)
@@ -166,7 +166,7 @@ export const Status = ({ notifications }) => {
                                                 <Text style={[styles.textNotiItem, { flex: 1 }]} numberOfLines={1} >{item.status}</Text>
                                             </View>
                                         </View>
-                                        <TouchableOpacity activeOpacity={0.6} onPress={() => null}>
+                                        <TouchableOpacity activeOpacity={0.6} onPress={() => navigate('TrackingNavigator')}>
                                             <Spacer paddingT={myHeight(2.15)} />
                                             <Image style={[styles.imageGo]} source={require('../../assets/home_main/go.png')} />
                                             <Spacer paddingT={myHeight(2.15)} />
