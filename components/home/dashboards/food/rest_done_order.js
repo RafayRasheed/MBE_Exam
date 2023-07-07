@@ -132,7 +132,6 @@ export const DoneOrder = ({ navigation, }) => {
                     marginHorizontal: myWidth(4),
                     alignItems: 'center',
                     justifyContent: 'center',
-
                 }}>
 
                 <Text style={[

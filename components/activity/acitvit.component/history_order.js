@@ -7,25 +7,45 @@ import { myFontSize, myFonts, myLetSpacing } from '../../../ultils/myFonts';
 
 export const History_Order = ({ item }) => {
     return (
-        <View>
-            <View style={styles.container}>
-                {/* Content */}
-                <View style={styles.containerContent}>
-                    <Image style={styles.imageMain} source={item.image} />
+        <View style={styles.container}>
+            {/* Content */}
+            <View style={styles.containerContent}>
+                <Image style={styles.imageMain} source={item.image} />
 
-                    {/* Text */}
-                    <View style={styles.containerText}>
-                        <View>
-                            <Text numberOfLines={1} style={styles.textName}>{item.name}</Text>
-                            <Text numberOfLines={1} style={styles.textTime_Status}>{item.date}</Text>
+                <Spacer paddingEnd={myWidth(1.5)} />
+                {/* Text */}
+                <View style={styles.containerText}>
+                    <View>
+                        <Text numberOfLines={1} style={styles.textName}>{item.name}</Text>
+                        <Text numberOfLines={1} style={styles.textTime_Status}>{item.date}</Text>
+                    </View>
+                    {/* Price & Status */}
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+
+                        <Text numberOfLines={1} style={styles.textTime_Status}>{item.price}</Text>
+
+                        <Spacer paddingEnd={myWidth(3)} />
+                        <Text numberOfLines={1} style={[styles.textTime_Status, {
+                            fontSize: myFontSize.xxSmall,
+                            fontFamily: myFonts.heading,
+                            color: item.status == 'Completed' ? '#4CD964' : item.status == 'Cancelled' ? '#FF1010' : myColors.primaryT,
+
+                        }]}>{item.status}</Text>
+                        {/* Status Tag */}
+                        <View style={{
+                            // backgroundColor:  item.status == 'Completed' ? '#4CD964' : item.status == 'Cancelled' ? '#FF1010' : myColors.primaryT,
+                            // paddingHorizontal: myWidth(3), paddingVertical: myHeight(0.1),
+                            // borderRadius: myWidth(1.2)
+                        }}>
                         </View>
-                        <Text numberOfLines={1} style={styles.textTime_Status}>{item.price} - {item.status}</Text>
-
                     </View>
 
-                    {/* Button  Invoice & Rebook/TrackOrder*/}
-                    <View style={styles.containerOrder_Reb}>
-                        {/* Order */}
+                </View>
+
+                <Image style={styles.imageDown_Rel} source={require('../../assets/home_main/go.png')} />
+
+                {/* Button  Invoice & Rebook/TrackOrder*/}
+                {/* <View style={styles.containerOrder_Reb}>
                         <TouchableOpacity activeOpacity={0.6} onPress={() => console.log('Invoice')}
                             style={styles.containerButtonOrder_Reb}>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -50,20 +70,19 @@ export const History_Order = ({ item }) => {
                                     </View>
                                 </TouchableOpacity>
                         }
-                    </View>
-                </View>
+                    </View> */}
             </View>
-            <View style={styles.containerDivider} />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        paddingVertical: myHeight(1.4),
+        paddingVertical: myHeight(1.2),
     },
     containerContent: {
         flexDirection: 'row',
+        alignItems: 'center',
         justifyContent: 'space-between',
     },
     containerDivider: {
@@ -100,15 +119,15 @@ const styles = StyleSheet.create({
 
     // Text
     textName: {
-        fontSize: myFontSize.small2,
-        fontFamily: myFonts.body,
+        fontSize: myFontSize.body,
+        fontFamily: myFonts.bodyBold,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
         includeFontPadding: false,
         padding: 0,
     },
     textTime_Status: {
-        fontSize: myFontSize.tiny,
+        fontSize: myFontSize.xxSmall,
         fontFamily: myFonts.body,
         color: myColors.textL4,
         letterSpacing: myLetSpacing.common,
@@ -116,7 +135,7 @@ const styles = StyleSheet.create({
         padding: 0,
     },
     textReb_Order: {
-        fontSize: myFontSize.small2,
+        fontSize: myFontSize.xxSmall,
         fontFamily: myFonts.body,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
@@ -130,12 +149,13 @@ const styles = StyleSheet.create({
     // Image
     imageMain: {
         height: myHeight(6.5),
-        width: myWidth(14),
+        width: myHeight(6.5),
         resizeMode: 'cover'
     },
     imageDown_Rel: {
-        height: myHeight(1.34),
-        width: myWidth(2.32),
+        height: myHeight(1.9),
+        width: myHeight(1.9),
         resizeMode: 'contain',
+        alignSelf: 'center'
     },
 })

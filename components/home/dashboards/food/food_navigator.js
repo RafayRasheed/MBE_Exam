@@ -33,7 +33,6 @@ export const FoodNavigator = ({ navigation, route }) => {
                 setHideStatus(false)
             }
         }
-
     }, [navigation, route])
 
 
@@ -41,6 +40,8 @@ export const FoodNavigator = ({ navigation, route }) => {
     return (
         <>
             <StatusBar backgroundColor={hideStatus ? 'transparent' : myColors.background} translucent={hideStatus} />
+            {/* <StatusBar backgroundColor={'transparent'} translucent={true} /> */}
+
             <FoodTAB.Navigator
                 screenOptions={{
                     animation: 'fade',

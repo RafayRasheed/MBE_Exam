@@ -431,8 +431,6 @@ export const OrderTracking = ({ navigation }) => {
                             }]}>CA $29.99</Text>
                         </View>
 
-
-
                         {/* OK Buttonr */}
                         <TouchableOpacity activeOpacity={0.9} onPress={() => setOrderModal(false)}
                             style={{

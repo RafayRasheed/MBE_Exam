@@ -283,11 +283,7 @@ export const RestaurantDetail = ({ route, navigation }) => {
 
                 </TouchableOpacity>
             }
-
-
-
         </>
-
     )
 }
 

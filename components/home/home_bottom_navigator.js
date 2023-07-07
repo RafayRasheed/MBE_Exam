@@ -7,6 +7,7 @@ import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts";
 import { ActivityScreen } from "../activity/activity_screen";
 import { HomeNavigator } from "./home_navigator";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
+import { ActivityNavigator } from "../activity/activity_navigator";
 
 const Tab = createBottomTabNavigator()
 
@@ -77,7 +78,7 @@ export const HomeBottomNavigator = ({ route, navigation }) => {
             initialRouteName="HOME"
         >
             <Tab.Screen name="HOME" component={HomeNavigator} />
-            <Tab.Screen name="ACTIVITY" component={ActivityScreen} />
+            <Tab.Screen name="ACTIVITY" component={ActivityNavigator} />
             <Tab.Screen name="CART" component={Xr} />
             {/* <Tab.Screen name="WALLET" component={Xr} /> */}
             <Tab.Screen name="ACCOUNT" component={Xr} />

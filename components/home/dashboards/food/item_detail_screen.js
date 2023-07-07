@@ -3,8 +3,6 @@ import { Image, ImageBackground, SafeAreaView, ScrollView, StatusBar, StyleSheet
 import { myColors } from '../../../../ultils/myColors';
 import { Spacer, ios, myHeight, myWidth } from '../../../common';
 import { myFontSize, myFonts, myLetSpacing } from '../../../../ultils/myFonts';
-import { ResCategories, mainCourse } from './food_data';
-import Animated, { SlideInDown, SlideOutDown } from 'react-native-reanimated';
 import { AddCartStatus } from './food_component/add_cart_status';
 
 export const ItemDetail = ({ navigation, route }) => {

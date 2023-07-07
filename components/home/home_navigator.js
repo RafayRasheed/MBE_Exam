@@ -27,8 +27,6 @@ export const HomeNavigator = ({ navigation, route }) => {
             navigation.setOptions({ tabBarStyle: { display: 'none' } })
 
         } else {
-
-
             navigation.setOptions({
                 tabBarStyle: {
                     display: 'flex',
@@ -42,7 +40,6 @@ export const HomeNavigator = ({ navigation, route }) => {
                 },
             })
             if (!ios && Platform.Version >= 23) {
-
                 StatusBar.setBackgroundColor(myColors.background)
             }
 

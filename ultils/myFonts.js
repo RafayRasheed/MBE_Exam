@@ -23,6 +23,7 @@ export const myFonts = {
 export const myLetSpacing = {
     common: -myWidth(0.0395)
 }
+
 export const myFontSize = {
     tiny: RFValue(8.3), //done 10
     small: RFValue(9), // done 11

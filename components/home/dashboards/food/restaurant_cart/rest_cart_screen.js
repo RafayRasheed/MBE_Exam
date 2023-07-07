@@ -6,7 +6,6 @@ import { myFonts, myLetSpacing, myFontSize } from '../../../../../ultils/myFonts
 import Animated, { FadeIn, SlideInDown, SlideOutDown } from 'react-native-reanimated';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Collapsible from 'react-native-collapsible';
-import { Schedule } from './rest_cart_component/schedule';
 const items = [
     {
         name: 'Big Mac 1',

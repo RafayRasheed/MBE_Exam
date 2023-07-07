@@ -15,7 +15,6 @@ export const ResturantCheckout = ({ navigation, route }) => {
     const [isStandardDelivery, setIsStandardDelivery] = useState(true)
     const [scheduleTime, setScheduleTime] = useState(null)
 
-
     //Modals
     const [showScheduleModal, setShowScheduleModal] = useState(false)
     const [dateTime, setDateTime] = useState(null)
