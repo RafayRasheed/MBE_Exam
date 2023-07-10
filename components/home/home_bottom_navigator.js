@@ -8,6 +8,8 @@ import { ActivityScreen } from "../activity/activity_screen";
 import { HomeNavigator } from "./home_navigator";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { ActivityNavigator } from "../activity/activity_navigator";
+import { ProfileNavigator } from "../profile/profile_navigator";
+import { CartNavigator } from "../cart/cart_navigator";
 
 const Tab = createBottomTabNavigator()
 
@@ -79,9 +81,9 @@ export const HomeBottomNavigator = ({ route, navigation }) => {
         >
             <Tab.Screen name="HOME" component={HomeNavigator} />
             <Tab.Screen name="ACTIVITY" component={ActivityNavigator} />
-            <Tab.Screen name="CART" component={Xr} />
+            <Tab.Screen name="CART" component={CartNavigator} />
             {/* <Tab.Screen name="WALLET" component={Xr} /> */}
-            <Tab.Screen name="ACCOUNT" component={Xr} />
+            <Tab.Screen name="ACCOUNT" component={ProfileNavigator} />
 
         </Tab.Navigator>
 

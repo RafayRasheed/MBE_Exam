@@ -4,7 +4,6 @@ import { myFonts, myLetSpacing, myFontSize } from '../../../../ultils/myFonts';
 import { myColors } from '../../../../ultils/myColors';
 import { StyleSheet, TextInput, TouchableOpacity, View, SafeAreaView, Image, Text, ScrollView, StatusBar, Easing } from 'react-native';
 import { useState } from 'react';
-import { recentPlaces, savePlaces, searchPlaces } from './food_data';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 

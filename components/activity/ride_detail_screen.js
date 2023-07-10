@@ -224,7 +224,79 @@ export const RideDetails = ({ navigation, route }) => {
                         }]}>CA $10 has been credited to your wallet</Text>
                     </View>
 
-                    <Spacer paddingT={myHeight(2)} />
+                    <Spacer paddingT={myHeight(3)} />
+
+                    {/* Captain Detail */}
+                    <View style={{ flexDirection: 'row', }}>
+                        <Image source={require('../assets/home_main/driver.png')}
+                            style={{
+                                width: myHeight(7.58),
+                                height: myHeight(7.58),
+                                resizeMode: 'contain',
+                                borderRadius: myHeight(7.58),
+                            }}
+                        />
+                        <Spacer paddingEnd={myWidth(3)} />
+
+                        {/* RATING & Car NAME */}
+                        <View style={{
+                            justifyContent: 'center', flex: 1,
+                            // backgroundColor: 'red'
+                        }}>
+                            {/* Rating */}
+                            <Text style={[
+                                styles.textCommon,
+                                {
+                                    fontSize: myFontSize.body2,
+                                    fontFamily: myFonts.heading,
+                                    color: myColors.textL4,
+                                    alignItems: 'center',
+                                }
+                            ]}>Azeem Khan. {'4.9'} <Image source={require('../assets/home_main/star.png')}
+                                style={{
+                                    width: myHeight(2),
+                                    height: myHeight(2),
+                                    resizeMode: 'contain',
+                                    tintColor: myColors.star
+                                }}
+                                />
+                            </Text>
+                            <Spacer paddingT={myHeight(0.4)} />
+
+                            {/* Car Name */}
+                            <Text numberOfLines={2} style={[
+                                styles.textCommon,
+                                {
+                                    fontSize: myFontSize.body2,
+                                    fontFamily: myFonts.bodyBold,
+                                    color: myColors.text,
+                                    alignItems: 'center',
+                                }
+                            ]}>{"White Suzuki Alto Japanese."}</Text>
+                        </View>
+
+                        <Spacer paddingEnd={myWidth(3)} />
+                        {/* Car Plate */}
+                        <View style={{ justifyContent: 'flex-end' }}>
+                            <View style={{
+                                backgroundColor: myColors.primaryT,
+                                padding: myWidth(1.4),
+                                borderRadius: myWidth(2),
+                            }}>
+                                <Text style={[
+                                    styles.textCommon,
+                                    {
+                                        fontSize: myFontSize.body2,
+                                        fontFamily: myFonts.heading,
+                                        color: myColors.background,
+                                    }
+                                ]}>{"WBVS-987"}</Text>
+
+                            </View>
+                            <Spacer paddingT={myHeight(1)} />
+                        </View>
+
+                    </View>
 
                 </ScrollView>
 
@@ -285,7 +357,7 @@ export const RideDetails = ({ navigation, route }) => {
 
                 </View>
 
-            </SafeAreaView >
+            </SafeAreaView>
         </>
     )
 }

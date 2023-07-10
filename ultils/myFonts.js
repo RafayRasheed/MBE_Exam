@@ -2,7 +2,9 @@ import { RFValue } from "react-native-responsive-fontsize"
 import { Dimensions } from "react-native"
 import { ios, myWidth } from "../components/common"
 const { height } = Dimensions.get('screen')
+
 const myHeight = ios ? height : height - 30;
+
 export const myFonts = {
     //400
     body: 'Poppins-Regular',

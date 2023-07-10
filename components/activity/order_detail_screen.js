@@ -188,7 +188,7 @@ export const OrderDetails = ({ navigation, route }) => {
                                 fontFamily: myFonts.heading,
                                 color: myColors.background,
                             }
-                        ]}>{item.status == 'In Progress' ? 'Track Order' : 'Rebook'}</Text>
+                        ]}>{item.status == 'In Progress' ? 'Track Order' : 'Reorder'}</Text>
                     </TouchableOpacity>
                     <Spacer paddingT={myHeight(1.5)} />
 
