@@ -4,8 +4,7 @@ import { Spacer, ios, myHeight, myWidth } from '../../../../common';
 import { myColors } from '../../../../../ultils/myColors';
 import { myFonts, myLetSpacing, myFontSize } from '../../../../../ultils/myFonts';
 import Animated, { FadeIn, SlideInDown, SlideOutDown, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Collapsible from 'react-native-collapsible';
+
 
 export const RestaurantPayment = ({ navigation }) => {
     const [isCash, setIsCash] = useState(null)
