@@ -3,7 +3,7 @@ import { myFonts, myLetSpacing, myFontSize } from '../../../../ultils/myFonts';
 
 import { myColors } from '../../../../ultils/myColors';
 import { StyleSheet, TextInput, TouchableOpacity, View, SafeAreaView, Image, Text, ScrollView, StatusBar, Easing } from 'react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { recentPlaces, savePlaces, searchPlaces } from './food_data';
 
 
@@ -21,6 +21,11 @@ export const Address = ({ route, navigation }) => {
     function onSelectLocation() {
         navigation.goBack()
     }
+    useEffect(() => {
+        // console.log(navigation)
+        // navigation.getParent().setOptions({ tabBarStyle: { display: 'none' } })
+    }
+        , [])
     return (
 
         <SafeAreaView style={{
@@ -112,7 +117,7 @@ export const Address = ({ route, navigation }) => {
                 <Spacer paddingT={myHeight(1)} />
 
                 {/* Search list OR  Recent_saved list */}
-                <ScrollView contentContainerStyle={{ flexGrow: 1, }} showsVerticalScrollIndicator={false} >
+                <ScrollView bounces='false' contentContainerStyle={{ flexGrow: 1, }} showsVerticalScrollIndicator={false} >
 
                     {
                         search ?

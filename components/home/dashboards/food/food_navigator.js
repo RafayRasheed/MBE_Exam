@@ -4,7 +4,7 @@ import { FilterScreen } from "./filter_screen";
 import { RestaurantDetail } from "./restaurant_detail_screen";
 import React, { useEffect, useState } from "react";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
-import { ios, } from "../../../common";
+import { ios, tabBarStyle, } from "../../../common";
 import { StatusBar } from "react-native";
 import { myColors } from "../../../../ultils/myColors";
 import { ItemDetail } from "./item_detail_screen";
@@ -20,26 +20,42 @@ import { RestRating } from "./rest_rating_screen";
 
 
 const FoodTAB = createNativeStackNavigator();
-androidStatusHide = ['RestaurantDetail']
+const androidStatusHide = ['RestaurantDetail']
+
+const hideBottom = ['RestCartNavigator', 'Address', 'SaveAddress']
 export const FoodNavigator = ({ navigation, route }) => {
     const [hideStatus, setHideStatus] = useState(false)
     React.useLayoutEffect(() => {
-        if (!ios) {
+        // if (!hideBottom.includes(getFocusedRouteNameFromRoute(route))) {
+        //     console.log('naaya')
 
-            if (androidStatusHide.includes(getFocusedRouteNameFromRoute(route))) {
-                setHideStatus(true)
-            }
-            else {
-                setHideStatus(false)
-            }
-        }
+        //     navigation.getParent().setOptions(tabBarStyle)
+        // } else {
+        //     console.log('aaya')
+        //     navigation.getParent().setOptions({ tabBarStyle: { display: 'none' } })
+        //     // setTimeout(() =>
+        //     //     navigation.getParent().setOptions({ tabBarStyle: { display: 'none' } })
+        //     //     , 500)
+        // }
+        // if (!ios) {
+
+        //     if (androidStatusHide.includes(getFocusedRouteNameFromRoute(route))) {
+        //         setHideStatus(true)
+        //     }
+        //     else {
+        //         setHideStatus(false)
+        //     }
+        // }
     }, [navigation, route])
 
 
 
     return (
         <>
-            <StatusBar backgroundColor={hideStatus ? 'transparent' : myColors.background} translucent={hideStatus} />
+            {
+                !hideStatus &&
+                <StatusBar backgroundColor={myColors.background} translucent={false} />
+            }
             {/* <StatusBar backgroundColor={'transparent'} translucent={true} /> */}
 
             <FoodTAB.Navigator
@@ -50,20 +66,7 @@ export const FoodNavigator = ({ navigation, route }) => {
                 initialRouteName="FoodScreen"
             >
                 <FoodTAB.Screen component={FoodScreen} name="FoodScreen" />
-                <FoodTAB.Screen component={FilterScreen} name="FilterScreen" />
                 <FoodTAB.Screen component={RestaurantDetail} name="RestaurantDetail" />
-                <FoodTAB.Screen component={ItemDetail} name="ItemDetail" />
-                <FoodTAB.Screen component={RestaurantAll} name="RestaurantAll" />
-                <FoodTAB.Screen component={RestaurantMoreInfo} name="RestaurantMoreInfo" />
-                <FoodTAB.Screen component={Address} name="Address" />
-                <FoodTAB.Screen component={SaveAddress} name="SaveAddress" />
-                <FoodTAB.Screen component={RestCartNavigator} name="RestCartNavigator" />
-                <FoodTAB.Screen component={RestaurantSearch} name="RestaurantSearch" />
-                <FoodTAB.Screen component={DoneOrder} name="DoneOrder" />
-                <FoodTAB.Screen component={RestRating} name="RestRating" />
-
-
-
 
             </FoodTAB.Navigator>
         </>

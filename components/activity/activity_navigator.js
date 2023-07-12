@@ -38,8 +38,8 @@ export const ActivityNavigator = ({ navigation, route }) => {
                 initialRouteName="ActivityScreen"
             >
                 <ActivityTAB.Screen component={ActivityScreen} name="ActivityScreen" />
-                <ActivityTAB.Screen component={OrderDetails} name="OrderDetails" />
-                <ActivityTAB.Screen component={RideDetails} name="RideDetails" />
+                {/* <ActivityTAB.Screen component={OrderDetails} name="OrderDetails" />
+                <ActivityTAB.Screen component={RideDetails} name="RideDetails" /> */}
                 {/* <ActivityTAB.Screen component={FilterScreen} name="FilterScreen" />
                 <ActivityTAB.Screen component={RestaurantDetail} name="RestaurantDetail" /> */}
 

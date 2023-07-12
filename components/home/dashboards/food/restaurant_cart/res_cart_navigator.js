@@ -10,6 +10,7 @@ import { ResturantCheckout } from "./rest_checkout_screen";
 import { RestaurantPayment } from "./res_payment_screen";
 import { ResCardDone } from "./res_card_done";
 import { ResAddCard } from "./res_add_card";
+import { DoneOrder } from "../rest_done_order";
 
 
 
@@ -43,13 +44,14 @@ export const RestCartNavigator = ({ navigation, route }) => {
                     headerShown: false,
 
                 }}
-                initialRouteName="FoodScreen"
+                initialRouteName="ResturantCart"
             >
                 <RestCart.Screen component={ResturantCart} name="ResturantCart" />
                 <RestCart.Screen component={ResturantCheckout} name="ResturantCheckout" />
                 <RestCart.Screen component={RestaurantPayment} name="RestaurantPayment" />
                 <RestCart.Screen component={ResCardDone} name="ResCardDone" />
                 <RestCart.Screen component={ResAddCard} name="ResAddCard" />
+                <RestCart.Screen component={DoneOrder} name="DoneOrder" />
 
 
 

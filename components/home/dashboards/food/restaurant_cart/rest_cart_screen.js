@@ -42,7 +42,7 @@ const PricingRow = ({ title, value, fontSize, fontFamily, color = myColors.text 
         }]}>{value}</Text>
     </View>
 )
-export const ResturantCart = ({ navigation }) => {
+export const ResturantCart = ({ navigation, route }) => {
     const [onDelivery, setOnDelivery] = useState(true)
     const [promoModal, setPromoModal] = useState(false)
     const [promoCode, setPromoCode] = useState(null)
@@ -51,7 +51,11 @@ export const ResturantCart = ({ navigation }) => {
     const [instructionUpdate, setInstructionUpdate] = useState(null)
     const [showNote, setShowNote] = useState(false)
 
-
+    useEffect(() => {
+        // navigation.getParent().getParent().setOptions({ tabBarStyle: { display: 'none' } })
+        // console.log(route)
+    }
+        , [])
 
     function onCheckout() {
         navigation.navigate('ResturantCheckout', { promoSet: promoCodeUpdate })

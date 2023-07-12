@@ -65,24 +65,45 @@ export const Favourite = ({ navigation }) => {
                     {
                         FoodOpenNow.map((restaurant, i) =>
                             <TouchableOpacity activeOpacity={0.85} onPress={() => navigation.navigate('RestaurantDetail', { item: restaurant })}
-                                key={i} style={{ flexDirection: 'row', paddingBottom: myHeight(2), alignItems: 'center' }}>
-                                <Image style={{
-                                    height: myHeight(7),
-                                    width: myHeight(7),
-                                    borderRadius: myWidth(1.5),
-                                    overflow: 'hidden',
-                                    resizeMode: 'cover',
-                                    marginTop: myHeight(0.5)
-                                }} source={restaurant.image} />
-                                <Spacer paddingEnd={myWidth(2)} />
+                                key={i} style={{ flexDirection: 'row', paddingBottom: myHeight(2), alignItems: 'flex-start' }}>
+                                <View>
+                                    <Image style={{
+                                        height: myHeight(8.5),
+                                        width: myHeight(8.5),
+                                        borderRadius: myWidth(1.5),
+                                        overflow: 'hidden',
+                                        resizeMode: 'cover',
+                                        marginTop: myHeight(0.5)
+                                    }} source={restaurant.image} />
+                                    <TouchableOpacity style={{
+                                        position: 'absolute', zIndex: 2, top: myHeight(0),
+                                        right: myWidth(0), padding: myHeight(1)
+                                    }} activeOpacity={0.8} onPress={() => null}>
+                                        {/* Heart */}
+                                        <Image style={{
+                                            height: myHeight(2.3),
+                                            width: myHeight(2.3),
+                                            resizeMode: 'contain',
+                                        }} source={require('../assets/home_main/dashboards/heart.png')} />
+
+                                    </TouchableOpacity>
+                                    {/* Effect */}
+                                    <View style={{
+                                        borderRadius: myWidth(1.5),
+                                        position: 'absolute', width: myHeight(8.5), backgroundColor: '#00000020', top: 0, left: 0, height: myHeight(8.5), zIndex: 1
+                                    }} />
+                                </View>
+                                <Spacer paddingEnd={myWidth(3)} />
 
                                 {/* Name & Price */}
                                 <View style={{ flex: 1 }}>
                                     <Text numberOfLines={1} style={[styles.textCommon, {
-                                        fontSize: myFontSize.body2,
+                                        fontSize: myFontSize.body3,
                                         fontFamily: myFonts.bodyBold,
-
                                     }]}>{restaurant.name}</Text>
+
+                                    <Spacer paddingT={myHeight(0.5)} />
+
                                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
 
                                         <View>

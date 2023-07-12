@@ -130,7 +130,7 @@ export const RestRating = ({ navigation, }) => {
 
 
             {/* Ok button */}
-            <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.replace('HomeScreen')}
+            <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.replace('HomeBottomNavigator')}
                 style={{
                     backgroundColor: myColors.primaryT,
                     borderRadius: myHeight(0.8),

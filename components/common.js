@@ -45,6 +45,18 @@ export const Loader = () => (
 
     </View>
 )
+export const tabBarStyle = {
+    tabBarStyle: {
+        display: 'flex',
+        backgroundColor: myColors.background,
+        paddingHorizontal: myWidth(3.5),
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: myHeight(9.5),
+        paddingBottom: ios ? myHeight(2.2) : myHeight(1.5),
+        paddingTop: myHeight(2.5),
+    },
+}
 export const MyError = ({ message = '' }) => {
 
     return (

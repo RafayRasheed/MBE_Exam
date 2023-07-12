@@ -13,6 +13,8 @@ export const ItemDetail = ({ navigation, route }) => {
         <SafeAreaView style={{
             flex: 1, backgroundColor: myColors.background,
         }}>
+            <StatusBar backgroundColor={myColors.background} translucent={false} />
+
             <AddCartStatus items={10} price={'Rs. 52021'} navigation={navigation} />
 
             <ScrollView showsVerticalScrollIndicator={false}>

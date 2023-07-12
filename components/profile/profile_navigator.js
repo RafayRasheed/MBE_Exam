@@ -40,11 +40,11 @@ export const ProfileNavigator = ({ navigation, route }) => {
                 initialRouteName="Profile"
             >
                 <ProfileTAB.Screen component={Profile} name="Profile" />
-                <ProfileTAB.Screen component={ProfileDetails} name="ProfileDetails" />
+                {/* <ProfileTAB.Screen component={ProfileDetails} name="ProfileDetails" />
                 <ProfileTAB.Screen component={Favourite} name="Favourite" />
                 <ProfileTAB.Screen component={Notification} name="Notification" />
                 <ProfileTAB.Screen component={Refer} name="Refer" />
-                <ProfileTAB.Screen component={Wallet} name="Wallet" />
+                <ProfileTAB.Screen component={Wallet} name="Wallet" /> */}
 
 
             </ProfileTAB.Navigator>

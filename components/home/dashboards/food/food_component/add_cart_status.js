@@ -14,7 +14,7 @@ export const AddCartStatus = ({ items, price, navigation }) => {
             flexDirection: 'row', paddingHorizontal: myWidth(4),
             backgroundColor: myColors.primaryT, paddingVertical: myHeight(1.5),
             width: myWidth(90), alignSelf: 'center',
-            justifyContent: 'space-between', position: 'absolute', bottom: 0, zIndex: 10,
+            justifyContent: 'space-between', position: 'absolute', bottom: myHeight(2.5), zIndex: 10,
             borderRadius: myWidth(1.5), alignItems: 'center', marginVertical: myHeight(1)
         }}
             onPress={onAddToCart}>

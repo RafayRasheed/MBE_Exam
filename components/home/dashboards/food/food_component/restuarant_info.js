@@ -151,8 +151,8 @@ const styles = StyleSheet.create({
         borderRadius: myWidth(5),
     },
     containerImageEffect: {
-        height: myHeight(13), top: 0,
-        width: myWidth(52), zIndex: 0, position: 'absolute',
+        height: '100%', top: 0,
+        width: '100%', zIndex: 0, position: 'absolute',
         backgroundColor: '#00000020'
     },
 

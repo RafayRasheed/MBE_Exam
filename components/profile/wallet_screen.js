@@ -130,7 +130,7 @@ export const Wallet = ({ navigation }) => {
 
                                             {/* Divider */}
                                             {i > 0 && <View style={{ height: myHeight(0.1), backgroundColor: myColors.offColor2 }} />}
-                                            <Spacer paddingT={myHeight(1.6)} />
+                                            <Spacer paddingT={myHeight(1.7)} />
                                             {/* Date */}
                                             <Text style={[styles.textCommon, {
                                                 fontSize: myFontSize.xxSmall,
@@ -140,7 +140,7 @@ export const Wallet = ({ navigation }) => {
 
                                             <Spacer paddingT={myHeight(0.7)} />
                                             {/* content */}
-                                            <View style={{ flexDirection: 'row', paddingBottom: myHeight(2), alignItems: 'center' }}>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
 
 
                                                 {/* Card or Cash image */}
@@ -186,9 +186,12 @@ export const Wallet = ({ navigation }) => {
                                                                 fontFamily: myFonts.heading,
                                                             }]}>{item.number}</Text>
                                                         </View>
+
                                                     </View>
                                                 </View>
                                             </View>
+                                            <Spacer paddingT={myHeight(1.7)} />
+
                                         </TouchableOpacity>
                                     )
                                 }

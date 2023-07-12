@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Image, ImageBackground, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { myColors } from '../../../../ultils/myColors';
-import { Spacer, ios, myHeight, myWidth } from '../../../common';
+import { Spacer, ios, myHeight, myWidth, tabBarStyle } from '../../../common';
 import { myFontSize, myFonts, myLetSpacing } from '../../../../ultils/myFonts';
 import { ResCategories, mainCourse } from './food_data';
 import Animated, { SlideInDown, SlideOutDown } from 'react-native-reanimated';
@@ -27,6 +27,7 @@ export const RestaurantDetail = ({ route, navigation }) => {
     function onViewStoreInfo() {
         navigation.navigate('RestaurantMoreInfo', { restaurant: item })
     }
+
     React.useLayoutEffect(() => {
 
         if (dotModal) {
@@ -34,18 +35,7 @@ export const RestaurantDetail = ({ route, navigation }) => {
 
         }
         else {
-            navigation.getParent().getParent().setOptions({
-                tabBarStyle: {
-                    display: 'flex',
-                    backgroundColor: myColors.background,
-                    paddingHorizontal: myWidth(3.5),
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    height: myHeight(9.5),
-                    paddingBottom: ios ? myHeight(2.2) : myHeight(1.5),
-                    paddingTop: myHeight(2.5),
-                },
-            })
+            navigation.getParent().getParent().setOptions(tabBarStyle)
         }
 
     }, [dotModal])
@@ -54,6 +44,7 @@ export const RestaurantDetail = ({ route, navigation }) => {
 
     return (
         <>
+
             <View style={styles.container}>
                 <CartStatus items={10} price={'Rs. 52021'} navigate={navigation.navigate} />
 
@@ -61,7 +52,7 @@ export const RestaurantDetail = ({ route, navigation }) => {
                 <ImageBackground imageStyle={{ borderRadius: 0 }} source={item.image} resizeMode={'cover'} style={styles.imageTop} >
                     {/* Top Arrow Search Dots */}
                     <SafeAreaView >
-                        <Spacer paddingT={ios ? myHeight(1) : myHeight(1) + StatusBar.currentHeight} />
+                        <Spacer paddingT={myHeight(1)} />
                         <View style={{ paddingHorizontal: myWidth(4), flexDirection: 'row', justifyContent: 'space-between' }}>
 
                             {/* Arrow */}

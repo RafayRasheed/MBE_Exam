@@ -33,8 +33,6 @@ export const FoodScreen = ({ navigation }) => {
                                 fontFamily: myFonts.body
                             }]}>Delivery Now</Text>
 
-
-
                             <Text numberOfLines={2} style={styles.textLoc}>67 Buick boulevard Brampton Canada  <View style={{ transform: [{ rotate: '90deg' }], }}>
                                 <Image style={{
                                     height: myHeight(1.8),
