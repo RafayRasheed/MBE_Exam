@@ -77,7 +77,7 @@ export const Favourite = ({ navigation }) => {
                                     }} source={restaurant.image} />
                                     <TouchableOpacity style={{
                                         position: 'absolute', zIndex: 2, top: myHeight(0),
-                                        right: myWidth(0), padding: myHeight(1)
+                                        right: myWidth(0), padding: myHeight(0.7)
                                     }} activeOpacity={0.8} onPress={() => null}>
                                         {/* Heart */}
                                         <Image style={{

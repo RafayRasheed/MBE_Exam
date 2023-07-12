@@ -14,7 +14,7 @@ export const CartStatus = ({ items, price, navigate }) => {
             justifyContent: 'space-between', position: 'absolute', bottom: 0, zIndex: 10,
             borderRadius: myWidth(1.5), alignItems: 'center', marginVertical: myHeight(1)
         }}
-            onPress={() => navigate('RestCartNavigator', { screen: 'ResturantCart' })}>
+            onPress={() => navigate('ResturantCart')}>
             <View style={{
                 height: myHeight(3.2),
                 minWidth: myHeight(3.2),

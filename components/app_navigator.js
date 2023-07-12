@@ -7,7 +7,6 @@ import { StartupNavigator } from "./startup/startup_navigator"
 import { HomeBottomNavigator } from "./home/home_bottom_navigator"
 import { Address } from "./home/dashboards/food/address_screen"
 import { SaveAddress } from "./home/dashboards/food/address_save_screen"
-import { RestCartNavigator } from "./home/dashboards/food/restaurant_cart/res_cart_navigator"
 import { RestRating } from "./home/dashboards/food/rest_rating_screen"
 import { FoodWNavigator } from "./home/dashboards/food/food_w_navigator"
 import { FilterScreen } from "./home/dashboards/food/filter_screen"
@@ -24,6 +23,13 @@ import { Notification } from "./profile/notification_screen"
 import { Refer } from "./profile/refer_screen"
 import { Wallet } from "./profile/wallet_screen"
 import { ProfileDetails } from "./profile/profile_detail_screen"
+import { OrderTracking } from "./home/dashboards/tracking/order_tracking"
+import { Payment } from "./profile/payment_screen"
+import { ResturantCart } from "./home/dashboards/food/restaurant_cart/rest_cart_screen"
+import { ResturantCheckout } from "./home/dashboards/food/restaurant_cart/rest_checkout_screen"
+import { RestaurantPayment } from "./home/dashboards/food/restaurant_cart/res_payment_screen"
+import { ResCardDone } from "./home/dashboards/food/restaurant_cart/res_card_done"
+import { ResAddCard } from "./home/dashboards/food/restaurant_cart/res_add_card"
 
 const AppTAB = createNativeStackNavigator()
 
@@ -51,9 +57,19 @@ export const AppNavigator = () => {
                 <AppTAB.Screen component={ItemDetail} name="ItemDetail" />
                 <AppTAB.Screen component={RestaurantAll} name="RestaurantAll" />
                 <AppTAB.Screen component={RestaurantMoreInfo} name="RestaurantMoreInfo" />
-                <AppTAB.Screen component={RestCartNavigator} name="RestCartNavigator" />
                 <AppTAB.Screen component={RestaurantSearch} name="RestaurantSearch" />
+                <AppTAB.Screen component={OrderTracking} name="OrderTracking" />
+
+                {/* ====Cart===== */}
+                <AppTAB.Screen component={ResturantCart} name="ResturantCart" />
+                <AppTAB.Screen component={ResturantCheckout} name="ResturantCheckout" />
+                <AppTAB.Screen component={RestaurantPayment} name="RestaurantPayment" />
+                <AppTAB.Screen component={ResCardDone} name="ResCardDone" />
+                <AppTAB.Screen component={ResAddCard} name="ResAddCard" />
                 <AppTAB.Screen component={DoneOrder} name="DoneOrder" />
+
+
+
 
 
                 {/* ---------------------- Activity Screens Without Bottom Navigator ---------------------------*/}
@@ -71,6 +87,7 @@ export const AppNavigator = () => {
                 <AppTAB.Screen component={Notification} name="Notification" />
                 <AppTAB.Screen component={Refer} name="Refer" />
                 <AppTAB.Screen component={Wallet} name="Wallet" />
+                <AppTAB.Screen component={Payment} name="Payment" />
             </AppTAB.Navigator>
         </NavigationContainer>
     )

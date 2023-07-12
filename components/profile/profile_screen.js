@@ -120,7 +120,7 @@ export const Profile = ({ navigation }) => {
 
                     {/*  Payment Method */}
                     <Common icon={require('../assets/profile/card.png')} iconSize={myHeight(2.8)}
-                        name={'Payment Method'} navigate={''}
+                        name={'Payment Method'} navigate={'Payment'}
                     />
                     {/* Divider */}
                     <View style={{ borderTopWidth: myHeight(0.18), borderColor: myColors.dot, }} />
