@@ -158,8 +158,7 @@ export const RestaurantMoreInfo = ({ navigation, route }) => {
             {/* Timmings Collapse */}
             <Collapsible style={{ paddingStart: myWidth(20), paddingEnd: myWidth(4) }} collapsed={timmingClose}>
                 {
-                    restaurant.timmings?.map((item, i) =>
-                        <View key={i}>
+                    restaurant.timmings?.map((item, i) => {/* <View key={i}>
                             <Spacer paddingT={myHeight(1)} />
 
                             <Text numberOfLines={2} style={[styles.textCommon, {
@@ -184,7 +183,7 @@ export const RestaurantMoreInfo = ({ navigation, route }) => {
                                     >{time}</Text>
                                 )
                             }
-                        </View>
+                        </View> */}
                     )
                 }
 
